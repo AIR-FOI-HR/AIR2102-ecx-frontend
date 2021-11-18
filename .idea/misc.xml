@@ -5,8 +5,11 @@
       <map>
         <entry key="..\:/FOI/FOI Materijali/7. semestar/AIR/AIR2102-ecx-frontend/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.43846153846153846" />
         <entry key="..\:/FOI/FOI Materijali/7. semestar/AIR/AIR2102-ecx-frontend/app/src/main/res/drawable/ic_launcher_background.xml" value="0.43846153846153846" />
+        <entry key="..\:/FOI/FOI Materijali/7. semestar/AIR/AIR2102-ecx-frontend/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.15896921017402946" />
+        <entry key="..\:/FOI/FOI Materijali/7. semestar/AIR/AIR2102-ecx-frontend/app/src/main/res/layout-w936dp/activity_login.xml" value="0.185546875" />
+        <entry key="..\:/FOI/FOI Materijali/7. semestar/AIR/AIR2102-ecx-frontend/app/src/main/res/layout/activity_login.xml" value="0.24739583333333334" />
         <entry key="..\:/FOI/FOI Materijali/7. semestar/AIR/AIR2102-ecx-frontend/app/src/main/res/layout/activity_main.xml" value="0.28306159420289856" />
-        <entry key="..\:/FOI/FOI Materijali/7. semestar/AIR/AIR2102-ecx-frontend/app/src/main/res/layout/activity_splash.xml" value="0.1" />
+        <entry key="..\:/FOI/FOI Materijali/7. semestar/AIR/AIR2102-ecx-frontend/app/src/main/res/layout/activity_splash.xml" value="0.22" />
       </map>
     </option>
   </component>

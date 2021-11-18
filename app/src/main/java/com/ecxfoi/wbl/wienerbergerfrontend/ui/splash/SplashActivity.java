@@ -1,4 +1,4 @@
-package com.ecxfoi.wbl.wienerbergerfrontend;
+package com.ecxfoi.wbl.wienerbergerfrontend.ui.splash;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
+
+import com.ecxfoi.wbl.wienerbergerfrontend.R;
 
 public class SplashActivity extends AppCompatActivity {
 
