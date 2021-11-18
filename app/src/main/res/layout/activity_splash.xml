@@ -9,11 +9,12 @@
 
     <ImageView
             android:src="@drawable/ic_logo_wienerberger_cbme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="371dp"
+            android:layout_height="657dp"
             android:id="@+id/imageView"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:contentDescription="@string/logo_image_description"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:contentDescription="@string/logo_image_description" />
 </androidx.constraintlayout.widget.ConstraintLayout>
