@@ -3,8 +3,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        jcenter() // Warning: this repository is going to shut down soon
     }
 }
-rootProject.name = "Foi and Ecx.io 2021"
+rootProject.name = "WienerbergerApp"
 include ':app'
