@@ -4,7 +4,7 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/wienerberger_red</item>
         <item name="colorPrimaryVariant">@color/wienerberger_red_variant</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/wienerberger_black</item>
         <item name="colorSecondaryVariant">@color/black</item>
