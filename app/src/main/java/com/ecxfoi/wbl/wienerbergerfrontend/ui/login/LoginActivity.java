@@ -181,8 +181,9 @@ public class LoginActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    private void showLoginSuccess(@StringRes Integer welcomeMessage) {
-        Toast.makeText(getApplicationContext(),  getString(welcomeMessage) + usernameEditText.getText(), Toast.LENGTH_SHORT).show();
+    private void showLoginSuccess(@StringRes Integer welcomeMessage)
+    {
+        Toast.makeText(getApplicationContext(), getString(welcomeMessage) + usernameEditText.getText(), Toast.LENGTH_SHORT).show();
     }
 
     private void showLoginFailed(@StringRes Integer errorString)
