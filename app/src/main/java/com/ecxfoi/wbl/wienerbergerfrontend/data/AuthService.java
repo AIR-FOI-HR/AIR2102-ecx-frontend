@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import org.apache.commons.lang.StringUtils;
+
 public class AuthService
 {
     public static boolean login(String username, String password, Context context)
@@ -12,7 +14,7 @@ public class AuthService
         {
             // TODO: handle login authentication, return received jwt
 
-            if (!(username.equals("admin") && password.equals("Test1234")))
+            if (!(StringUtils.equals(username, "admin") && StringUtils.equals(password, "Test1234")))
             {
                 throw new Exception();
             }
