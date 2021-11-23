@@ -23,7 +23,7 @@ import android.widget.Toast;
 
 import com.ecxfoi.wbl.wienerbergerfrontend.CompanySelectionActivity;
 import com.ecxfoi.wbl.wienerbergerfrontend.R;
-import com.ecxfoi.wbl.wienerbergerfrontend.data.Authenticator;
+import com.ecxfoi.wbl.wienerbergerfrontend.data.AuthService;
 import com.ecxfoi.wbl.wienerbergerfrontend.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity
@@ -58,10 +58,11 @@ public class LoginActivity extends AppCompatActivity
         loginButton = binding.login;
         passwordSwitch = binding.passwordSwitch;
 
-        String storedUsername = Authenticator.getUsername(this);
-        String storedPassword = Authenticator.getPassword(this);
+        String storedUsername = AuthService.getUsername(this);
+        String storedPassword = AuthService.getPassword(this);
 
-        if (storedUsername != null && storedPassword != null) {
+        if (storedUsername != null && storedPassword != null)
+        {
             usernameEditText.setText(storedUsername);
             passwordEditText.setText(storedPassword);
             loginButton.setEnabled(true);
@@ -71,7 +72,7 @@ public class LoginActivity extends AppCompatActivity
         passwordEditText.addTextChangedListener(getPasswordTextWatcher());
 
         loginButton.setOnClickListener(v -> {
-            boolean loginResult = Authenticator.login(usernameEditText.getText().toString(),
+            boolean loginResult = AuthService.login(usernameEditText.getText().toString(),
                     passwordEditText.getText().toString(), this);
 
             if (!loginResult)
@@ -101,7 +102,8 @@ public class LoginActivity extends AppCompatActivity
         }
     }
 
-    private TextWatcher getUsernameTextWatcher() {
+    private TextWatcher getUsernameTextWatcher()
+    {
         return new TextWatcher()
         {
             @Override
@@ -119,9 +121,12 @@ public class LoginActivity extends AppCompatActivity
             @Override
             public void afterTextChanged(final Editable editable)
             {
-                if (usernameEditText.getText().length() > 2 && passwordEditText.getText().length() > 2) {
+                if (usernameEditText.getText().length() > 2 && passwordEditText.getText().length() > 2)
+                {
                     loginButton.setEnabled(true);
-                } else if (loginButton.isEnabled()) {
+                }
+                else if (loginButton.isEnabled())
+                {
                     loginButton.setEnabled(false);
                 }
             }
@@ -129,7 +134,8 @@ public class LoginActivity extends AppCompatActivity
     }
 
 
-    private TextWatcher getPasswordTextWatcher() {
+    private TextWatcher getPasswordTextWatcher()
+    {
         return new TextWatcher()
         {
             @Override
@@ -147,9 +153,12 @@ public class LoginActivity extends AppCompatActivity
             @Override
             public void afterTextChanged(final Editable editable)
             {
-                if (usernameEditText.getText().length() > 2 && passwordEditText.getText().length() > 2) {
+                if (usernameEditText.getText().length() > 2 && passwordEditText.getText().length() > 2)
+                {
                     loginButton.setEnabled(true);
-                } else if (loginButton.isEnabled()) {
+                }
+                else if (loginButton.isEnabled())
+                {
                     loginButton.setEnabled(false);
                 }
             }

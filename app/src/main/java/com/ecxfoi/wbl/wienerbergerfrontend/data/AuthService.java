@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-public class Authenticator
+public class AuthService
 {
     public static boolean login(String username, String password, Context context)
     {
