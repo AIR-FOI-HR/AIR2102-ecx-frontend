@@ -21,8 +21,13 @@ public class Authenticator
 
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putString("username", username);
-            editor.putString("password", password);
+
+            if (!preferences.getString("username", null).equals(username))
+            {
+                editor.putString("username", username);
+                editor.putString("password", password);
+            }
+
             editor.putString("jwt", jwt);
             editor.apply();
 

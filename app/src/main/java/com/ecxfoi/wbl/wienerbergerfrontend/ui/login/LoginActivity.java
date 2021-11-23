@@ -10,6 +10,8 @@ import android.os.Bundle;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.Window;
@@ -56,6 +58,18 @@ public class LoginActivity extends AppCompatActivity
         loginButton = binding.login;
         passwordSwitch = binding.passwordSwitch;
 
+        String storedUsername = Authenticator.getUsername(this);
+        String storedPassword = Authenticator.getPassword(this);
+
+        if (storedUsername != null && storedPassword != null) {
+            usernameEditText.setText(storedUsername);
+            passwordEditText.setText(storedPassword);
+            loginButton.setEnabled(true);
+        }
+
+        usernameEditText.addTextChangedListener(getUsernameTextWatcher());
+        passwordEditText.addTextChangedListener(getPasswordTextWatcher());
+
         loginButton.setOnClickListener(v -> {
             boolean loginResult = Authenticator.login(usernameEditText.getText().toString(),
                     passwordEditText.getText().toString(), this);
@@ -85,6 +99,61 @@ public class LoginActivity extends AppCompatActivity
         {
             passwordEditText.setTransformationMethod(PasswordTransformationMethod.getInstance());
         }
+    }
+
+    private TextWatcher getUsernameTextWatcher() {
+        return new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(final CharSequence charSequence, final int i, final int i1, final int i2)
+            {
+                // ignore
+            }
+
+            @Override
+            public void onTextChanged(final CharSequence charSequence, final int i, final int i1, final int i2)
+            {
+                // ignore
+            }
+
+            @Override
+            public void afterTextChanged(final Editable editable)
+            {
+                if (usernameEditText.getText().length() > 2 && passwordEditText.getText().length() > 2) {
+                    loginButton.setEnabled(true);
+                } else if (loginButton.isEnabled()) {
+                    loginButton.setEnabled(false);
+                }
+            }
+        };
+    }
+
+
+    private TextWatcher getPasswordTextWatcher() {
+        return new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(final CharSequence charSequence, final int i, final int i1, final int i2)
+            {
+                // ignore
+            }
+
+            @Override
+            public void onTextChanged(final CharSequence charSequence, final int i, final int i1, final int i2)
+            {
+                // ignore
+            }
+
+            @Override
+            public void afterTextChanged(final Editable editable)
+            {
+                if (usernameEditText.getText().length() > 2 && passwordEditText.getText().length() > 2) {
+                    loginButton.setEnabled(true);
+                } else if (loginButton.isEnabled()) {
+                    loginButton.setEnabled(false);
+                }
+            }
+        };
     }
 
     private void switchToCompanySelection()
