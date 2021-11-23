@@ -19,6 +19,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ecxfoi.wbl.wienerbergerfrontend.CompanySelectionActivity;
@@ -33,7 +34,7 @@ public class LoginActivity extends AppCompatActivity
     private EditText usernameEditText;
     private EditText passwordEditText;
     private Button loginButton;
-    private SwitchCompat passwordSwitch;
+    private TextView errorMessage;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -56,8 +57,19 @@ public class LoginActivity extends AppCompatActivity
         usernameEditText = binding.username;
         passwordEditText = binding.password;
         loginButton = binding.login;
-        passwordSwitch = binding.passwordSwitch;
+        errorMessage = binding.errorMessage;
+        final SwitchCompat passwordSwitch = binding.passwordSwitch;
 
+        retreiveStoredUserData();
+
+        usernameEditText.addTextChangedListener(getUsernameTextWatcher());
+        passwordEditText.addTextChangedListener(getPasswordTextWatcher());
+        loginButton.setOnClickListener(v -> attemptLogin());
+        passwordSwitch.setOnCheckedChangeListener(this::onCheckedChanged);
+    }
+
+    private void retreiveStoredUserData()
+    {
         String storedUsername = AuthService.getUsername(this);
         String storedPassword = AuthService.getPassword(this);
 
@@ -67,27 +79,25 @@ public class LoginActivity extends AppCompatActivity
             passwordEditText.setText(storedPassword);
             loginButton.setEnabled(true);
         }
+    }
 
-        usernameEditText.addTextChangedListener(getUsernameTextWatcher());
-        passwordEditText.addTextChangedListener(getPasswordTextWatcher());
+    private void attemptLogin()
+    {
+        errorMessage.setText("");
+        boolean loginResult = AuthService.login(usernameEditText.getText().toString(),
+                passwordEditText.getText().toString(), this);
 
-        loginButton.setOnClickListener(v -> {
-            boolean loginResult = AuthService.login(usernameEditText.getText().toString(),
-                    passwordEditText.getText().toString(), this);
+        if (!loginResult)
+        {
+            showLoginFailed(R.string.login_failed);
+            return;
+        }
 
-            if (!loginResult)
-            {
-                showLoginFailed(R.string.login_failed);
-                return;
-            }
+        setResult(Activity.RESULT_OK);
 
-            setResult(Activity.RESULT_OK);
-
-            finish();
-            switchToCompanySelection();
-        });
-
-        passwordSwitch.setOnCheckedChangeListener(this::onCheckedChanged);
+        showLoginSuccess(R.string.welcome);
+        finish();
+        switchToCompanySelection();
     }
 
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
@@ -171,8 +181,12 @@ public class LoginActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+    private void showLoginSuccess(@StringRes Integer welcomeMessage) {
+        Toast.makeText(getApplicationContext(),  getString(welcomeMessage) + usernameEditText.getText(), Toast.LENGTH_SHORT).show();
+    }
+
     private void showLoginFailed(@StringRes Integer errorString)
     {
-        Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+        errorMessage.setText(errorString);
     }
 }
