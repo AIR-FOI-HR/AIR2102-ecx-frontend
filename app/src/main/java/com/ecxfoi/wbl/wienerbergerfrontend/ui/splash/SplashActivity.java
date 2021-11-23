@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.ecxfoi.wbl.wienerbergerfrontend.R;
 import com.ecxfoi.wbl.wienerbergerfrontend.ui.login.LoginActivity;
@@ -14,16 +13,19 @@ import com.ecxfoi.wbl.wienerbergerfrontend.ui.login.LoginActivity;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity
+{
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE); // will hide the title
 
-        if (getSupportActionBar() != null) {
-        getSupportActionBar().hide(); // hide the title bar
+        if (getSupportActionBar() != null)
+        {
+            getSupportActionBar().hide(); // hide the title bar
         }
 
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -42,7 +44,8 @@ public class SplashActivity extends AppCompatActivity {
         }, 600);
     }
 
-    private void switchActivities() {
+    private void switchActivities()
+    {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
