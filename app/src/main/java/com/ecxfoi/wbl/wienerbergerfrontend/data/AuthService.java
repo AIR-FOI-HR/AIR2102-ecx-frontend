@@ -24,7 +24,7 @@ public class AuthService
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
             SharedPreferences.Editor editor = preferences.edit();
 
-            if (!preferences.getString("username", null).equals(username))
+            if (!preferences.getString("username", "").equals(username))
             {
                 editor.putString("username", username);
                 editor.putString("password", password);
