@@ -11,5 +11,8 @@
     <string name="welcome">"Welcome "</string>
     <string name="invalid_email">Not a valid email</string>
     <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
+    <string name="login_failed_internet">"Connection error, try again later"</string>
+    <string name="login_failed_email">"Please check your email!"</string>
+    <string name="login_failed_password">"Check your password and try again!"</string>
+    <string name="login_failed_generic">"Something went wrong on our side."</string>
 </resources>

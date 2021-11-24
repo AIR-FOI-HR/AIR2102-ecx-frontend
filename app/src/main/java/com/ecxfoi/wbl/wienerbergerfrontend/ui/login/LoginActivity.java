@@ -24,8 +24,19 @@ import android.widget.Toast;
 
 import com.ecxfoi.wbl.wienerbergerfrontend.CompanySelectionActivity;
 import com.ecxfoi.wbl.wienerbergerfrontend.R;
-import com.ecxfoi.wbl.wienerbergerfrontend.data.AuthService;
+import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthService;
+import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthenticationData;
+import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthenticationInterface;
 import com.ecxfoi.wbl.wienerbergerfrontend.databinding.ActivityLoginBinding;
+import com.ecxfoi.wbl.wienerbergerfrontend.models.WienerbergerResponse;
+
+import org.apache.commons.lang.StringUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity
 {
@@ -64,8 +75,72 @@ public class LoginActivity extends AppCompatActivity
 
         emailEditText.addTextChangedListener(getEmailTextWatcher());
         passwordEditText.addTextChangedListener(getPasswordTextWatcher());
-        loginButton.setOnClickListener(v -> attemptLogin());
         passwordSwitch.setOnCheckedChangeListener(this::onCheckedChanged);
+
+        AuthService.authenticationInterface = new AuthenticationInterface()
+        {
+            @Override
+            public void interpretResponse(final String email, final String password, final Response<WienerbergerResponse<AuthenticationData>> response)
+            {
+                WienerbergerResponse<AuthenticationData> wienerbergerResponse;
+                if (response.isSuccessful())
+                {
+                    wienerbergerResponse = response.body();
+                    AuthenticationData responseData = wienerbergerResponse.getData();
+                    String jwt = responseData.jwt;
+
+                    rememberUser(email, password, jwt);
+
+                    setResult(Activity.RESULT_OK);
+
+                    showLoginSuccess(R.string.welcome);
+                    finish();
+                    switchToCompanySelection();
+                }
+                else
+                {
+                    int errorString = R.string.login_failed_generic;
+
+                    try
+                    {
+                        // Casting to real objects just didn't work so easier variant was implemented here:
+                        JSONObject jsonObject = new JSONObject(response.errorBody().string());
+
+                        // Strings are generated on backend and compared here. This is not the best way.
+                        // Better alternative would be to hardcode message codes, but I think we can save that for another Sprint.
+                        if (StringUtils.equals(jsonObject.getString("message"), "Please check your email!"))
+                        {
+                            errorString = R.string.login_failed_email;
+                        }
+                        else if (StringUtils.equals(jsonObject.getString("message"), "Check your password and try again!"))
+                        {
+                            errorString = R.string.login_failed_password;
+                        }
+                    }
+                    catch (JSONException | IOException e)
+                    {
+                        e.printStackTrace();
+                    }
+
+                    showLoginFailed(errorString);
+                }
+            }
+
+            @Override
+            public void interpretError()
+            {
+                showLoginFailed(R.string.login_failed_internet);
+            }
+        };
+
+        loginButton.setOnClickListener(v -> attemptLogin());
+    }
+
+    private void rememberUser(String email, String password, String JWT)
+    {
+        AuthService.setEmail(email, this);
+        AuthService.setPassword(password, this);
+        AuthService.setJWT(JWT, this);
     }
 
     private void retreiveStoredUserData()
@@ -84,20 +159,23 @@ public class LoginActivity extends AppCompatActivity
     private void attemptLogin()
     {
         errorMessage.setText("");
-        boolean loginResult = AuthService.login(emailEditText.getText().toString(),
-                passwordEditText.getText().toString(), this);
-
-        if (!loginResult)
+        try
         {
-            showLoginFailed(R.string.login_failed);
-            return;
+            String enteredEmail = emailEditText.getText().toString();
+
+            if (!StringUtils.contains(enteredEmail, '@'))
+            {
+                enteredEmail += "@wb.com";
+                emailEditText.setText(enteredEmail);
+            }
+
+            String enteredPassword = passwordEditText.getText().toString();
+            AuthService.createLoginRequest(enteredEmail, enteredPassword);
         }
-
-        setResult(Activity.RESULT_OK);
-
-        showLoginSuccess(R.string.welcome);
-        finish();
-        switchToCompanySelection();
+        catch (Exception e)
+        {
+            this.showLoginFailed(R.string.login_failed_internet);
+        }
     }
 
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
