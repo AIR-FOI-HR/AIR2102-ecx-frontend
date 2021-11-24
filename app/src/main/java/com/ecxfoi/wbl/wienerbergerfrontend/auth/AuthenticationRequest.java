@@ -1,4 +1,4 @@
-package com.ecxfoi.wbl.wienerbergerfrontend.data;
+package com.ecxfoi.wbl.wienerbergerfrontend.auth;
 
 import java.io.Serializable;
 
