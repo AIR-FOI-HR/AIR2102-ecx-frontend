@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity
 {
     private ActivityLoginBinding binding;
 
-    private EditText usernameEditText;
+    private EditText emailEditText;
     private EditText passwordEditText;
     private Button loginButton;
     private TextView errorMessage;
@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        usernameEditText = binding.username;
+        emailEditText = binding.email;
         passwordEditText = binding.password;
         loginButton = binding.login;
         errorMessage = binding.errorMessage;
@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity
 
         retreiveStoredUserData();
 
-        usernameEditText.addTextChangedListener(getUsernameTextWatcher());
+        emailEditText.addTextChangedListener(getEmailTextWatcher());
         passwordEditText.addTextChangedListener(getPasswordTextWatcher());
         loginButton.setOnClickListener(v -> attemptLogin());
         passwordSwitch.setOnCheckedChangeListener(this::onCheckedChanged);
@@ -70,12 +70,12 @@ public class LoginActivity extends AppCompatActivity
 
     private void retreiveStoredUserData()
     {
-        String storedUsername = AuthService.getUsername(this);
+        String storedEmail = AuthService.getEmail(this);
         String storedPassword = AuthService.getPassword(this);
 
-        if (storedUsername != null && storedPassword != null)
+        if (storedEmail != null && storedPassword != null)
         {
-            usernameEditText.setText(storedUsername);
+            emailEditText.setText(storedEmail);
             passwordEditText.setText(storedPassword);
             loginButton.setEnabled(true);
         }
@@ -84,7 +84,7 @@ public class LoginActivity extends AppCompatActivity
     private void attemptLogin()
     {
         errorMessage.setText("");
-        boolean loginResult = AuthService.login(usernameEditText.getText().toString(),
+        boolean loginResult = AuthService.login(emailEditText.getText().toString(),
                 passwordEditText.getText().toString(), this);
 
         if (!loginResult)
@@ -112,7 +112,7 @@ public class LoginActivity extends AppCompatActivity
         }
     }
 
-    private TextWatcher getUsernameTextWatcher()
+    private TextWatcher getEmailTextWatcher()
     {
         return new TextWatcher()
         {
@@ -131,7 +131,7 @@ public class LoginActivity extends AppCompatActivity
             @Override
             public void afterTextChanged(final Editable editable)
             {
-                if (usernameEditText.getText().length() > 2 && passwordEditText.getText().length() > 2)
+                if (emailEditText.getText().length() > 2 && passwordEditText.getText().length() > 2)
                 {
                     loginButton.setEnabled(true);
                 }
@@ -163,7 +163,7 @@ public class LoginActivity extends AppCompatActivity
             @Override
             public void afterTextChanged(final Editable editable)
             {
-                if (usernameEditText.getText().length() > 2 && passwordEditText.getText().length() > 2)
+                if (emailEditText.getText().length() > 2 && passwordEditText.getText().length() > 2)
                 {
                     loginButton.setEnabled(true);
                 }
@@ -183,7 +183,7 @@ public class LoginActivity extends AppCompatActivity
 
     private void showLoginSuccess(@StringRes Integer welcomeMessage)
     {
-        Toast.makeText(getApplicationContext(), getString(welcomeMessage) + usernameEditText.getText(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), getString(welcomeMessage) + emailEditText.getText(), Toast.LENGTH_SHORT).show();
     }
 
     private void showLoginFailed(@StringRes Integer errorString)
