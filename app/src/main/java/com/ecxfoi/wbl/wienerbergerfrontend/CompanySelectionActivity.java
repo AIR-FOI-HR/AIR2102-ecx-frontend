@@ -85,7 +85,6 @@ public class CompanySelectionActivity extends AppCompatActivity
                 //TODO: consider data binding instead of handling color changes here
                 final Button nextButton = (Button) findViewById(R.id.btnNext);
 
-
                 boolean isACompanySelected = position > 0;
 
                 int buttonId = isACompanySelected ? R.drawable.rounded_button_red : R.drawable.rounded_button_grey;
