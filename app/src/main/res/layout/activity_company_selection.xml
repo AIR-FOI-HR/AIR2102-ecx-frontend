@@ -34,6 +34,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageViewLogo"
             android:background="@drawable/spinner_border"
+            android:popupBackground="@drawable/spinner_border_bottom"
             />
 
     <Button
@@ -54,5 +55,7 @@
             android:textAllCaps="false"
             app:backgroundTint="@null"
             android:background="@drawable/rounded_button_grey" />
+    />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

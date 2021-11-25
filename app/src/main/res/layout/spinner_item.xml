@@ -8,4 +8,5 @@
     android:fontFamily="sans-serif-medium"
     android:lineSpacingExtra="5dp"
     android:gravity="center"
+    android:background="@drawable/spinner_item_divider"
     />

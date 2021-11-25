@@ -6,10 +6,14 @@
                 <shape>
                     <solid android:color="@color/white"></solid>
                     <corners android:radius="3dp" />
-                    <stroke android:width="2dp" android:color="@color/wienerberger_red" />
+                    <stroke android:width="2dp"
+                            android:color="@color/wienerberger_red" />
                 </shape>
             </item>
-            <item android:bottom="-5dp" android:right="-15dp" android:gravity="bottom|right" android:drawable="@drawable/spinner_dropdown_icon_red" />
+            <item android:bottom="-5dp"
+                  android:right="-15dp"
+                  android:gravity="bottom|right"
+                  android:drawable="@drawable/spinner_dropdown_icon_red" />
         </layer-list>
     </item>
 </selector>
