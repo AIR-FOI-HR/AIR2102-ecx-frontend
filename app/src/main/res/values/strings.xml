@@ -14,4 +14,5 @@
     <string name="login_failed_internet">"Connection error, try again later"</string>
     <string name="login_failed_credentials">"Invalid credentials."</string>
     <string name="login_failed_generic">"Something went wrong on our side."</string>
+    <string name="action_next">Next</string>
 </resources>
