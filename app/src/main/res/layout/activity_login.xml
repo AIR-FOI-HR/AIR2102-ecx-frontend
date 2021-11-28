@@ -19,15 +19,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/username"
+            app:layout_constraintBottom_toTopOf="@+id/email"
             android:contentDescription="@string/logo_image_description" />
 
     <EditText
-            android:id="@+id/username"
+            android:id="@+id/email"
             android:textAlignment="center"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/prompt_username"
+            android:hint="@string/prompt_email"
             android:inputType="textEmailAddress"
             android:selectAllOnFocus="true"
             app:layout_constraintEnd_toEndOf="parent"
@@ -35,7 +35,7 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView2"
             app:layout_constraintBottom_toTopOf="@+id/password"
             android:textSize="30sp"
-            android:autofillHints="username" />
+            android:autofillHints="email" />
 
     <EditText
             android:id="@+id/password"
@@ -49,7 +49,7 @@
             android:selectAllOnFocus="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/username"
+            app:layout_constraintTop_toBottomOf="@+id/email"
             app:layout_constraintBottom_toTopOf="@+id/login"
             android:layout_marginBottom="5pt"
             android:textSize="30sp"
