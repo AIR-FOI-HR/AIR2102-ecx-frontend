@@ -106,16 +106,7 @@ public class LoginActivity extends AppCompatActivity
                         // Casting to real objects just didn't work so easier variant was implemented here:
                         JSONObject jsonObject = new JSONObject(response.errorBody().string());
 
-                        // Strings are generated on backend and compared here. This is not the best way.
-                        // Better alternative would be to hardcode message codes, but I think we can save that for another Sprint.
-                        if (StringUtils.equals(jsonObject.getString("message"), "Please check your email!"))
-                        {
-                            errorString = R.string.login_failed_email;
-                        }
-                        else if (StringUtils.equals(jsonObject.getString("message"), "Check your password and try again!"))
-                        {
-                            errorString = R.string.login_failed_password;
-                        }
+                        errorString = R.string.login_failed_credentials;
                     }
                     catch (JSONException | IOException e)
                     {
