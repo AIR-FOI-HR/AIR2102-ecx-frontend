@@ -24,14 +24,25 @@ import android.widget.Toast;
 
 import com.ecxfoi.wbl.wienerbergerfrontend.CompanySelectionActivity;
 import com.ecxfoi.wbl.wienerbergerfrontend.R;
-import com.ecxfoi.wbl.wienerbergerfrontend.data.AuthService;
+import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthService;
+import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthenticationData;
+import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthenticationInterface;
 import com.ecxfoi.wbl.wienerbergerfrontend.databinding.ActivityLoginBinding;
+import com.ecxfoi.wbl.wienerbergerfrontend.models.WienerbergerResponse;
+
+import org.apache.commons.lang.StringUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity
 {
     private ActivityLoginBinding binding;
 
-    private EditText usernameEditText;
+    private EditText emailEditText;
     private EditText passwordEditText;
     private Button loginButton;
     private TextView errorMessage;
@@ -54,7 +65,7 @@ public class LoginActivity extends AppCompatActivity
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        usernameEditText = binding.username;
+        emailEditText = binding.email;
         passwordEditText = binding.password;
         loginButton = binding.login;
         errorMessage = binding.errorMessage;
@@ -62,20 +73,75 @@ public class LoginActivity extends AppCompatActivity
 
         retreiveStoredUserData();
 
-        usernameEditText.addTextChangedListener(getUsernameTextWatcher());
+        emailEditText.addTextChangedListener(getEmailTextWatcher());
         passwordEditText.addTextChangedListener(getPasswordTextWatcher());
-        loginButton.setOnClickListener(v -> attemptLogin());
         passwordSwitch.setOnCheckedChangeListener(this::onCheckedChanged);
+
+        AuthService.authenticationInterface = new AuthenticationInterface()
+        {
+            @Override
+            public void interpretResponse(final String email, final String password, final Response<WienerbergerResponse<AuthenticationData>> response)
+            {
+                WienerbergerResponse<AuthenticationData> wienerbergerResponse;
+                if (response.isSuccessful())
+                {
+                    wienerbergerResponse = response.body();
+                    AuthenticationData responseData = wienerbergerResponse.getData();
+                    String jwt = responseData.jwt;
+
+                    rememberUser(email, password, jwt);
+
+                    setResult(Activity.RESULT_OK);
+
+                    showLoginSuccess(R.string.welcome);
+                    finish();
+                    switchToCompanySelection();
+                }
+                else
+                {
+                    int errorString = R.string.login_failed_generic;
+
+                    try
+                    {
+                        // Casting to real objects just didn't work so easier variant was implemented here:
+                        JSONObject jsonObject = new JSONObject(response.errorBody().string());
+
+                        errorString = R.string.login_failed_credentials;
+                    }
+                    catch (JSONException | IOException e)
+                    {
+                        e.printStackTrace();
+                    }
+
+                    showLoginFailed(errorString);
+                }
+            }
+
+            @Override
+            public void interpretError()
+            {
+                showLoginFailed(R.string.login_failed_internet);
+            }
+        };
+
+        loginButton.setOnClickListener(v -> attemptLogin());
+    }
+
+    private void rememberUser(String email, String password, String JWT)
+    {
+        AuthService.setEmail(email, this);
+        AuthService.setPassword(password, this);
+        AuthService.setJWT(JWT, this);
     }
 
     private void retreiveStoredUserData()
     {
-        String storedUsername = AuthService.getUsername(this);
+        String storedEmail = AuthService.getEmail(this);
         String storedPassword = AuthService.getPassword(this);
 
-        if (storedUsername != null && storedPassword != null)
+        if (storedEmail != null && storedPassword != null)
         {
-            usernameEditText.setText(storedUsername);
+            emailEditText.setText(storedEmail);
             passwordEditText.setText(storedPassword);
             loginButton.setEnabled(true);
         }
@@ -84,20 +150,23 @@ public class LoginActivity extends AppCompatActivity
     private void attemptLogin()
     {
         errorMessage.setText("");
-        boolean loginResult = AuthService.login(usernameEditText.getText().toString(),
-                passwordEditText.getText().toString(), this);
-
-        if (!loginResult)
+        try
         {
-            showLoginFailed(R.string.login_failed);
-            return;
+            String enteredEmail = emailEditText.getText().toString();
+
+            if (!StringUtils.contains(enteredEmail, '@'))
+            {
+                enteredEmail += "@wb.com";
+                emailEditText.setText(enteredEmail);
+            }
+
+            String enteredPassword = passwordEditText.getText().toString();
+            AuthService.createLoginRequest(enteredEmail, enteredPassword);
         }
-
-        setResult(Activity.RESULT_OK);
-
-        showLoginSuccess(R.string.welcome);
-        finish();
-        switchToCompanySelection();
+        catch (Exception e)
+        {
+            this.showLoginFailed(R.string.login_failed_internet);
+        }
     }
 
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
@@ -112,7 +181,7 @@ public class LoginActivity extends AppCompatActivity
         }
     }
 
-    private TextWatcher getUsernameTextWatcher()
+    private TextWatcher getEmailTextWatcher()
     {
         return new TextWatcher()
         {
@@ -131,7 +200,7 @@ public class LoginActivity extends AppCompatActivity
             @Override
             public void afterTextChanged(final Editable editable)
             {
-                if (usernameEditText.getText().length() > 2 && passwordEditText.getText().length() > 2)
+                if (emailEditText.getText().length() > 2 && passwordEditText.getText().length() > 2)
                 {
                     loginButton.setEnabled(true);
                 }
@@ -163,7 +232,7 @@ public class LoginActivity extends AppCompatActivity
             @Override
             public void afterTextChanged(final Editable editable)
             {
-                if (usernameEditText.getText().length() > 2 && passwordEditText.getText().length() > 2)
+                if (emailEditText.getText().length() > 2 && passwordEditText.getText().length() > 2)
                 {
                     loginButton.setEnabled(true);
                 }
@@ -183,7 +252,7 @@ public class LoginActivity extends AppCompatActivity
 
     private void showLoginSuccess(@StringRes Integer welcomeMessage)
     {
-        Toast.makeText(getApplicationContext(), getString(welcomeMessage) + usernameEditText.getText(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), getString(welcomeMessage) + emailEditText.getText(), Toast.LENGTH_SHORT).show();
     }
 
     private void showLoginFailed(@StringRes Integer errorString)
