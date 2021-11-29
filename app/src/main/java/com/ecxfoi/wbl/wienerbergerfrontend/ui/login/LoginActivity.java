@@ -8,21 +8,18 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ecxfoi.wbl.wienerbergerfrontend.CompanySelectionActivity;
+import com.ecxfoi.wbl.wienerbergerfrontend.ui.companyselection.CompanySelectionActivity;
 import com.ecxfoi.wbl.wienerbergerfrontend.R;
 import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthService;
 import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthenticationData;
@@ -38,7 +35,7 @@ import java.io.IOException;
 
 import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity
+public class LoginActivity extends Activity
 {
     private ActivityLoginBinding binding;
 
@@ -51,16 +48,6 @@ public class LoginActivity extends AppCompatActivity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-        if (getSupportActionBar() != null)
-        {
-            getSupportActionBar().hide();
-        }
-
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
