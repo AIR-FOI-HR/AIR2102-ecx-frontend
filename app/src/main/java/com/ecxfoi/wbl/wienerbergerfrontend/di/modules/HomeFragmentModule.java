@@ -19,7 +19,7 @@ public class HomeFragmentModule
     }
 
     @Provides
-    ViewModelProvider.Factory provideViewModelProvider(HomeFragmentProvider viewModel)
+    ViewModelProvider.Factory provideViewModelProvider(HomeViewModel viewModel)
     {
         return new ViewModelProviderFactory<>(viewModel);
     }

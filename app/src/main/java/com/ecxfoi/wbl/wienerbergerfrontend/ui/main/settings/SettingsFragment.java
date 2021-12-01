@@ -11,7 +11,7 @@ import javax.inject.Inject;
 public class SettingsFragment extends BaseFragment<SettingsViewModel>
 {
     @Inject
-    private ViewModelProvider.Factory factory;
+    ViewModelProvider.Factory factory;
 
     private SettingsViewModel viewModel;
 

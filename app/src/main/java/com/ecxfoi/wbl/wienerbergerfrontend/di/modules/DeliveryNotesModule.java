@@ -19,7 +19,7 @@ public class DeliveryNotesModule
     }
 
     @Provides
-    ViewModelProvider.Factory provideViewModelProvider(DeliveryNotesFragmentProvider viewModel)
+    ViewModelProvider.Factory provideViewModelProvider(DeliveryNotesViewModel viewModel)
     {
         return new ViewModelProviderFactory<>(viewModel);
     }

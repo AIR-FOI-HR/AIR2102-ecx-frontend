@@ -10,7 +10,7 @@ import javax.inject.Inject;
 public class MyAccountFragment extends BaseFragment<MyAccountViewModel>
 {
     @Inject
-    private ViewModelProvider.Factory factory;
+    ViewModelProvider.Factory factory;
 
     private MyAccountViewModel viewModel;
 

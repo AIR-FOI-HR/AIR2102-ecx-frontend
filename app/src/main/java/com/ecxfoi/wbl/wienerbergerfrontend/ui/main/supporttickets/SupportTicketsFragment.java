@@ -9,7 +9,7 @@ import javax.inject.Inject;
 public class SupportTicketsFragment extends BaseFragment<SupportTicketsViewModel>
 {
     @Inject
-    private ViewModelProvider.Factory factory;
+    ViewModelProvider.Factory factory;
 
     private SupportTicketsViewModel viewModel;
 
