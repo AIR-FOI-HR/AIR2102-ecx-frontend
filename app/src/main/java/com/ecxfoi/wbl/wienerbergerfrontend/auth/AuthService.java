@@ -5,7 +5,10 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.ecxfoi.wbl.wienerbergerfrontend.api.APIClient;
+import com.ecxfoi.wbl.wienerbergerfrontend.api.APIService;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.WienerbergerResponse;
+
+import javax.inject.Inject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -13,13 +16,20 @@ import retrofit2.Response;
 
 public class AuthService
 {
+    private static APIService apiService;
+
+    @Inject
+    public AuthService(APIService apiService) {
+        this.apiService = apiService;
+    }
+
     public static AuthenticationInterface authenticationInterface;
 
     public static void createLoginRequest(String email, String password)
     {
         AuthenticationRequest request = new AuthenticationRequest(password, email);
 
-        Call<WienerbergerResponse<AuthenticationData>> call = APIClient.getService().createUser(request);
+        Call<WienerbergerResponse<AuthenticationData>> call = apiService.createUser(request);
 
         call.enqueue(new Callback<WienerbergerResponse<AuthenticationData>>()
         {

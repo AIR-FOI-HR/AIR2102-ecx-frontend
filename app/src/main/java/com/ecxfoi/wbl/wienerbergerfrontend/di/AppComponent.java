@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.ecxfoi.wbl.wienerbergerfrontend.App;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.api.RetrofitModule;
+import com.ecxfoi.wbl.wienerbergerfrontend.di.api.RetrofitModule_GetApiInterfaceFactory;
 
 import javax.inject.Singleton;
 
@@ -16,7 +17,9 @@ import dagger.android.support.AndroidSupportInjectionModule;
 @Singleton
 @Component(modules={AndroidSupportInjectionModule.class,
         AppModule.class,
-        ActivityBuilder.class})
+        ActivityBuilder.class,
+        RetrofitModule.class,
+        ServiceBuilder.class})
 public interface AppComponent extends AndroidInjector<DaggerApplication>
 {
     @Component.Builder
