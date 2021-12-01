@@ -4,14 +4,29 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.lifecycle.ViewModelProvider;
+
 import com.ecxfoi.wbl.wienerbergerfrontend.R;
+import com.ecxfoi.wbl.wienerbergerfrontend.base.BaseActivity;
 import com.ecxfoi.wbl.wienerbergerfrontend.ui.login.LoginActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class SplashActivity extends Activity
+import javax.inject.Inject;
+
+public class SplashActivity extends BaseActivity<SplashViewModel>
 {
+    SplashViewModel viewModel;
+    @Inject
+    ViewModelProvider.Factory factory;
+
+    @Override
+    public SplashViewModel getViewModel() {
+        viewModel = new ViewModelProvider(this, factory).get(SplashViewModel.class);
+        return viewModel;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
