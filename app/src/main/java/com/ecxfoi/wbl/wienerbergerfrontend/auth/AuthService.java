@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.ecxfoi.wbl.wienerbergerfrontend.api.APIClient;
 import com.ecxfoi.wbl.wienerbergerfrontend.api.APIService;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.WienerbergerResponse;
 

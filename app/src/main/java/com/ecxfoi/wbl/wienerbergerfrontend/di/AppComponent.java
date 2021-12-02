@@ -4,7 +4,6 @@ import android.app.Application;
 
 import com.ecxfoi.wbl.wienerbergerfrontend.App;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.api.RetrofitModule;
-import com.ecxfoi.wbl.wienerbergerfrontend.di.api.RetrofitModule_GetApiInterfaceFactory;
 
 import javax.inject.Singleton;
 

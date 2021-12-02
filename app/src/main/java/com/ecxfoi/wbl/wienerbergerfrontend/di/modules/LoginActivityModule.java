@@ -2,6 +2,7 @@ package com.ecxfoi.wbl.wienerbergerfrontend.di.modules;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthService;
 import com.ecxfoi.wbl.wienerbergerfrontend.ui.companyselection.CompanySelectionViewModel;
 import com.ecxfoi.wbl.wienerbergerfrontend.ui.login.LoginViewModel;
 import com.ecxfoi.wbl.wienerbergerfrontend.utils.ViewModelProviderFactory;
@@ -14,9 +15,9 @@ import dagger.Provides;
 public class LoginActivityModule
 {
     @Provides
-    LoginViewModel provideLoginViewModel()
+    LoginViewModel provideLoginViewModel(AuthService authService)
     {
-        return new LoginViewModel();
+        return new LoginViewModel(authService);
     }
 
     @Provides
