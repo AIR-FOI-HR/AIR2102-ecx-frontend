@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -126,12 +127,15 @@ public class CompanySelectionActivity extends BaseActivity<CompanySelectionViewM
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
                 //TODO: consider data binding instead of handling color changes here
-                final Button nextButton = (Button) findViewById(R.id.btnNext);
+                final Button nextButton = binding.btnNext;
 
                 boolean isACompanySelected = position > 0;
 
-                int buttonId = isACompanySelected ? R.drawable.rounded_button_red : R.drawable.rounded_button_grey;
-                nextButton.setBackgroundResource(buttonId);
+                int buttonBackgroundId = isACompanySelected ? R.drawable.rounded_button_red : R.drawable.rounded_button_grey;
+                int buttonColorId = isACompanySelected ? R.color.white : R.color.black;
+
+                nextButton.setBackgroundResource(buttonBackgroundId);
+                nextButton.setTextColor(ContextCompat.getColor(getApplicationContext(), buttonColorId));
                 nextButton.setEnabled(isACompanySelected);
 
                 updateSelectedCompanyData(position - 1);

@@ -36,8 +36,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageViewLogo"
                 android:background="@drawable/spinner_border"
-                android:popupBackground="@drawable/spinner_border_bottom"
-                />
+                android:popupBackground="@drawable/spinner_border_bottom" />
 
         <TextView
                 style="@style/tv_general"
@@ -46,6 +45,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/spinnerCompanySelection"
                 android:text="@string/address"
                 android:textStyle="bold"
+                android:textColor="@color/black"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:visibility="invisible" />
@@ -82,13 +82,12 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvAddressCity"
                 android:text="@string/empty" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
                 style="@style/button_grey_centered"
                 android:id="@+id/btnNext"
                 android:layout_marginBottom="60dp"
-                android:enabled="false"
+                android:enabled="true"
                 android:text="@string/action_next"
-
                 />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
