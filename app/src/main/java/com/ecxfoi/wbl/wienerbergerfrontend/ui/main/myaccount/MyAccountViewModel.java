@@ -39,7 +39,7 @@ public class MyAccountViewModel extends ViewModel
     {
         this.userRepository = userRepository;
 
-        userMessage = new ObservableField<>("fake");
+        userMessage = new ObservableField<>();
         data = new ObservableField<>();
         error = new ObservableField<>(false);
     }

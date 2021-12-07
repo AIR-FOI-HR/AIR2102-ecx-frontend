@@ -1,0 +1,31 @@
+package com.ecxfoi.wbl.wienerbergerfrontend.models;
+
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
+import androidx.databinding.library.baseAdapters.BR;
+
+import com.google.gson.annotations.SerializedName;
+
+public class UserData
+{
+    public String title;
+    @SerializedName("first_name")
+    public String firstName;
+    @SerializedName("last_name")
+    public String lastName;
+    @SerializedName("phone_number")
+    public String phoneNum;
+    @SerializedName("fax_number")
+    public String faxNum;
+    public String email;
+
+    public UserData(final String title, final String firstName, final String lastName, final String phoneNum, final String faxNum, final String email)
+    {
+        this.title = title;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNum = phoneNum;
+        this.faxNum = faxNum;
+        this.email = email;
+    }
+}

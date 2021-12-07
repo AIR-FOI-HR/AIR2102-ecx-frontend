@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,9 @@ import com.ecxfoi.wbl.wienerbergerfrontend.base.BaseFragment;
 import com.ecxfoi.wbl.wienerbergerfrontend.databinding.ActivityMainBinding;
 import com.ecxfoi.wbl.wienerbergerfrontend.databinding.FragmentMyAccountBinding;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.UserData;
+
+import java.util.Arrays;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -41,12 +45,10 @@ public class MyAccountFragment extends BaseFragment<MyAccountViewModel>
         binding = FragmentMyAccountBinding.inflate(inflater, container, false);
         binding.setMyAccountViewModel(viewModel);
 
-        binding.btnUpdate.setOnClickListener(v -> {
-            viewModel.updateUserData();
-        });
-        binding.btnCancel.setOnClickListener(v -> Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.action_myAccountFragment_to_homeFragment));
-
         viewModel.getCurrentUserData().observe(getViewLifecycleOwner(), this::setUserData);
+
+        initNavigation();
+        initDropdown();
 
         return binding.getRoot();
     }
@@ -54,5 +56,22 @@ public class MyAccountFragment extends BaseFragment<MyAccountViewModel>
     private void setUserData(UserData userData)
     {
         viewModel.setUserData(userData);
+    }
+
+    private void initNavigation()
+    {
+        binding.btnUpdate.setOnClickListener(v -> {
+            viewModel.updateUserData();
+        });
+        binding.btnCancel.setOnClickListener(v -> Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.action_myAccountFragment_to_homeFragment));
+    }
+
+    private void initDropdown()
+    {
+        String[] titles = new String[]{"Mr.", "Mrs.", "Unk."};
+
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<String>(getActivity(), R.layout.spinner_item_grey, titles);
+        binding.spinnerTitle.setAdapter(adapter);
     }
 }
