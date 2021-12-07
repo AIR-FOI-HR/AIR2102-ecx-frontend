@@ -25,7 +25,9 @@
     <string name="title">Title</string>
     <string name="profile">Profile</string>
     <string name="orders">Orders</string>
-    <string name="material_balance_view">Material balance view</string>
+    <string name="material_balance_view">Material balance</string>
     <string name="support_tickets">Support tickets</string>
     <string name="delivery_notes">Delivery notes</string>
+    <string name="empty"></string>
+    <string name="address">Address</string>
 </resources>

@@ -18,7 +18,7 @@ public class RetrofitModule {
 
     @Provides
     @Singleton
-    APIService getApiInterface(Retrofit retroFit) {
+    APIService provideApiInterface(Retrofit retroFit) {
         return retroFit.create(APIService.class);
     }
 
@@ -34,7 +34,7 @@ public class RetrofitModule {
 
     @Provides
     @Singleton
-    OkHttpClient provideOkHttpCleint(HttpLoggingInterceptor httpLoggingInterceptor, JwtAuthInterceptor authInterceptor) {
+    OkHttpClient provideOkHttpClient(HttpLoggingInterceptor httpLoggingInterceptor, JwtAuthInterceptor authInterceptor) {
         return new OkHttpClient.Builder()
                 .addInterceptor(httpLoggingInterceptor)
                 .addInterceptor(authInterceptor)
