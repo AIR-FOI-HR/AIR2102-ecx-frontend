@@ -86,7 +86,7 @@
                 style="@style/button_grey_centered"
                 android:id="@+id/btnNext"
                 android:layout_marginBottom="60dp"
-                android:enabled="true"
+                android:enabled="false"
                 android:text="@string/action_next"
                 />
     </androidx.constraintlayout.widget.ConstraintLayout>
