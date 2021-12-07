@@ -25,7 +25,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:textSize="24sp"
-                android:paddingBottom="20dp"
+                android:paddingBottom="25dp"
                 android:layout_marginTop="10dp" />
 
         <TextView
@@ -104,8 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/e_mail"
-                android:textSize="24sp"
-                />
+                android:textSize="24sp" />
 
         <Spinner
                 android:id="@+id/spinnerTitle"
@@ -126,7 +125,9 @@
                 android:inputType="phone"
                 android:textSize="24sp"
                 android:textAlignment="center"
-                android:text="@={myAccountViewModel.data.faxNum}" />
+                android:text="@={myAccountViewModel.data.faxNum}"
+                android:scrollHorizontally="true"
+                android:singleLine="true" />
 
         <EditText
                 android:id="@+id/txtFirstName"
@@ -135,7 +136,9 @@
                 android:hint="@string/first_name"
                 android:textSize="24sp"
                 android:textAlignment="center"
-                android:text="@={myAccountViewModel.data.firstName}" />
+                android:text="@={myAccountViewModel.data.firstName}"
+                android:scrollHorizontally="true"
+                android:singleLine="true" />
 
         <EditText
                 android:id="@+id/txtLastName"
@@ -144,9 +147,9 @@
                 android:hint="@string/last_name"
                 android:textSize="24sp"
                 android:textAlignment="center"
-                android:maxLines="1"
-
-                android:text="@={myAccountViewModel.data.lastName}" />
+                android:text="@={myAccountViewModel.data.lastName}"
+                android:scrollHorizontally="true"
+                android:singleLine="true" />
 
         <EditText
                 android:id="@+id/txtPhoneNumber"
@@ -156,7 +159,9 @@
                 android:inputType="phone"
                 android:textSize="24sp"
                 android:textAlignment="center"
-                android:text="@={myAccountViewModel.data.phoneNum}" />
+                android:text="@={myAccountViewModel.data.phoneNum}"
+                android:scrollHorizontally="true"
+                android:singleLine="true" />
 
         <EditText
                 android:id="@+id/txtEmail"
@@ -168,7 +173,8 @@
                 android:textSize="24sp"
                 android:textAlignment="center"
                 android:text="@={myAccountViewModel.data.email}"
-               />
+                android:scrollHorizontally="true"
+                android:singleLine="true" />
 
         <androidx.appcompat.widget.AppCompatButton
                 style="@style/button_grey"

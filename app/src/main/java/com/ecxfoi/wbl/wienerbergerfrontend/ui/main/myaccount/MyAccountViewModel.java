@@ -81,7 +81,7 @@ public class MyAccountViewModel extends ViewModel
             public void onResponse(final Call<WienerbergerResponse<UserData>> call, final Response<WienerbergerResponse<UserData>> response)
             {
                 boolean isSuccessful = response.body() != null;
-                String newUserMessage = isSuccessful ? "User data successfuly updated!" : APIUtil.getErrorResponseMessage(response.errorBody());
+                String newUserMessage = isSuccessful ? "User data successfully updated!" : APIUtil.getErrorResponseMessage(response.errorBody());
 
                 error.set(!isSuccessful);
                 userMessage.set(newUserMessage);
