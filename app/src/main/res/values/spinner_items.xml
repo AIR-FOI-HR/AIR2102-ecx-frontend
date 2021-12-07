@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="title_list">
+        <item>Mr.</item>
+        <item>Mrs.</item>
+        <item>Unk.</item>
+    </array>
+</resources>
