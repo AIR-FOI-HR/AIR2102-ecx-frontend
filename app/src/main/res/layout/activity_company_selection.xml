@@ -9,19 +9,12 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        tools:context=".CompanySelectionActivity">
+        tools:context=".ui.companyselection.CompanySelectionActivity">
 
     <ImageView
+            style="@style/logo"
             android:id="@+id/imageViewLogo"
-            android:layout_width="0dp"
-            android:layout_height="150dp"
-            app:srcCompat="@drawable/ic_logo_wienerberger_cbme"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/spinnerCompanySelection"
-            android:contentDescription="@string/logo_image_description" />
-
+            app:layout_constraintBottom_toTopOf="@+id/spinnerCompanySelection" />
 
     <Spinner
             android:id="@+id/spinnerCompanySelection"
@@ -34,28 +27,51 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageViewLogo"
             android:background="@drawable/spinner_border"
-            android:popupBackground="@drawable/spinner_border_bottom"
-            />
+            android:popupBackground="@drawable/spinner_border_bottom" />
+
+    <TextView
+            style="@style/tv_general"
+            android:id="@+id/tvAddressBar"
+            android:textSize="24sp"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerCompanySelection"
+            android:text="Address"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"/>
+
+    <TextView
+            style="@style/tv_general"
+            android:id="@+id/tvAddress"
+            app:layout_constraintTop_toBottomOf="@+id/tvAddressBar"
+            android:text="2405 OAK STREET East" />
+
+    <TextView
+            style="@style/tv_general"
+            android:id="@+id/tvAddressPostal"
+            app:layout_constraintTop_toBottomOf="@+id/tvAddress"
+            android:text="30042" />
+
+    <TextView
+            style="@style/tv_general"
+            android:id="@+id/tvAddressCity"
+            app:layout_constraintTop_toBottomOf="@+id/tvAddressPostal"
+            android:text="CUMMING" />
+
+    <TextView
+            style="@style/tv_general"
+            android:id="@+id/tvAddressRegion"
+            app:layout_constraintTop_toBottomOf="@+id/tvAddressCity"
+            android:text="GA" />
+
+    <TextView
+            style="@style/tv_general"
+            android:id="@+id/tvAddressCountry"
+            app:layout_constraintTop_toBottomOf="@+id/tvAddressRegion"
+            android:text="US" />
 
     <Button
+            style="@style/button_grey_centered"
             android:id="@+id/btnNext"
-            android:layout_height="0dp"
-            android:layout_width="wrap_content"
-            android:layout_marginBottom="80dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            android:layout_marginBottom="60dp"
             android:enabled="false"
-            android:shadowColor="@color/black"
-            android:textColor="@color/white"
-            android:text="@string/action_next"
-            android:textAlignment="center"
-            android:textSize="42sp"
-            android:textAllCaps="false"
-            app:backgroundTint="@null"
-            android:background="@drawable/rounded_button_grey" />
-    />
-
-
+            android:text="@string/action_next" />
 </androidx.constraintlayout.widget.ConstraintLayout>

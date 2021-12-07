@@ -8,27 +8,28 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ecxfoi.wbl.wienerbergerfrontend.CompanySelectionActivity;
+import com.ecxfoi.wbl.wienerbergerfrontend.api.JwtAuthInterceptor;
+import com.ecxfoi.wbl.wienerbergerfrontend.base.BaseActivity;
+import com.ecxfoi.wbl.wienerbergerfrontend.ui.companyselection.CompanySelectionActivity;
 import com.ecxfoi.wbl.wienerbergerfrontend.R;
 import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthService;
 import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthenticationData;
 import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthenticationInterface;
 import com.ecxfoi.wbl.wienerbergerfrontend.databinding.ActivityLoginBinding;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.WienerbergerResponse;
+import com.ecxfoi.wbl.wienerbergerfrontend.ui.companyselection.CompanySelectionViewModel;
 
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONException;
@@ -36,9 +37,11 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import javax.inject.Inject;
+
 import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity
+public class LoginActivity extends BaseActivity<LoginViewModel>
 {
     private ActivityLoginBinding binding;
 
@@ -47,20 +50,24 @@ public class LoginActivity extends AppCompatActivity
     private Button loginButton;
     private TextView errorMessage;
 
+    private LoginViewModel viewModel;
+
+    @Inject
+    JwtAuthInterceptor authInterceptor;
+    @Inject
+    ViewModelProvider.Factory factory;
+
+    @Override
+    public LoginViewModel getViewModel()
+    {
+        viewModel = new ViewModelProvider(this, factory).get(LoginViewModel.class);
+        return viewModel;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-        if (getSupportActionBar() != null)
-        {
-            getSupportActionBar().hide();
-        }
-
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -96,6 +103,8 @@ public class LoginActivity extends AppCompatActivity
                     showLoginSuccess(R.string.welcome);
                     finish();
                     switchToCompanySelection();
+
+                    authInterceptor.setJwtToken(jwt);
                 }
                 else
                 {

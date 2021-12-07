@@ -15,4 +15,17 @@
     <string name="login_failed_credentials">"Invalid credentials."</string>
     <string name="login_failed_generic">"Something went wrong on our side."</string>
     <string name="action_next">Next</string>
+    <string name="update">Update</string>
+    <string name="cancel">Cancel</string>
+    <string name="first_name">First name</string>
+    <string name="phone_num">Phone num</string>
+    <string name="fax_num">Fax num</string>
+    <string name="e_mail">E-mail</string>
+    <string name="last_name">Last name</string>
+    <string name="title">Title</string>
+    <string name="profile">Profile</string>
+    <string name="orders">Orders</string>
+    <string name="material_balance_view">Material balance view</string>
+    <string name="support_tickets">Support tickets</string>
+    <string name="delivery_notes">Delivery notes</string>
 </resources>
