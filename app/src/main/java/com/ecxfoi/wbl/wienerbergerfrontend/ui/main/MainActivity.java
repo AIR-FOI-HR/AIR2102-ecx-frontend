@@ -31,6 +31,9 @@ public class MainActivity extends BaseActivity<MainActivityViewModel>
 {
     private ActivityMainBinding binding;
 
+    private DrawerLayout dlMainLayout;
+    private NavigationView navigationView;
+    private NavController navController;
     private ImageView ivHamburger;
 
     @Inject
@@ -48,6 +51,7 @@ public class MainActivity extends BaseActivity<MainActivityViewModel>
         super.onCreate(savedInstanceState);
 
         initBindings();
+        initNavigation();
     }
 
     private void initBindings()
@@ -56,5 +60,56 @@ public class MainActivity extends BaseActivity<MainActivityViewModel>
         setContentView(binding.getRoot());
 
         ivHamburger = binding.btnMenu;
+        dlMainLayout = binding.layoutMain;
+        navigationView = binding.navView;
+    }
+
+    private void initNavigation()
+    {
+        navigationView.setNavigationItemSelectedListener(this::onDrawerItemSelected);
+
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.nav_host_fragment);
+
+        if (navHostFragment != null)
+        {
+            navController = navHostFragment.getNavController();
+
+            AppBarConfiguration appBarConfiguration =
+                    new AppBarConfiguration.Builder(navController.getGraph()).build();
+
+            NavigationUI.setupWithNavController(navigationView, navController);
+        }
+
+        ivHamburger.setOnClickListener(v -> {
+            dlMainLayout.openDrawer(GravityCompat.START);
+        });
+    }
+
+    public boolean onDrawerItemSelected(@NonNull final MenuItem item)
+    {
+        int selectedMenuItemId = item.getItemId();
+
+        NavDestination currentDestination = navController.getCurrentDestination();
+        if (currentDestination == null)
+        {
+            return true;
+        }
+        int currentMenuId = currentDestination.getId();
+
+        if (selectedMenuItemId == currentMenuId)
+        {
+            return true;
+        }
+        else if (selectedMenuItemId == R.id.logout)
+        {
+            //TODO: implement logout
+            startActivity(new Intent(this, LoginActivity.class));
+            return true;
+        }
+
+        NavigationUI.onNavDestinationSelected(item, navController);
+
+        return true;
     }
 }

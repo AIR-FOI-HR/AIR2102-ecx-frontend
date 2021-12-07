@@ -28,7 +28,6 @@
         <item name="android:shadowRadius">0.2</item>
         <item name="android:textSize">25sp</item>
         <item name="android:width">175sp</item>
-        <item name="android:textStyle">bold</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:shadowColor">@color/black</item>
@@ -47,18 +46,22 @@
 
     <style name="button_grey" parent="@style/button_general">
         <item name="android:background">@drawable/rounded_button_grey</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="button_red" parent="@style/button_general">
         <item name="android:background">@drawable/rounded_button_red</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="button_grey_centered" parent="@style/button_centered">
         <item name="android:background">@drawable/rounded_button_grey</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="button_red_centered" parent="@style/button_centered">
         <item name="android:background">@drawable/rounded_button_red</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="tv_general" parent="@android:style/Widget.TextView">
@@ -83,6 +86,11 @@
 
     <style name="ev_general" parent="@android:style/Widget.EditText">
 
+    </style>
+
+    <style name="menu_item_typeface">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">24dp</item>
     </style>
 
 </resources>
