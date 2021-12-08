@@ -4,7 +4,6 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:textSize="24sp"
-        android:fontFamily="sans-serif-medium"
         android:lineSpacingExtra="5dp"
         android:gravity="center"
         android:background="@drawable/spinner_item_divider_grey" />

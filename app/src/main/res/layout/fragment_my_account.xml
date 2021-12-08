@@ -19,6 +19,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/profile"
+                android:textColor="@color/dark_grey"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -32,9 +33,12 @@
                 android:id="@+id/tvUserMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:textColor="@{myAccountViewModel.error ? @color/wienerberger_red : @color/black}"
+                android:textAlignment="center"
+                android:textColor="@{myAccountViewModel.error ? @color/wienerberger_red : @color/light_grey}"
                 android:text="@={myAccountViewModel.userMessage}"
                 app:layout_constraintTop_toBottomOf="@id/tvProfileTitle"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -57,7 +61,7 @@
                 app:flow_horizontalAlign="start"
                 app:flow_horizontalBias="0"
                 app:flow_maxElementsWrap="2"
-                app:flow_verticalGap="20dp"
+                app:flow_verticalGap="25dp"
                 app:flow_verticalBias="0"
                 app:flow_wrapMode="aligned"
                 app:layout_constraintTop_toBottomOf="@+id/tvUserMessage"
@@ -68,7 +72,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/title"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:textColor="@color/dark_grey"
+                />
 
         <TextView
                 android:id="@+id/tvFirstName"
@@ -76,6 +82,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/first_name"
                 android:textSize="24sp"
+                android:textColor="@color/dark_grey"
                 android:textAlignment="center" />
 
         <TextView
@@ -83,6 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/last_name"
+                android:textColor="@color/dark_grey"
                 android:textSize="24sp" />
 
         <TextView
@@ -90,6 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/phone_num"
+                android:textColor="@color/dark_grey"
                 android:textSize="24sp" />
 
         <TextView
@@ -97,6 +106,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/fax_num"
+                android:textColor="@color/dark_grey"
                 android:textSize="24sp" />
 
         <TextView
@@ -104,6 +114,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/e_mail"
+                android:textColor="@color/dark_grey"
                 android:textSize="24sp" />
 
         <Spinner
@@ -183,7 +194,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/cancel"
-                android:layout_marginBottom="40dp" />
+                android:layout_marginBottom="20dp" />
 
         <androidx.appcompat.widget.AppCompatButton
                 style="@style/button_red"
@@ -191,6 +202,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/update"
-                android:layout_marginBottom="40dp" />
+                android:layout_marginBottom="20dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
