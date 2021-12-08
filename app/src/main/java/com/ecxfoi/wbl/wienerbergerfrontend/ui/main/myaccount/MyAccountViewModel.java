@@ -73,6 +73,7 @@ public class MyAccountViewModel extends ViewModel
         if (updatedUserData != null && !validateInput(updatedUserData))
         {
             error.set(true);
+            return;
         }
 
         userRepository.setCurrentUserData(updatedUserData).enqueue(new Callback<WienerbergerResponse<UserData>>()
