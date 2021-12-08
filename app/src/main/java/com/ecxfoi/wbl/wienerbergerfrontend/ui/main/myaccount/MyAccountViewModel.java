@@ -8,20 +8,14 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.ecxfoi.wbl.wienerbergerfrontend.api.APIUtil;
-import com.ecxfoi.wbl.wienerbergerfrontend.models.EmptyResponse;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.UserData;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.WienerbergerResponse;
 import com.ecxfoi.wbl.wienerbergerfrontend.repositories.UserRepository;
 
 import org.apache.commons.lang.StringUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 
 import javax.inject.Inject;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,17 +40,17 @@ public class MyAccountViewModel extends ViewModel
 
     Boolean validateInput(UserData userData)
     {
-        if (StringUtils.isEmpty(userData.email))
+        if (StringUtils.isEmpty(userData.getEmail()))
         {
             userMessage.set("Email is empty!");
             return false;
         }
-        else if (StringUtils.isEmpty(userData.firstName))
+        else if (StringUtils.isEmpty(userData.getFirstName()))
         {
             userMessage.set("First name is empty!");
             return false;
         }
-        else if (StringUtils.isEmpty(userData.lastName))
+        else if (StringUtils.isEmpty(userData.getLastName()))
         {
             userMessage.set("Last name is empty!");
             return false;
@@ -118,7 +112,7 @@ public class MyAccountViewModel extends ViewModel
 
         if (newUserData != null)
         {
-            newUserData.title = selectedTitle;
+            newUserData.setTitle(selectedTitle);
 
             data.set(newUserData);
         }

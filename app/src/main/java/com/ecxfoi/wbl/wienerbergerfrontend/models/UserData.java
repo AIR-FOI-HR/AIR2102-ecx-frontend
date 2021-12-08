@@ -28,4 +28,64 @@ public class UserData
         this.faxNum = faxNum;
         this.email = email;
     }
+
+    public String getTitle()
+    {
+        return title;
+    }
+
+    public void setTitle(final String title)
+    {
+        this.title = title;
+    }
+
+    public String getFirstName()
+    {
+        return firstName;
+    }
+
+    public void setFirstName(final String firstName)
+    {
+        this.firstName = firstName;
+    }
+
+    public String getLastName()
+    {
+        return lastName;
+    }
+
+    public void setLastName(final String lastName)
+    {
+        this.lastName = lastName;
+    }
+
+    public String getPhoneNum()
+    {
+        return phoneNum;
+    }
+
+    public void setPhoneNum(final String phoneNum)
+    {
+        this.phoneNum = phoneNum;
+    }
+
+    public String getFaxNum()
+    {
+        return faxNum;
+    }
+
+    public void setFaxNum(final String faxNum)
+    {
+        this.faxNum = faxNum;
+    }
+
+    public String getEmail()
+    {
+        return email;
+    }
+
+    public void setEmail(final String email)
+    {
+        this.email = email;
+    }
 }

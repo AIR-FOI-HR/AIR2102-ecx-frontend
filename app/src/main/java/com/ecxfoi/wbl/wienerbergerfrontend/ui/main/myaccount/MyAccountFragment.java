@@ -19,6 +19,8 @@ import com.ecxfoi.wbl.wienerbergerfrontend.databinding.ActivityMainBinding;
 import com.ecxfoi.wbl.wienerbergerfrontend.databinding.FragmentMyAccountBinding;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.UserData;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -45,10 +47,9 @@ public class MyAccountFragment extends BaseFragment<MyAccountViewModel>
         binding = FragmentMyAccountBinding.inflate(inflater, container, false);
         binding.setMyAccountViewModel(viewModel);
 
-        viewModel.getCurrentUserData().observe(getViewLifecycleOwner(), this::setUserData);
-
         initNavigation();
-        initDropdown();
+
+        viewModel.getCurrentUserData().observe(getViewLifecycleOwner(), this::setUserData);
 
         return binding.getRoot();
     }
@@ -56,6 +57,7 @@ public class MyAccountFragment extends BaseFragment<MyAccountViewModel>
     private void setUserData(UserData userData)
     {
         viewModel.setUserData(userData);
+        initDropdown(userData.getTitle());
     }
 
     private void initNavigation()
@@ -66,12 +68,22 @@ public class MyAccountFragment extends BaseFragment<MyAccountViewModel>
         binding.btnCancel.setOnClickListener(v -> Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.action_myAccountFragment_to_homeFragment));
     }
 
-    private void initDropdown()
+    private void initDropdown(String currentUserTitle)
     {
         String[] titles = new String[]{"Mr.", "Mrs.", "Unk."};
 
         ArrayAdapter<String> adapter =
-                new ArrayAdapter<String>(getActivity(), R.layout.spinner_item_grey, titles);
+                new ArrayAdapter<>(getActivity(), R.layout.spinner_item_grey, titles);
         binding.spinnerTitle.setAdapter(adapter);
+
+        if (StringUtils.isNotEmpty(currentUserTitle))
+        {
+            int spinnerPosition = adapter.getPosition(currentUserTitle);
+
+            if (spinnerPosition != -1)
+            {
+                binding.spinnerTitle.setSelection(spinnerPosition);
+            }
+        }
     }
 }
