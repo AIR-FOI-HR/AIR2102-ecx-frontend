@@ -1,50 +1,103 @@
 package com.ecxfoi.wbl.wienerbergerfrontend.ui.companyselection;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.ecxfoi.wbl.wienerbergerfrontend.R;
+import com.ecxfoi.wbl.wienerbergerfrontend.base.BaseActivity;
+import com.ecxfoi.wbl.wienerbergerfrontend.databinding.ActivityCompanySelectionBinding;
+import com.ecxfoi.wbl.wienerbergerfrontend.databinding.ActivityLoginBinding;
+import com.ecxfoi.wbl.wienerbergerfrontend.models.CompanyData;
+import com.ecxfoi.wbl.wienerbergerfrontend.ui.login.LoginViewModel;
+import com.ecxfoi.wbl.wienerbergerfrontend.ui.main.MainActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CompanySelectionActivity extends AppCompatActivity
+import javax.inject.Inject;
+
+import dagger.android.support.DaggerAppCompatActivity;
+
+public class CompanySelectionActivity extends BaseActivity<CompanySelectionViewModel>
 {
+    private ActivityCompanySelectionBinding binding;
+
+    private TextView tvAddressBar;
+    private TextView tvStreet;
+    private TextView tvCountry;
+    private TextView tvCity;
+    private TextView tvPostal;
+    private Button btnContinue;
+
+    private ArrayList<CompanyData> companies;
+
+    CompanySelectionViewModel viewModel;
+    @Inject
+    ViewModelProvider.Factory factory;
+
+    @Override
+    public CompanySelectionViewModel getViewModel()
+    {
+        viewModel = new ViewModelProvider(this, factory).get(CompanySelectionViewModel.class);
+        return viewModel;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_company_selection);
-        initDropdown();
+        getBindings();
+
+        viewModel.getCompanyData().observe(this, this::initDropdown);
+
+        companies = new ArrayList<>();
+
+        btnContinue.setOnClickListener(v -> continueToMainMenu());
     }
 
-    private void initDropdown()
+    private void getBindings()
     {
-        final Spinner spinner = (Spinner) findViewById(R.id.spinnerCompanySelection);
+        binding = ActivityCompanySelectionBinding.inflate(getLayoutInflater());
 
-        String[] companiesMock = new String[]{
-                "Select a company...",
-                "McCarthy",
-                "Strabag"
-        };
+        setContentView(binding.getRoot());
 
-        final List<String> companiesList = new ArrayList<>(Arrays.asList(companiesMock));
+        btnContinue = binding.btnNext;
+        
+        tvAddressBar = binding.tvAddressBar;
+        tvStreet = binding.tvAddressStreet;
+        tvPostal = binding.tvAddressPostal;
+        tvCountry = binding.tvAddressCountry;
+        tvCity = binding.tvAddressCity;
+    }
+
+    private void initDropdown(ArrayList<CompanyData> companyList)
+    {
+        final Spinner spinner = binding.spinnerCompanySelection;
+
+        ArrayList<String> companyNames = new ArrayList<>();
+        companyNames.add("Select a company...");
+
+        companies = companyList;
+        companyList.forEach(company -> {
+            companyNames.add(String.format("%s - %s", company.id, company.name));
+        });
 
         final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
-                this, R.layout.spinner_item, companiesList)
+                this, R.layout.spinner_item, companyNames)
         {
             @Override
             public boolean isEnabled(int position)
@@ -74,13 +127,18 @@ public class CompanySelectionActivity extends AppCompatActivity
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
                 //TODO: consider data binding instead of handling color changes here
-                final Button nextButton = (Button) findViewById(R.id.btnNext);
+                final Button nextButton = binding.btnNext;
 
                 boolean isACompanySelected = position > 0;
 
-                int buttonId = isACompanySelected ? R.drawable.rounded_button_red : R.drawable.rounded_button_grey;
-                nextButton.setBackgroundResource(buttonId);
+                int buttonBackgroundId = isACompanySelected ? R.drawable.rounded_button_red : R.drawable.rounded_button_grey;
+                int buttonColorId = isACompanySelected ? R.color.white : R.color.black;
+
+                nextButton.setBackgroundResource(buttonBackgroundId);
+                nextButton.setTextColor(ContextCompat.getColor(getApplicationContext(), buttonColorId));
                 nextButton.setEnabled(isACompanySelected);
+
+                updateSelectedCompanyData(position - 1);
             }
 
             @Override
@@ -88,5 +146,33 @@ public class CompanySelectionActivity extends AppCompatActivity
             {
             }
         });
+    }
+
+    private void updateSelectedCompanyData(int companyIdx)
+    {
+        if (companyIdx == -1)
+        {
+            return;
+        }
+
+        try
+        {
+            CompanyData selectedCompany = companies.get(companyIdx);
+
+            tvCountry.setText(selectedCompany.addressCountryCode);
+            tvCity.setText(selectedCompany.addressCity);
+            tvPostal.setText(selectedCompany.addressPostCode);
+            tvStreet.setText(selectedCompany.addressStreet);
+            tvAddressBar.setVisibility(View.VISIBLE);
+        }
+        catch (IndexOutOfBoundsException ignored)
+        {
+        }
+    }
+
+    private void continueToMainMenu()
+    {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }
