@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/main_nav_graph"
+        app:startDestination="@id/homeFragment">
+    <fragment
+            android:id="@+id/myAccountFragment"
+            android:name="com.ecxfoi.wbl.wienerbergerfrontend.ui.main.myaccount.MyAccountFragment"
+            android:label="fragment_my_account"
+            tools:layout="@layout/fragment_my_account">
+        <action
+                android:id="@+id/action_myAccountFragment_to_homeFragment"
+                app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/homeFragment"
+            android:name="com.ecxfoi.wbl.wienerbergerfrontend.ui.main.home.HomeFragment"
+            android:label="HomeFragment">
+        <action
+                android:id="@+id/action_homeFragment_to_myAccountFragment"
+                app:destination="@id/myAccountFragment" />
+        <action
+                android:id="@+id/action_homeFragment_to_customersFragment"
+                app:destination="@id/customersFragment" />
+        <action
+                android:id="@+id/action_homeFragment_to_deliveryNotesFragment"
+                app:destination="@id/deliveryNotesFragment" />
+        <action
+                android:id="@+id/action_homeFragment_to_settingsFragment"
+                app:destination="@id/settingsFragment" />
+        <action
+                android:id="@+id/action_homeFragment_to_ordersFragment"
+                app:destination="@id/ordersFragment" />
+        <action
+                android:id="@+id/action_homeFragment_to_supportTicketsFragment"
+                app:destination="@id/supportTicketsFragment" />
+        <action
+                android:id="@+id/action_homeFragment_to_materialBalanceFragment"
+                app:destination="@id/materialBalanceFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/customersFragment"
+            android:name="com.ecxfoi.wbl.wienerbergerfrontend.ui.main.customers.CustomersFragment"
+            android:label="CustomersFragment" >
+        <action
+                android:id="@+id/action_customersFragment_to_homeFragment"
+                app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/deliveryNotesFragment"
+            android:name="com.ecxfoi.wbl.wienerbergerfrontend.ui.main.deliverynotes.DeliveryNotesFragment"
+            android:label="DeliveryNotesFragment" >
+        <action
+                android:id="@+id/action_deliveryNotesFragment_to_homeFragment"
+                app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/settingsFragment"
+            android:name="com.ecxfoi.wbl.wienerbergerfrontend.ui.main.settings.SettingsFragment"
+            android:label="SettingsFragment" >
+        <action
+                android:id="@+id/action_settingsFragment_to_homeFragment"
+                app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/ordersFragment"
+            android:name="com.ecxfoi.wbl.wienerbergerfrontend.ui.main.orders.OrdersFragment"
+            android:label="OrdersFragment" >
+        <action
+                android:id="@+id/action_ordersFragment_to_homeFragment"
+                app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/supportTicketsFragment"
+            android:name="com.ecxfoi.wbl.wienerbergerfrontend.ui.main.supporttickets.SupportTicketsFragment"
+            android:label="SupportTicketsFragment" >
+        <action
+                android:id="@+id/action_supportTicketsFragment_to_homeFragment"
+                app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/materialBalanceFragment"
+            android:name="com.ecxfoi.wbl.wienerbergerfrontend.ui.main.materialbalance.MaterialBalanceFragment"
+            android:label="MaterialBalanceFragment" >
+        <action
+                android:id="@+id/action_materialBalanceFragment_to_homeFragment"
+                app:destination="@id/homeFragment" />
+    </fragment>
+</navigation>
