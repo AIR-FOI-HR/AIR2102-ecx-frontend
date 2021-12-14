@@ -14,17 +14,20 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
-public class RetrofitModule {
+public class RetrofitModule
+{
 
     @Provides
     @Singleton
-    APIService provideApiInterface(Retrofit retroFit) {
+    APIService provideApiInterface(Retrofit retroFit)
+    {
         return retroFit.create(APIService.class);
     }
 
     @Provides
     @Singleton
-    Retrofit provideRetrofit(OkHttpClient okHttpClient) {
+    Retrofit provideRetrofit(OkHttpClient okHttpClient)
+    {
         return new Retrofit.Builder()
                 .baseUrl(APIRoutes.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -34,7 +37,8 @@ public class RetrofitModule {
 
     @Provides
     @Singleton
-    OkHttpClient provideOkHttpClient(HttpLoggingInterceptor httpLoggingInterceptor, JwtAuthInterceptor authInterceptor) {
+    OkHttpClient provideOkHttpClient(HttpLoggingInterceptor httpLoggingInterceptor, JwtAuthInterceptor authInterceptor)
+    {
         return new OkHttpClient.Builder()
                 .addInterceptor(httpLoggingInterceptor)
                 .addInterceptor(authInterceptor)
@@ -43,7 +47,8 @@ public class RetrofitModule {
 
     @Provides
     @Singleton
-    HttpLoggingInterceptor provideHttpLoggingInterceptor() {
+    HttpLoggingInterceptor provideHttpLoggingInterceptor()
+    {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         return httpLoggingInterceptor;
@@ -51,7 +56,8 @@ public class RetrofitModule {
 
     @Provides
     @Singleton
-    JwtAuthInterceptor provideHeaderInterceptor(){
+    JwtAuthInterceptor provideHeaderInterceptor()
+    {
         return new JwtAuthInterceptor();
     }
 }
