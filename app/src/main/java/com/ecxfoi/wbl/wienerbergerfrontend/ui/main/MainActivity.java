@@ -97,7 +97,7 @@ public class MainActivity extends BaseActivity<MainActivityViewModel>
         }
         int currentMenuId = currentDestination.getId();
 
-        if (selectedMenuItemId == currentMenuId)
+        if (selectedMenuItemId == currentMenuId) // When linked with NavigationUI the current item disappears, but just in case
         {
             return true;
         }
