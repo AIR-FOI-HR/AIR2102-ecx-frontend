@@ -1,35 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
-    <group>
-        <item
-                android:id="@+id/homeFragment"
-                android:title="@string/home" />
-        <item
-                android:id="@+id/myAccountFragment"
-                android:title="@string/profile"
-                android:icon="@drawable/menu_person_icon" />
-        <item
-                android:id="@+id/customersFragment"
-                android:title="@string/customers"
-                android:icon="@drawable/menu_people_icon" />
-        <item
-                android:id="@+id/settingsFragment"
-                android:title="@string/settings"
-                android:icon="@drawable/menu_settings_icon" />
-    </group>
-
-
-    <group
-            android:checkableBehavior="single"
-            android:gravity="bottom"
-            android:layout_gravity="bottom">
-        <item
-                android:id="@+id/logout"
-                android:title="@string/logout"
-                android:icon="@drawable/menu_logout_icon"
-                android:gravity="bottom"
-                android:layout_gravity="bottom" />
-    </group>
+         xmlns:tools="http://schemas.android.com/tools">
+    <item
+            android:id="@+id/homeFragment"
+            android:title="@string/home" />
+    <item
+            android:id="@+id/myAccountFragment"
+            android:title="@string/profile"
+            android:icon="@drawable/menu_person_icon" />
+    <item
+            android:id="@+id/customersFragment"
+            android:title="@string/customers"
+            android:icon="@drawable/menu_people_icon" />
+    <item
+            android:id="@+id/settingsFragment"
+            android:title="@string/settings"
+            android:icon="@drawable/menu_settings_icon" />
+    <!--<item
+            android:id="@+id/logout"
+            android:title="@string/logout"
+            android:icon="@drawable/menu_logout_icon" />-->
 </menu>
