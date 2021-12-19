@@ -18,14 +18,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ecxfoi.wbl.wienerbergerfrontend.R;
+import com.ecxfoi.wbl.wienerbergerfrontend.api.JwtAuthInterceptor;
 import com.ecxfoi.wbl.wienerbergerfrontend.base.BaseActivity;
 import com.ecxfoi.wbl.wienerbergerfrontend.databinding.ActivityMainBinding;
 import com.ecxfoi.wbl.wienerbergerfrontend.ui.login.LoginActivity;
-import com.ecxfoi.wbl.wienerbergerfrontend.ui.main.home.HomeFragment;
 import com.google.android.material.navigation.NavigationView;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -41,6 +38,9 @@ public class MainActivity extends BaseActivity<MainActivityViewModel>
 
     @Inject
     MainActivityViewModel viewModel;
+
+    @Inject
+    JwtAuthInterceptor authInterceptor;
 
     @Override
     public MainActivityViewModel getViewModel()
@@ -121,7 +121,7 @@ public class MainActivity extends BaseActivity<MainActivityViewModel>
 
     private void onLogoutMenuItemClick(final View view)
     {
-        //TODO: implement logout
+        authInterceptor.setJwtToken("");
         startActivity(new Intent(this, LoginActivity.class));
     }
 }
