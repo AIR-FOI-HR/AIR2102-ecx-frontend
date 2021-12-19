@@ -96,7 +96,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
                     AuthenticationData responseData = wienerbergerResponse.getData();
                     String jwt = responseData.jwt;
 
-                    rememberUser(email, password, jwt);
+                    rememberUser(email, password);
 
                     setResult(Activity.RESULT_OK);
 
@@ -136,11 +136,10 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
         loginButton.setOnClickListener(v -> attemptLogin());
     }
 
-    private void rememberUser(String email, String password, String JWT)
+    private void rememberUser(String email, String password)
     {
         AuthService.setEmail(email, this);
         AuthService.setPassword(password, this);
-        AuthService.setJWT(JWT, this);
     }
 
     private void retreiveStoredUserData()
