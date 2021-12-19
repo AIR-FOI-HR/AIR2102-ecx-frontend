@@ -54,18 +54,21 @@
                 style="@style/tv_general"
                 android:id="@+id/tvAddressStreet"
                 app:layout_constraintTop_toBottomOf="@+id/tvAddressBar"
-                android:text="@string/empty" />
+                android:text="@string/empty"
+                app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
                 style="@style/tv_general"
                 android:id="@+id/tvAddressPostal"
-                app:layout_constraintTop_toBottomOf="@+id/tvAddressStreet"
-                android:text="@string/empty" />
+                app:layout_constraintTop_toBottomOf="@+id/tvAddressBar"
+                android:text="@string/empty"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
                 style="@style/tv_general"
                 android:id="@+id/tvAddressCity"
-                app:layout_constraintTop_toBottomOf="@+id/tvAddressPostal"
+                app:layout_constraintTop_toBottomOf="@+id/tvAddressStreet"
+                app:layout_constraintStart_toStartOf="parent"
                 android:text="@string/empty" />
 
         <!-- region was specified on the design, but isn't in the API response
@@ -78,8 +81,9 @@
         <TextView
                 style="@style/tv_general"
                 android:id="@+id/tvAddressCountry"
-                app:layout_constraintTop_toBottomOf="@+id/tvAddressCity"
-                android:text="@string/empty" />
+                app:layout_constraintTop_toBottomOf="@+id/tvAddressPostal"
+                android:text="@string/empty"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
         <androidx.appcompat.widget.AppCompatButton
                 style="@style/button_grey_centered"
