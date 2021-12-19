@@ -18,7 +18,8 @@ public class AuthService
     private static APIService apiService;
 
     @Inject
-    public AuthService(APIService apiService) {
+    public AuthService(APIService apiService)
+    {
         this.apiService = apiService;
     }
 
@@ -68,11 +69,6 @@ public class AuthService
         changeParameter("password", password, context);
     }
 
-    public static void setJWT(String jwt, Context context)
-    {
-        changeParameter("jwt", jwt, context);
-    }
-
     public static String getEmail(Context context)
     {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -83,19 +79,5 @@ public class AuthService
     {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         return preferences.getString("password", null);
-    }
-
-    public static String getJWT(Context context)
-    {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return preferences.getString("jwt", null);
-    }
-
-    public static void logout(Context context)
-    {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("jwt", "");
-        editor.apply();
     }
 }
