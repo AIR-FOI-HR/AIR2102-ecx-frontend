@@ -58,7 +58,7 @@ public class HomeFragment extends BaseFragment<HomeViewModel>
             });
 
             ivSupportTickets.setOnClickListener(v -> {
-                Navigation.findNavController(mainActivity, R.id.nav_host_fragment).navigate(R.id.action_homeFragment_to_supportTicketsFragment);
+                Navigation.findNavController(mainActivity, R.id.nav_host_fragment).navigate(R.id.action_homeFragment_to_createSupportTicketsFragment);
             });
         }
 
