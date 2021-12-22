@@ -1,17 +1,14 @@
 package com.ecxfoi.wbl.wienerbergerfrontend.ui.splash;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 
 import androidx.lifecycle.ViewModelProvider;
 
 import com.ecxfoi.wbl.wienerbergerfrontend.R;
 import com.ecxfoi.wbl.wienerbergerfrontend.base.BaseActivity;
 import com.ecxfoi.wbl.wienerbergerfrontend.ui.login.LoginActivity;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.inject.Inject;
 
@@ -22,7 +19,8 @@ public class SplashActivity extends BaseActivity<SplashViewModel>
     ViewModelProvider.Factory factory;
 
     @Override
-    public SplashViewModel getViewModel() {
+    public SplashViewModel getViewModel()
+    {
         viewModel = new ViewModelProvider(this, factory).get(SplashViewModel.class);
         return viewModel;
     }
@@ -34,20 +32,10 @@ public class SplashActivity extends BaseActivity<SplashViewModel>
 
         setContentView(R.layout.activity_splash); // show splash screen with Wienerberger logo
 
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask()
-        {
-            @Override
-            public void run()
-            {
-                switchActivities();
-            }
+        new Handler().postDelayed(() -> {
+            Intent mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
+            SplashActivity.this.startActivity(mainIntent);
+            SplashActivity.this.finish();
         }, 600);
-    }
-
-    private void switchActivities()
-    {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
     }
 }
