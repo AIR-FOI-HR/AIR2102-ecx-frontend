@@ -15,6 +15,8 @@
     <string name="login_failed_credentials">"Invalid credentials."</string>
     <string name="login_failed_generic">"Something went wrong on our side."</string>
     <string name="action_next">Next</string>
+    <string name="add_ticket">Add Ticket</string>
+    <string name="create_new_ticket">Create new ticket</string>
     <string name="update">Update</string>
     <string name="cancel">Cancel</string>
     <string name="first_name">First name</string>
