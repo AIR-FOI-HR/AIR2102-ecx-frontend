@@ -33,16 +33,18 @@
                 android:id="@+id/action_homeFragment_to_ordersFragment"
                 app:destination="@id/ordersFragment" />
         <action
-                android:id="@+id/action_homeFragment_to_supportTicketsFragment"
-                app:destination="@id/supportTicketsFragment" />
-        <action
                 android:id="@+id/action_homeFragment_to_materialBalanceFragment"
                 app:destination="@id/materialBalanceFragment" />
+        <action
+                android:id="@+id/action_homeFragment_to_createSupportTicketsFragment"
+                app:destination="@id/createSupportTicketsFragment"
+                android:label="activity_create_new_ticket"
+                tools:layout="@layout/fragment_create_new_ticket" />
     </fragment>
     <fragment
             android:id="@+id/customersFragment"
             android:name="com.ecxfoi.wbl.wienerbergerfrontend.ui.main.customers.CustomersFragment"
-            android:label="CustomersFragment" >
+            android:label="CustomersFragment">
         <action
                 android:id="@+id/action_customersFragment_to_homeFragment"
                 app:destination="@id/homeFragment" />
@@ -50,7 +52,7 @@
     <fragment
             android:id="@+id/deliveryNotesFragment"
             android:name="com.ecxfoi.wbl.wienerbergerfrontend.ui.main.deliverynotes.DeliveryNotesFragment"
-            android:label="DeliveryNotesFragment" >
+            android:label="DeliveryNotesFragment">
         <action
                 android:id="@+id/action_deliveryNotesFragment_to_homeFragment"
                 app:destination="@id/homeFragment" />
@@ -58,7 +60,7 @@
     <fragment
             android:id="@+id/settingsFragment"
             android:name="com.ecxfoi.wbl.wienerbergerfrontend.ui.main.settings.SettingsFragment"
-            android:label="SettingsFragment" >
+            android:label="SettingsFragment">
         <action
                 android:id="@+id/action_settingsFragment_to_homeFragment"
                 app:destination="@id/homeFragment" />
@@ -66,7 +68,7 @@
     <fragment
             android:id="@+id/ordersFragment"
             android:name="com.ecxfoi.wbl.wienerbergerfrontend.ui.main.orders.OrdersFragment"
-            android:label="OrdersFragment" >
+            android:label="OrdersFragment">
         <action
                 android:id="@+id/action_ordersFragment_to_homeFragment"
                 app:destination="@id/homeFragment" />
@@ -74,17 +76,21 @@
     <fragment
             android:id="@+id/supportTicketsFragment"
             android:name="com.ecxfoi.wbl.wienerbergerfrontend.ui.main.supporttickets.SupportTicketsFragment"
-            android:label="SupportTicketsFragment" >
-        <action
-                android:id="@+id/action_supportTicketsFragment_to_homeFragment"
-                app:destination="@id/homeFragment" />
-    </fragment>
+            android:label="SupportTicketsFragment" />
     <fragment
             android:id="@+id/materialBalanceFragment"
             android:name="com.ecxfoi.wbl.wienerbergerfrontend.ui.main.materialbalance.MaterialBalanceFragment"
-            android:label="MaterialBalanceFragment" >
+            android:label="MaterialBalanceFragment">
         <action
                 android:id="@+id/action_materialBalanceFragment_to_homeFragment"
+                app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/createSupportTicketsFragment"
+            android:name="com.ecxfoi.wbl.wienerbergerfrontend.ui.main.supporttickets.CreateSupportTicketsFragment"
+            android:label="CreateSupportTicketsFragment">
+        <action
+                android:id="@+id/action_createSupportTicketsFragment_to_homeFragment"
                 app:destination="@id/homeFragment" />
     </fragment>
 </navigation>
