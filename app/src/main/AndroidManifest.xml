@@ -16,12 +16,15 @@
             android:theme="@style/Theme.WienerbergerApp"
             android:usesCleartextTraffic="true">
         <activity
+                android:name=".utils.ExitActivity"
+                android:theme="@android:style/Theme.NoDisplay"
+                android:autoRemoveFromRecents="true" />
+        <activity
                 android:name=".ui.main.MainActivity"
                 android:exported="true" />
         <activity
                 android:name=".ui.companyselection.CompanySelectionActivity"
-                android:exported="false" >
-        </activity>
+                android:exported="false" />
         <activity
                 android:name=".ui.login.LoginActivity"
                 android:exported="false"
