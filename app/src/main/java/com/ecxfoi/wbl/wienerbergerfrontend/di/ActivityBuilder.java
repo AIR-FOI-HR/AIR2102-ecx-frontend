@@ -6,6 +6,7 @@ import com.ecxfoi.wbl.wienerbergerfrontend.di.modules.LoginActivityModule;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.modules.MainActivityModule;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.modules.MyAccountFragmentModule;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.modules.SplashActivityModule;
+import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.CreateSupportTicketsFragmentProvider;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.CustomersFragmentProvider;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.DeliveryNotesFragmentProvider;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.HomeFragmentProvider;
@@ -47,7 +48,8 @@ public abstract class ActivityBuilder
             OrdersFragmentProvider.class,
             SettingsFragmentProvider.class,
             SupportTicketsFragmentProvider.class,
-            MaterialBalanceFragmentProvider.class
+            MaterialBalanceFragmentProvider.class,
+            CreateSupportTicketsFragmentProvider.class
             })
     abstract MainActivity contributeMainActivity();
 }
