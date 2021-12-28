@@ -23,7 +23,11 @@
         <ImageView
                 style="@style/logo"
                 android:id="@+id/imageViewLogo"
-                app:layout_constraintBottom_toTopOf="@+id/spinnerCompanySelection" />
+                app:layout_constraintBottom_toTopOf="@+id/spinnerCompanySelection"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/app_description"/>
 
         <Spinner
                 android:id="@+id/spinnerCompanySelection"
@@ -47,29 +51,39 @@
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:visibility="invisible" />
+                android:visibility="invisible"
+                tools:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="match_parent"
+                android:textAlignment="center" />
 
         <TextView
                 style="@style/tv_general"
                 android:id="@+id/tvAddressStreet"
                 app:layout_constraintTop_toBottomOf="@+id/tvAddressBar"
                 android:text="@string/empty"
-                app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-                style="@style/tv_general"
-                android:id="@+id/tvAddressPostal"
-                app:layout_constraintTop_toBottomOf="@+id/tvAddressBar"
-                android:text="@string/empty"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                tools:text="tvAddressStreet"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="wrap_content" />
 
         <TextView
                 style="@style/tv_general"
                 android:id="@+id/tvAddressCity"
                 app:layout_constraintTop_toBottomOf="@+id/tvAddressStreet"
                 app:layout_constraintStart_toStartOf="parent"
-                android:text="@string/empty" />
+                android:text="@string/empty"
+                tools:text="tvAddressCity"
+                android:layout_width="wrap_content" />
+
+        <TextView
+                style="@style/tv_general"
+                android:id="@+id/tvAddressPostal"
+                app:layout_constraintTop_toBottomOf="@+id/tvAddressStreet"
+                android:text="@string/empty"
+                tools:text="tvAddressPostal"
+                app:layout_constraintStart_toEndOf="@id/tvAddressCity"
+                android:layout_marginStart="10dp" />
 
         <!-- region was specified on the design, but isn't in the API response
         <TextView
@@ -81,15 +95,22 @@
         <TextView
                 style="@style/tv_general"
                 android:id="@+id/tvAddressCountry"
-                app:layout_constraintTop_toBottomOf="@+id/tvAddressPostal"
                 android:text="@string/empty"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                tools:text="tvAddressCountry"
+                app:layout_constraintTop_toBottomOf="@+id/tvAddressCity"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.0" />
 
         <androidx.appcompat.widget.AppCompatButton
                 style="@style/button_grey_centered"
                 android:id="@+id/btnNext"
-                android:layout_marginBottom="60dp"
                 android:enabled="false"
-                android:text="@string/action_next" />
+                android:text="@string/action_next"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvAddressBar"
+                app:layout_constraintVertical_bias="0.9" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
