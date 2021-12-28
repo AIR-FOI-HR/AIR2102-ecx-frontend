@@ -86,7 +86,7 @@
                 android:id="@+id/btnCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/cancel"
+                android:text="@string/back"
                 android:layout_marginBottom="20dp" />
 
         <androidx.appcompat.widget.AppCompatButton

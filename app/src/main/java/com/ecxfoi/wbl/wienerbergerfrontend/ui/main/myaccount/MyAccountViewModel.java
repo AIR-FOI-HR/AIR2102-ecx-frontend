@@ -14,6 +14,8 @@ import com.ecxfoi.wbl.wienerbergerfrontend.repositories.UserRepository;
 
 import org.apache.commons.lang.StringUtils;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 
 import retrofit2.Call;
@@ -22,9 +24,19 @@ import retrofit2.Response;
 
 public class MyAccountViewModel extends ViewModel
 {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    public ObservableField<String> userMessage;
+    // It was too much of a hastle to use resources :(
+    private final String checkFieldMessage = "Check this field";
+    private final String successfulUpdateMessage = "User data successfully updated!";
+    private final String multipleErrorsMessage = "Check fields for errors!";
+
+    public ObservableField<String> firstNameMessage;
+    public ObservableField<String> lastNameMessage;
+    public ObservableField<String> phoneMessage;
+    public ObservableField<String> faxMessage;
+    public ObservableField<String> mainErrorMessage;
+
     public ObservableField<UserData> data;
     public ObservableField<Boolean> error;
 
@@ -32,31 +44,64 @@ public class MyAccountViewModel extends ViewModel
     public MyAccountViewModel(UserRepository userRepository)
     {
         this.userRepository = userRepository;
-
-        userMessage = new ObservableField<>();
+        firstNameMessage = new ObservableField<>();
+        lastNameMessage = new ObservableField<>();
+        phoneMessage = new ObservableField<>();
+        faxMessage = new ObservableField<>();
+        mainErrorMessage = new ObservableField<>();
         data = new ObservableField<>();
         error = new ObservableField<>(false);
     }
 
+    private void clearAllMessages()
+    {
+        mainErrorMessage.set("");
+        firstNameMessage.set("");
+        lastNameMessage.set("");
+        phoneMessage.set("");
+        faxMessage.set("");
+    }
+
     Boolean validateInput(UserData userData)
     {
-        if (StringUtils.isEmpty(userData.getEmail()))
+        clearAllMessages();
+        ArrayList<String> errors = new ArrayList<>();
+        if (StringUtils.isEmpty(userData.getFirstName()))
         {
-            userMessage.set("Email is empty!");
-            return false;
+            errors.add("First name");
+            firstNameMessage.set(checkFieldMessage);
         }
-        else if (StringUtils.isEmpty(userData.getFirstName()))
+        if (StringUtils.isEmpty(userData.getLastName()))
         {
-            userMessage.set("First name is empty!");
-            return false;
+            errors.add("Last name");
+            lastNameMessage.set(checkFieldMessage);
         }
-        else if (StringUtils.isEmpty(userData.getLastName()))
+        if (StringUtils.isEmpty(userData.getPhoneNum()))
         {
-            userMessage.set("Last name is empty!");
-            return false;
+            errors.add("Phone number");
+            phoneMessage.set(checkFieldMessage);
+        }
+        if (StringUtils.isEmpty(userData.getFaxNum()))
+        {
+            errors.add("Fax number");
+            faxMessage.set(checkFieldMessage);
         }
 
-        userMessage.set("");
+        if (!errors.isEmpty())
+        {
+            String finalMessage = "";
+            if (errors.size() <= 2)
+            {
+                for (String error : errors)
+                {
+                    finalMessage = StringUtils.join(new String[]{finalMessage, StringUtils.join(new String[]{error, " is empty!\n"})});
+                }
+            } else {
+                finalMessage = multipleErrorsMessage;
+            }
+            mainErrorMessage.set(finalMessage);
+            return false;
+        }
         return true;
     }
 
@@ -75,17 +120,46 @@ public class MyAccountViewModel extends ViewModel
             @Override
             public void onResponse(final Call<WienerbergerResponse<UserData>> call, final Response<WienerbergerResponse<UserData>> response)
             {
+                clearAllMessages();
                 boolean isSuccessful = response.body() != null;
-                String newUserMessage = isSuccessful ? "User data successfully updated!" : APIUtil.getErrorResponseMessage(response.errorBody());
+                String receivedUserMessage = isSuccessful ? successfulUpdateMessage : APIUtil.getErrorResponseMessage(response.errorBody());
 
                 error.set(!isSuccessful);
-                userMessage.set(newUserMessage);
+
+                if (!isSuccessful)
+                {
+                    switch (receivedUserMessage.substring(0, 3))
+                    {
+                        case "Fax":
+                        {
+                            faxMessage.set(checkFieldMessage);
+                            break;
+                        }
+                        case "Pho":
+                        {
+                            phoneMessage.set(checkFieldMessage);
+                            break;
+                        }
+                        case "Las":
+                        {
+                            lastNameMessage.set(checkFieldMessage);
+                            break;
+                        }
+                        case "Fir":
+                        {
+                            firstNameMessage.set(checkFieldMessage);
+                            break;
+                        }
+                    }
+                }
+
+                mainErrorMessage.set(receivedUserMessage);
             }
 
             @Override
             public void onFailure(final Call<WienerbergerResponse<UserData>> call, final Throwable t)
             {
-                userMessage.set("We were unable to connect to the server!");
+                mainErrorMessage.set("Connection error");
                 error.set(true);
                 call.cancel();
             }
