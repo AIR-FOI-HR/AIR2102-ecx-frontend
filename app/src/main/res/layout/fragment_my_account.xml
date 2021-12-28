@@ -59,7 +59,7 @@
             <Spinner
                     android:id="@+id/spinnerTitle"
                     android:layout_width="100pt"
-                    android:layout_marginLeft="2dp"
+                    android:layout_marginStart="2dp"
                     android:layout_marginBottom="25dp"
                     android:layout_height="48dp"
                     android:textSize="24sp"
@@ -82,14 +82,16 @@
                     android:id="@+id/txtFirstName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="2dp"
+                    android:layout_marginStart="2dp"
                     android:layout_marginBottom="25dp"
                     android:hint="@string/first_name"
                     android:textSize="24sp"
                     android:textAlignment="gravity"
                     android:text="@={myAccountViewModel.data.firstName}"
                     android:scrollHorizontally="true"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:importantForAutofill="no"
+                    android:inputType="textPersonName" />
 
             <TextView
                     android:id="@+id/tvLastName"
@@ -103,14 +105,16 @@
                     android:id="@+id/txtLastName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="2dp"
+                    android:layout_marginStart="2dp"
                     android:layout_marginBottom="25dp"
                     android:hint="@string/last_name"
                     android:textSize="24sp"
                     android:textAlignment="gravity"
                     android:text="@={myAccountViewModel.data.lastName}"
                     android:scrollHorizontally="true"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:inputType="textPersonName"
+                    android:importantForAutofill="no" />
 
             <TextView
                     android:id="@+id/tvPhoneNumber"
@@ -125,7 +129,7 @@
                     android:id="@+id/txtPhoneNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="2dp"
+                    android:layout_marginStart="2dp"
                     android:layout_marginBottom="25dp"
                     android:hint="@string/phone_num"
                     android:inputType="phone"
@@ -133,7 +137,8 @@
                     android:textAlignment="gravity"
                     android:text="@={myAccountViewModel.data.phoneNum}"
                     android:scrollHorizontally="true"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:importantForAutofill="no" />
 
             <TextView
                     android:id="@+id/tvFaxNum"
@@ -147,7 +152,7 @@
                     android:id="@+id/txtFaxNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="2dp"
+                    android:layout_marginStart="2dp"
                     android:layout_marginBottom="25dp"
                     android:hint="@string/fax_num"
                     android:inputType="phone"
@@ -155,7 +160,8 @@
                     android:textAlignment="gravity"
                     android:text="@={myAccountViewModel.data.faxNum}"
                     android:scrollHorizontally="true"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:importantForAutofill="no" />
 
             <TextView
                     android:id="@+id/tvEmail"
@@ -169,7 +175,7 @@
                     android:id="@+id/txtEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="2dp"
+                    android:layout_marginStart="2dp"
                     android:layout_marginBottom="25dp"
                     android:hint="@string/e_mail"
                     android:enabled="false"
@@ -178,57 +184,40 @@
                     android:textAlignment="gravity"
                     android:text="@={myAccountViewModel.data.email}"
                     android:scrollHorizontally="true"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:importantForAutofill="no"
+                    android:inputType="textEmailAddress" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                    style="@style/button_red"
+                    android:id="@+id/btnUpdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/update"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp" />
 
             <TextView
                     android:id="@+id/tvUserMessage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="2dp"
+                    android:layout_marginStart="2dp"
                     android:layout_marginBottom="25dp"
-                    android:layout_marginRight="10dp"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     android:textAlignment="center"
-                    android:textColor="@{myAccountViewModel.error ? @color/wienerberger_red : @color/light_grey}"
+                    android:textColor="@{myAccountViewModel.error ? @color/wienerberger_red : @color/success}"
                     android:text="@={myAccountViewModel.userMessage}"
                     app:layout_constraintTop_toBottomOf="@id/tvProfileTitle"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    android:paddingBottom="20dp" />
+                    android:paddingBottom="20dp"/>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.AppCompatButton
-                        style="@style/button_grey"
-                        android:background="@drawable/rounded_button_grey"
-                        android:id="@+id/btnCancel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/cancel"
-                        app:layout_constraintEnd_toStartOf="@+id/btnUpdate"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="@id/btnUpdate"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                        style="@style/button_red"
-                        android:id="@+id/btnUpdate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/update"
-                        app:layout_constraintStart_toEndOf="@+id/btnCancel"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintLeft_toRightOf="@id/btnCancel"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp" />
         </LinearLayout>
     </ScrollView>
 </layout>

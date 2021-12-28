@@ -5,24 +5,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.ecxfoi.wbl.wienerbergerfrontend.R;
 import com.ecxfoi.wbl.wienerbergerfrontend.base.BaseFragment;
-import com.ecxfoi.wbl.wienerbergerfrontend.databinding.ActivityMainBinding;
 import com.ecxfoi.wbl.wienerbergerfrontend.databinding.FragmentMyAccountBinding;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.UserData;
 
 import org.apache.commons.lang.StringUtils;
-
-import java.util.Arrays;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -62,15 +54,12 @@ public class MyAccountFragment extends BaseFragment<MyAccountViewModel>
 
     private void initNavigation()
     {
-        binding.btnUpdate.setOnClickListener(v -> {
-            viewModel.updateUserData();
-        });
-        binding.btnCancel.setOnClickListener(v -> Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.action_myAccountFragment_to_homeFragment));
+        binding.btnUpdate.setOnClickListener(v -> viewModel.updateUserData());
     }
 
     private void initDropdown(String currentUserTitle)
     {
-        String[] titles = new String[]{"Mr.", "Mrs.", "Unk."};
+        String[] titles = new String[]{"Mr.", "Mrs.", "Other"};
 
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<>(getActivity(), R.layout.spinner_item_grey, titles);
