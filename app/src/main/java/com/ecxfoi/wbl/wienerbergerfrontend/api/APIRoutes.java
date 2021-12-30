@@ -9,4 +9,5 @@ public class APIRoutes
     public final static String ROUTE_ORDERS = "/api/orders";
     public final static String ROUTE_CUSTOMERS = "/api/customers";
     public final static String ROUTE_DELIVERY_NOTES = "/api/delivery_notes";
+    public static final String ROUTE_TICKETS = "/api/tickets";
 }

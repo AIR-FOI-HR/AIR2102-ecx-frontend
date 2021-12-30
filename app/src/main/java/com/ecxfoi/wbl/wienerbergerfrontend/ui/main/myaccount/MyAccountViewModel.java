@@ -171,7 +171,7 @@ public class MyAccountViewModel extends ViewModel
         this.data.set(userData);
     }
 
-    public LiveData<UserData> getCurrentUserData()
+    public LiveData<UserData>getCurrentUserData()
     {
         return userRepository.getCurrentUserData();
     }
