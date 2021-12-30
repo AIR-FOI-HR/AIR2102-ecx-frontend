@@ -7,13 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.ecxfoi.wbl.wienerbergerfrontend.R;
 import com.ecxfoi.wbl.wienerbergerfrontend.base.BaseFragment;
 import com.ecxfoi.wbl.wienerbergerfrontend.databinding.FragmentHomeBinding;
-import com.ecxfoi.wbl.wienerbergerfrontend.databinding.FragmentMyAccountBinding;
 
 import javax.inject.Inject;
 
@@ -33,7 +33,7 @@ public class HomeFragment extends BaseFragment<HomeViewModel>
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
 
@@ -45,21 +45,13 @@ public class HomeFragment extends BaseFragment<HomeViewModel>
         final Activity mainActivity = getActivity();
         if (mainActivity != null)
         {
-            ivDeliveryNotes.setOnClickListener(v -> {
-                Navigation.findNavController(mainActivity, R.id.nav_host_fragment).navigate(R.id.action_homeFragment_to_deliveryNotesFragment);
-            });
+            ivDeliveryNotes.setOnClickListener(v -> Navigation.findNavController(mainActivity, R.id.nav_host_fragment).navigate(R.id.action_homeFragment_to_deliveryNotesFragment));
 
-            ivMaterialBalance.setOnClickListener(v -> {
-                Navigation.findNavController(mainActivity, R.id.nav_host_fragment).navigate(R.id.action_homeFragment_to_materialBalanceFragment);
-            });
+            ivMaterialBalance.setOnClickListener(v -> Navigation.findNavController(mainActivity, R.id.nav_host_fragment).navigate(R.id.action_homeFragment_to_materialBalanceFragment));
 
-            ivOrders.setOnClickListener(v -> {
-                Navigation.findNavController(mainActivity, R.id.nav_host_fragment).navigate(R.id.action_homeFragment_to_ordersFragment);
-            });
+            ivOrders.setOnClickListener(v -> Navigation.findNavController(mainActivity, R.id.nav_host_fragment).navigate(R.id.action_homeFragment_to_ordersFragment));
 
-            ivSupportTickets.setOnClickListener(v -> {
-                Navigation.findNavController(mainActivity, R.id.nav_host_fragment).navigate(R.id.action_homeFragment_to_createSupportTicketsFragment);
-            });
+            ivSupportTickets.setOnClickListener(v -> Navigation.findNavController(mainActivity, R.id.nav_host_fragment).navigate(R.id.action_homeFragment_to_supportTicketsFragment));
         }
 
         return binding.getRoot();
