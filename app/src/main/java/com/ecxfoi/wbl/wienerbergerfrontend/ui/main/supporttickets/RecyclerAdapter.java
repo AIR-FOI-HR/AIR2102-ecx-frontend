@@ -25,26 +25,26 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
      */
     public static class ViewHolder extends RecyclerView.ViewHolder
     {
-        private final TextView textId;
-        private final TextView textDesc;
+        private final TextView tvSubject;
+        private final TextView tvStatus;
 
         public ViewHolder(View view)
         {
             super(view);
             // Define click listener for the ViewHolder's View
 
-            textId = (TextView) view.findViewById(R.id.tv_ticket_id);
-            textDesc = (TextView) view.findViewById(R.id.tv_ticket_text);
+            tvSubject = (TextView) view.findViewById(R.id.tv_ticket_subject);
+            tvStatus = (TextView) view.findViewById(R.id.tv_ticket_status);
         }
 
-        public TextView getIdTextView()
+        public TextView getSubjectTextView()
         {
-            return textId;
+            return tvSubject;
         }
 
-        public TextView getDescTextView()
+        public TextView getStatusTextView()
         {
-            return textDesc;
+            return tvStatus;
         }
     }
 
@@ -60,7 +60,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         int counter = 0;
         for (TicketData ticket : ticketArray)
         {
-            ticketsStringArray[counter++] = "#" + ticket.id + "\n" + ticket.status + " | " + ticket.message;
+            ticketsStringArray[counter++] = ticket.subject + "\n" + ticket.status;
         }
     }
 
@@ -83,8 +83,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.getIdTextView().setText(ticketsStringArray[position].split("\n")[0]);
-        viewHolder.getDescTextView().setText(ticketsStringArray[position].split("\n")[1]);
+        viewHolder.getSubjectTextView().setText(ticketsStringArray[position].split("\n")[0]);
+        viewHolder.getStatusTextView().setText(ticketsStringArray[position].split("\n")[1]);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
