@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.ecxfoi.wbl.wienerbergerfrontend.R;
 import com.ecxfoi.wbl.wienerbergerfrontend.base.BaseFragment;
@@ -19,8 +19,6 @@ import com.ecxfoi.wbl.wienerbergerfrontend.databinding.FragmentSupportTicketsBin
 import com.ecxfoi.wbl.wienerbergerfrontend.models.TicketData;
 
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.inject.Inject;
 
@@ -60,5 +58,7 @@ public class SupportTicketsFragment extends BaseFragment<SupportTicketsViewModel
     private void setTicketsData(final ArrayList<TicketData> ticketData)
     {
         viewModel.setTicketsData(ticketData);
+        binding.listView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding.listView.setAdapter(new RecyclerAdapter(ticketData));
     }
 }
