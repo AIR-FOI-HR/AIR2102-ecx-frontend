@@ -41,4 +41,7 @@
     <string name="create">Create</string>
     <string name="ticket_subject">Subject:</string>
     <string name="ticket_status">Status:</string>
+    <string name="status_new">New</string>
+    <string name="status_resolved">Resolved</string>
+    <string name="status_inprogress">In-progress</string>
 </resources>

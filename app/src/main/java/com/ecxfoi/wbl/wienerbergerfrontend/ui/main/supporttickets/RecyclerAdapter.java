@@ -27,6 +27,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     {
         private final TextView tvSubject;
         private final TextView tvStatus;
+        private final View circleStatus;
 
         public ViewHolder(View view)
         {
@@ -35,16 +36,31 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
             tvSubject = (TextView) view.findViewById(R.id.tv_ticket_subject);
             tvStatus = (TextView) view.findViewById(R.id.tv_ticket_status);
+            circleStatus = (View) view.findViewById(R.id.circle_status_indicator);
         }
 
-        public TextView getSubjectTextView()
+        public void setSubjectTextView(String subjectText)
         {
-            return tvSubject;
+            tvSubject.setText(subjectText);
         }
 
-        public TextView getStatusTextView()
+        public void setStatus(String status)
         {
-            return tvStatus;
+            switch (status)
+            {
+                case "New":
+                    tvStatus.setText(R.string.status_new);
+                    circleStatus.setBackgroundResource(R.drawable.circle_status_new);
+                    break;
+                case "Resolved":
+                    tvStatus.setText(R.string.status_resolved);
+                    circleStatus.setBackgroundResource(R.drawable.circle_status_resolved);
+                    break;
+                default: // Treat any vague status as "In-progress".
+                    tvStatus.setText(R.string.status_inprogress);
+                    circleStatus.setBackgroundResource(R.drawable.circle_status_progress);
+                    break;
+            }
         }
     }
 
@@ -83,8 +99,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.getSubjectTextView().setText(ticketsStringArray[position].split("\n")[0]);
-        viewHolder.getStatusTextView().setText(ticketsStringArray[position].split("\n")[1]);
+        viewHolder.setSubjectTextView(ticketsStringArray[position].split("\n")[0]);
+        viewHolder.setStatus(ticketsStringArray[position].split("\n")[1]);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
