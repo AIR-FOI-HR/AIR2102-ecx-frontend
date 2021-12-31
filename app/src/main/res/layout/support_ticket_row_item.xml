@@ -11,22 +11,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/ticket_subject"
-            android:width="100dp"
+            android:width="75dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:textStyle="bold" />
 
     <TextView
             android:id="@+id/labelStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/ticket_status"
-            android:width="100dp"
+            android:width="75dp"
             app:layout_constraintTop_toBottomOf="@+id/labelSubject"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_alignParentStart="true"
             android:layout_marginTop="5dp"
-            android:layout_below="@+id/labelSubject" />
+            android:layout_below="@+id/labelSubject"
+            android:textStyle="bold" />
 
     <TextView
             android:id="@+id/tv_ticket_subject"
