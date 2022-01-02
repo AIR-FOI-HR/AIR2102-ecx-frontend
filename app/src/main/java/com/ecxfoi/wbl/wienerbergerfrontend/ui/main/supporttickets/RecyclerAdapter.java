@@ -1,9 +1,11 @@
 package com.ecxfoi.wbl.wienerbergerfrontend.ui.main.supporttickets;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,18 +18,18 @@ import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>
 {
-
-    private String[] ticketsStringArray;
+    private ArrayList<TicketData> ticketArray;
 
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder).
      */
-    public static class ViewHolder extends RecyclerView.ViewHolder
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener
     {
         private final TextView tvSubject;
         private final TextView tvStatus;
         private final View circleStatus;
+        private TicketData ticketData;
 
         public ViewHolder(View view)
         {
@@ -37,16 +39,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             tvSubject = (TextView) view.findViewById(R.id.tv_ticket_subject);
             tvStatus = (TextView) view.findViewById(R.id.tv_ticket_status);
             circleStatus = (View) view.findViewById(R.id.circle_status_indicator);
+
+            view.setOnClickListener(this);
+            view.setOnLongClickListener(this);
         }
 
-        public void setSubjectTextView(String subjectText)
+        public void bind(TicketData ticketData)
         {
-            tvSubject.setText(subjectText);
-        }
+            this.ticketData = ticketData;
 
-        public void setStatus(String status)
-        {
-            switch (status)
+            tvSubject.setText(ticketData.getSubject());
+            switch (ticketData.getStatus())
             {
                 case "New":
                     tvStatus.setText(R.string.status_new);
@@ -62,6 +65,21 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     break;
             }
         }
+
+        @Override
+        public void onClick(final View view)
+        {
+            System.out.println("PRESS");
+            Toast.makeText(view.getContext(), ticketData.getSubject(), Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public boolean onLongClick(final View view)
+        {
+            System.out.println("LONG PRESS");
+            Toast.makeText(view.getContext(), ticketData.getMessage(), Toast.LENGTH_SHORT).show();
+            return true;
+        }
     }
 
     /**
@@ -72,12 +90,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
      */
     public RecyclerAdapter(ArrayList<TicketData> ticketArray)
     {
-        ticketsStringArray = new String[ticketArray.size()];
-        int counter = 0;
-        for (TicketData ticket : ticketArray)
-        {
-            ticketsStringArray[counter++] = ticket.subject + "\n" + ticket.status;
-        }
+        this.ticketArray = ticketArray;
     }
 
     // Create new views (invoked by the layout manager)
@@ -96,17 +109,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position)
     {
-
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.setSubjectTextView(ticketsStringArray[position].split("\n")[0]);
-        viewHolder.setStatus(ticketsStringArray[position].split("\n")[1]);
+        viewHolder.bind(ticketArray.get(ticketArray.size() - 1 - position));
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount()
     {
-        return ticketsStringArray.length;
+        return ticketArray.size();
     }
 }
