@@ -71,4 +71,9 @@ public class TicketsRepository
 
         return ticketData;
     }
+
+    public Call<WienerbergerResponse<TicketData>> updateTicket(TicketData ticketData)
+    {
+        return apiService.createSingleTicket(ticketData);
+    }
 }

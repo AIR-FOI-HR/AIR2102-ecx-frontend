@@ -92,7 +92,7 @@
     </fragment>
     <fragment
             android:id="@+id/createSupportTicketsFragment"
-            android:name="com.ecxfoi.wbl.wienerbergerfrontend.ui.main.supporttickets.CreateSupportTicketsFragment"
+            android:name="com.ecxfoi.wbl.wienerbergerfrontend.ui.main.supporttickets.NewTicketFragment"
             android:label="CreateSupportTicketsFragment">
         <action
                 android:id="@+id/action_createSupportTicketsFragment_to_supportTicketsFragment"

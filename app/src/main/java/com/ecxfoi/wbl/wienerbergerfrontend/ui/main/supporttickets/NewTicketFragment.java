@@ -13,18 +13,18 @@ import com.ecxfoi.wbl.wienerbergerfrontend.databinding.FragmentCreateNewTicketBi
 
 import javax.inject.Inject;
 
-public class CreateSupportTicketsFragment extends BaseFragment<CreateSupportTicketsViewModel>
+public class NewTicketFragment extends BaseFragment<NewTicketViewModel>
 {
     @Inject
     ViewModelProvider.Factory factory;
 
-    private CreateSupportTicketsViewModel viewModel;
+    private NewTicketViewModel viewModel;
     private FragmentCreateNewTicketBinding binding;
 
     @Override
-    public CreateSupportTicketsViewModel getViewModel()
+    public NewTicketViewModel getViewModel()
     {
-        viewModel = new ViewModelProvider(this, factory).get(CreateSupportTicketsViewModel.class);
+        viewModel = new ViewModelProvider(this, factory).get(NewTicketViewModel.class);
         return viewModel;
     }
 
@@ -32,8 +32,15 @@ public class CreateSupportTicketsFragment extends BaseFragment<CreateSupportTick
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         binding = FragmentCreateNewTicketBinding.inflate(inflater, container, false);
-        binding.setCreateSupportTicketsViewModel(viewModel);
+        binding.setNewTicketViewModel(viewModel);
+
+        initNavigation();
 
         return binding.getRoot();
+    }
+
+    private void initNavigation()
+    {
+        binding.btnAddTicket.setOnClickListener(v -> viewModel.createNewTicket());
     }
 }

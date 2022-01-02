@@ -11,6 +11,10 @@ public class TicketData
     @SerializedName("resolve_message")
     public String resolveMessage;
 
+    public TicketData()
+    {
+    }
+
     public TicketData(final int id, final String subject, final String status, final String message, final String resolveMessage)
     {
         this.id = id;

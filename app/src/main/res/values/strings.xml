@@ -11,7 +11,7 @@
     <string name="welcome">"Welcome "</string>
     <string name="invalid_email">Not a valid email</string>
     <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed_internet">"Connection error, try again later"</string>
+    <string name="error_no_connection">"Connection error, try again later."</string>
     <string name="login_failed_credentials">"Invalid credentials."</string>
     <string name="login_failed_generic">"Something went wrong on our side."</string>
     <string name="action_next">Next</string>
@@ -39,9 +39,15 @@
     <string name="hint_subject">Subject</string>
     <string name="hint_message">Message</string>
     <string name="create">Create</string>
-    <string name="ticket_subject">Subject:</string>
-    <string name="ticket_status">Status:</string>
+    <string name="ticket_subject">Subject</string>
+    <string name="ticket_status">Status</string>
     <string name="status_new">New</string>
     <string name="status_resolved">Resolved</string>
     <string name="status_inprogress">In-progress</string>
+    <string name="ticket_details_title">Details of ticket</string>
+    <string name="ticket_resolve_message">Resolve message</string>
+    <string name="ticket_message">Message</string>
+    <string name="subject_input_error">Subject not valid!</string>
+    <string name="message_input_error">Message not valid!</string>
+    <string name="ticket_created">Ticket created!</string>
 </resources>

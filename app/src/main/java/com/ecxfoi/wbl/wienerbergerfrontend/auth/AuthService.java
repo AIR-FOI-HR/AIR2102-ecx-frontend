@@ -18,9 +18,9 @@ public class AuthService
     private static APIService apiService;
 
     @Inject
-    public AuthService(APIService apiService)
+    public AuthService(APIService _apiService)
     {
-        this.apiService = apiService;
+        apiService = _apiService;
     }
 
     public static AuthenticationInterface authenticationInterface;
@@ -29,7 +29,7 @@ public class AuthService
     {
         AuthenticationRequest request = new AuthenticationRequest(password, email);
 
-        Call<WienerbergerResponse<AuthenticationData>> call = apiService.createUser(request);
+        Call<WienerbergerResponse<AuthenticationData>> call = apiService.loginUser(request);
 
         call.enqueue(new Callback<WienerbergerResponse<AuthenticationData>>()
         {
