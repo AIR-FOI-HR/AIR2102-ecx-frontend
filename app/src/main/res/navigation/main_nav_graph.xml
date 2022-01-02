@@ -36,10 +36,8 @@
                 android:id="@+id/action_homeFragment_to_materialBalanceFragment"
                 app:destination="@id/materialBalanceFragment" />
         <action
-                android:id="@+id/action_homeFragment_to_createSupportTicketsFragment"
-                app:destination="@id/createSupportTicketsFragment"
-                android:label="activity_create_new_ticket"
-                tools:layout="@layout/fragment_create_new_ticket" />
+                android:id="@+id/action_homeFragment_to_supportTicketsFragment"
+                app:destination="@id/supportTicketsFragment" />
     </fragment>
     <fragment
             android:id="@+id/customersFragment"
@@ -76,7 +74,14 @@
     <fragment
             android:id="@+id/supportTicketsFragment"
             android:name="com.ecxfoi.wbl.wienerbergerfrontend.ui.main.supporttickets.SupportTicketsFragment"
-            android:label="SupportTicketsFragment" />
+            android:label="SupportTicketsFragment">
+        <action
+                android:id="@+id/action_supportTicketsFragment_to_createSupportTicketsFragment"
+                app:destination="@id/createSupportTicketsFragment" />
+        <action
+                android:id="@+id/action_supportTicketsFragment_to_homeFragment"
+                app:destination="@id/homeFragment" />
+    </fragment>
     <fragment
             android:id="@+id/materialBalanceFragment"
             android:name="com.ecxfoi.wbl.wienerbergerfrontend.ui.main.materialbalance.MaterialBalanceFragment"
@@ -90,7 +95,7 @@
             android:name="com.ecxfoi.wbl.wienerbergerfrontend.ui.main.supporttickets.CreateSupportTicketsFragment"
             android:label="CreateSupportTicketsFragment">
         <action
-                android:id="@+id/action_createSupportTicketsFragment_to_homeFragment"
-                app:destination="@id/homeFragment" />
+                android:id="@+id/action_createSupportTicketsFragment_to_supportTicketsFragment"
+                app:destination="@id/supportTicketsFragment" />
     </fragment>
 </navigation>
