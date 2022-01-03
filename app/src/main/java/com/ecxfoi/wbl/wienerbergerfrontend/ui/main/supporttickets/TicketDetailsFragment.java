@@ -6,37 +6,53 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.ecxfoi.wbl.wienerbergerfrontend.R;
+import com.ecxfoi.wbl.wienerbergerfrontend.base.BaseFragment;
+import com.ecxfoi.wbl.wienerbergerfrontend.databinding.TicketDetailsFragmentBinding;
+import com.ecxfoi.wbl.wienerbergerfrontend.models.TicketData;
 
-public class TicketDetailsFragment extends Fragment
+import javax.inject.Inject;
+
+public class TicketDetailsFragment extends BaseFragment<TicketDetailsViewModel>
 {
+    @Inject
+    ViewModelProvider.Factory factory;
 
-    private TicketDetailsViewModel mViewModel;
+    private TicketDetailsViewModel viewModel;
 
-    public static TicketDetailsFragment newInstance()
+    @Override
+    public TicketDetailsViewModel getViewModel()
     {
-        return new TicketDetailsFragment();
+        viewModel = new ViewModelProvider(this, factory).get(TicketDetailsViewModel.class);
+        return viewModel;
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState)
     {
-        return inflater.inflate(R.layout.ticket_details_fragment, container, false);
+        final com.ecxfoi.wbl.wienerbergerfrontend.databinding.TicketDetailsFragmentBinding binding = TicketDetailsFragmentBinding.inflate(inflater, container, false);
+        binding.setTicketDetailsViewmodel(viewModel);
+
+        if (getArguments() == null)
+        {
+            Toast.makeText(getContext(), getString(R.string.generic_error_message), Toast.LENGTH_LONG).show();
+        }
+
+        Long currentTicketID = getArguments().getLong("ticket");
+        viewModel.fetchSingleTicketData(currentTicketID).observe(getViewLifecycleOwner(), this::setTicketData);
+
+        return binding.getRoot();
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState)
+    public void setTicketData(TicketData ticketData)
     {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(TicketDetailsViewModel.class);
-        // TODO: Use the ViewModel
+        viewModel.setTicketData(ticketData);
     }
-
 }

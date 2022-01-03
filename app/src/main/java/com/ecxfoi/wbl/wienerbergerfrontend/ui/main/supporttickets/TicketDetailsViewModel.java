@@ -12,8 +12,12 @@ import javax.inject.Inject;
 public class TicketDetailsViewModel extends ViewModel
 {
     private final TicketsRepository ticketsRepository;
-
     private final ObservableField<TicketData> ticketData;
+
+    public ObservableField<TicketData> getTicketData()
+    {
+        return ticketData;
+    }
 
     @Inject
     public TicketDetailsViewModel(final TicketsRepository ticketsRepository)
@@ -25,5 +29,10 @@ public class TicketDetailsViewModel extends ViewModel
     public LiveData<TicketData> fetchSingleTicketData(Long id)
     {
         return ticketsRepository.getSingleTicket(id);
+    }
+
+    public void setTicketData(final TicketData ticketData)
+    {
+        this.ticketData.set(ticketData);
     }
 }

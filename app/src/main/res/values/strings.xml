@@ -50,4 +50,7 @@
     <string name="subject_input_error">Subject not valid!</string>
     <string name="message_input_error">Message not valid!</string>
     <string name="ticket_created">Ticket created!</string>
+    <string name="generic_error_message">There was an error.</string>
+    <string name="error_something_wrong">Something went wrong</string>
+    <string name="ticket_not_permitted">You are not permitted to read other user\'s tickets!</string>
 </resources>

@@ -37,7 +37,10 @@ public class TicketsRepository
             @Override
             public void onResponse(final Call<WienerbergerResponse<TicketData>> call, final Response<WienerbergerResponse<TicketData>> response)
             {
-                ticketData.setValue(response.body().getData());
+                if (response.isSuccessful())
+                {
+                    ticketData.setValue(response.body().getData());
+                }
             }
 
             @Override

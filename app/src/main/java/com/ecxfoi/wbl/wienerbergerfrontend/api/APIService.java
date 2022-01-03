@@ -31,7 +31,7 @@ public interface APIService
     @PUT(APIRoutes.BASE_URL + APIRoutes.ROUTE_USERS)
     Call<WienerbergerResponse<UserData>> updateCurrentUserData(@Body UserData userData);
 
-    @GET(APIRoutes.BASE_URL + APIRoutes.ROUTE_TICKETS + "{id}")
+    @GET(APIRoutes.BASE_URL + APIRoutes.ROUTE_TICKETS + "/{id}")
     Call<WienerbergerResponse<TicketData>> getSingleTicket(@Path("id") Long id);
 
     @GET(APIRoutes.BASE_URL + APIRoutes.ROUTE_TICKETS)
