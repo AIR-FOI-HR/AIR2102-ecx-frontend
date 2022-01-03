@@ -27,7 +27,7 @@ abstract class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Tick
         private final TextView tvStatus;
         private final View circleStatus;
         private TicketData ticketData;
-        private RecyclerAdapter recyclerAdapter;
+        private final RecyclerAdapter recyclerAdapter;
 
         public TicketsViewHolder(final View view, final RecyclerAdapter recyclerAdapter)
         {
