@@ -13,6 +13,7 @@ import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.MyAccountFragmentProvide
 import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.OrdersFragmentProvider;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.SettingsFragmentProvider;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.SupportTicketsFragmentProvider;
+import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.TicketDetailsFragmentProvider;
 import com.ecxfoi.wbl.wienerbergerfrontend.ui.companyselection.CompanySelectionActivity;
 import com.ecxfoi.wbl.wienerbergerfrontend.ui.login.LoginActivity;
 import com.ecxfoi.wbl.wienerbergerfrontend.ui.main.MainActivity;
@@ -45,7 +46,8 @@ public abstract class ActivityBuilder
             SettingsFragmentProvider.class,
             SupportTicketsFragmentProvider.class,
             MaterialBalanceFragmentProvider.class,
-            NewTicketFragmentProvider.class
+            NewTicketFragmentProvider.class,
+            TicketDetailsFragmentProvider.class
     })
     abstract MainActivity contributeMainActivity();
 }
