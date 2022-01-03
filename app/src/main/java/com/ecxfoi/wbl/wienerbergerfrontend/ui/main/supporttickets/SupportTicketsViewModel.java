@@ -24,18 +24,8 @@ public class SupportTicketsViewModel extends ViewModel
         ticketsData = new ObservableField<>();
     }
 
-    public ObservableField<ArrayList<TicketData>> getTicketsData()
-    {
-        return ticketsData;
-    }
-
     public LiveData<ArrayList<TicketData>> fetchTicketData()
     {
         return ticketsRepository.getAllTickets();
-    }
-
-    public void setTicketsData(final ArrayList<TicketData> ticketsData)
-    {
-        this.ticketsData.set(ticketsData);
     }
 }

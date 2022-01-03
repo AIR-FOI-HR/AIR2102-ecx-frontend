@@ -48,7 +48,7 @@
                 android:id="@+id/listView"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="35dp"
-                android:background="@drawable/item_divider"
+                android:background="@drawable/item_divider_both"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 app:layout_constraintEnd_toEndOf="parent"

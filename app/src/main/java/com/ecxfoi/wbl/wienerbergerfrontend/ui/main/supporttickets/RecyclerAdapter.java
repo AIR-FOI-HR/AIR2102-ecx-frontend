@@ -1,11 +1,9 @@
 package com.ecxfoi.wbl.wienerbergerfrontend.ui.main.supporttickets;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,32 +13,31 @@ import com.ecxfoi.wbl.wienerbergerfrontend.models.TicketData;
 
 import java.util.ArrayList;
 
-
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>
+abstract class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.TicketsViewHolder> implements TicketListenerCallback
 {
-    private ArrayList<TicketData> ticketArray;
+    private final ArrayList<TicketData> ticketArray;
 
     /**
      * Provide a reference to the type of views that you are using
-     * (custom ViewHolder).
+     * (custom TicketsViewHolder).
      */
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener
+    public static class TicketsViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener
     {
         private final TextView tvSubject;
         private final TextView tvStatus;
         private final View circleStatus;
         private TicketData ticketData;
+        private RecyclerAdapter recyclerAdapter;
 
-        public ViewHolder(View view)
+        public TicketsViewHolder(final View view, final RecyclerAdapter recyclerAdapter)
         {
             super(view);
-            // Define click listener for the ViewHolder's View
 
-            tvSubject = (TextView) view.findViewById(R.id.tv_ticket_subject);
-            tvStatus = (TextView) view.findViewById(R.id.tv_ticket_status);
-            circleStatus = (View) view.findViewById(R.id.circle_status_indicator);
+            tvSubject = view.findViewById(R.id.tv_ticket_subject);
+            tvStatus = view.findViewById(R.id.tv_ticket_status);
+            circleStatus = view.findViewById(R.id.circle_status_indicator);
+            this.recyclerAdapter = recyclerAdapter;
 
-            view.setOnClickListener(this);
             view.setOnLongClickListener(this);
         }
 
@@ -67,17 +64,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         }
 
         @Override
-        public void onClick(final View view)
-        {
-            System.out.println("PRESS");
-            Toast.makeText(view.getContext(), ticketData.getSubject(), Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
         public boolean onLongClick(final View view)
         {
-            System.out.println("LONG PRESS");
-            Toast.makeText(view.getContext(), ticketData.getMessage(), Toast.LENGTH_SHORT).show();
+            if (ticketData != null)
+            {
+                recyclerAdapter.onTicketSelected(ticketData.getId());
+            }
             return true;
         }
     }
@@ -96,22 +88,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     // Create new views (invoked by the layout manager)
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType)
+    public TicketsViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType)
     {
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.support_ticket_row_item, viewGroup, false);
 
-        return new ViewHolder(view);
+        return new TicketsViewHolder(view, this);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, final int position)
+    public void onBindViewHolder(TicketsViewHolder ticketsViewHolder, final int position)
     {
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.bind(ticketArray.get(ticketArray.size() - 1 - position));
+        ticketsViewHolder.bind(ticketArray.get(ticketArray.size() - 1 - position));
     }
 
     // Return the size of your dataset (invoked by the layout manager)
