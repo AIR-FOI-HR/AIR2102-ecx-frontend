@@ -61,12 +61,14 @@ public class SupportTicketsFragment extends BaseFragment<SupportTicketsViewModel
         RecyclerAdapter recyclerAdapter = new RecyclerAdapter(ticketData)
         {
             @Override
-            public void onTicketSelected(final int ticketId)
+            public void onTicketSelected(final Long ticketId)
             {
                 final Activity allTicketsActivity = getActivity();
                 if (allTicketsActivity != null)
                 {
-                    Navigation.findNavController(allTicketsActivity, R.id.nav_host_fragment).navigate(R.id.action_supportTicketsFragment_to_ticketDetails);
+                    Bundle argument = new Bundle();
+                    argument.putLong("ticket", ticketId);
+                    Navigation.findNavController(allTicketsActivity, R.id.nav_host_fragment).navigate(R.id.action_supportTicketsFragment_to_ticketDetails, argument);
                 }
             }
         };

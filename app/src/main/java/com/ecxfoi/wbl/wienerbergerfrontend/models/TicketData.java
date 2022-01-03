@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class TicketData
 {
-    public int id;
+    public Long id;
     public String subject;
     public String status;
     public String message;
@@ -15,7 +15,7 @@ public class TicketData
     {
     }
 
-    public TicketData(final int id, final String subject, final String status, final String message, final String resolveMessage)
+    public TicketData(final Long id, final String subject, final String status, final String message, final String resolveMessage)
     {
         this.id = id;
         this.subject = subject;
@@ -24,12 +24,12 @@ public class TicketData
         this.resolveMessage = resolveMessage;
     }
 
-    public int getId()
+    public Long getId()
     {
         return id;
     }
 
-    public void setId(final int id)
+    public void setId(final Long id)
     {
         this.id = id;
     }
