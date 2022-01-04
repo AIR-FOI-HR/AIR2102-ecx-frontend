@@ -57,8 +57,21 @@ public class SupportTicketsFragment extends BaseFragment<SupportTicketsViewModel
 
     private void setTicketsData(final ArrayList<TicketData> ticketData)
     {
-        viewModel.setTicketsData(ticketData);
         binding.listView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        binding.listView.setAdapter(new RecyclerAdapter(ticketData));
+        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(ticketData)
+        {
+            @Override
+            public void onTicketSelected(final Long ticketId)
+            {
+                final Activity allTicketsActivity = getActivity();
+                if (allTicketsActivity != null)
+                {
+                    Bundle argument = new Bundle();
+                    argument.putLong("ticket", ticketId);
+                    Navigation.findNavController(allTicketsActivity, R.id.nav_host_fragment).navigate(R.id.action_supportTicketsFragment_to_ticketDetails, argument);
+                }
+            }
+        };
+        binding.listView.setAdapter(recyclerAdapter);
     }
 }

@@ -20,7 +20,7 @@ import retrofit2.http.Path;
 public interface APIService
 {
     @POST(APIRoutes.BASE_URL + APIRoutes.ROUTE_LOGIN)
-    Call<WienerbergerResponse<AuthenticationData>> createUser(@Body AuthenticationRequest user);
+    Call<WienerbergerResponse<AuthenticationData>> loginUser(@Body AuthenticationRequest user);
 
     @GET(APIRoutes.BASE_URL + APIRoutes.ROUTE_COMPANIES)
     Call<WienerbergerResponse<ArrayList<CompanyData>>> getAllCompanies();
@@ -31,9 +31,12 @@ public interface APIService
     @PUT(APIRoutes.BASE_URL + APIRoutes.ROUTE_USERS)
     Call<WienerbergerResponse<UserData>> updateCurrentUserData(@Body UserData userData);
 
-    @GET(APIRoutes.BASE_URL + APIRoutes.ROUTE_TICKETS + "{id}")
+    @GET(APIRoutes.BASE_URL + APIRoutes.ROUTE_TICKETS + "/{id}")
     Call<WienerbergerResponse<TicketData>> getSingleTicket(@Path("id") Long id);
 
     @GET(APIRoutes.BASE_URL + APIRoutes.ROUTE_TICKETS)
     Call<WienerbergerResponse<List<TicketData>>> getAllTickets();
+
+    @POST(APIRoutes.BASE_URL + APIRoutes.ROUTE_TICKETS)
+    Call<WienerbergerResponse<TicketData>> createSingleTicket(@Body TicketData ticket);
 }

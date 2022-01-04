@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+                name="ticketDetailsViewmodel"
+                type="com.ecxfoi.wbl.wienerbergerfrontend.ui.main.supporttickets.TicketDetailsViewModel" />
+    </data>
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:layout_marginBottom="30dp">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="20dp">
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ticket_details_title"
+                    android:textColor="@color/dark_grey"
+                    android:textStyle="bold"
+                    android:textSize="24sp"
+                    android:paddingBottom="25dp"
+                    android:textAlignment="center" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="@string/ticket_subject" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="25sp"
+                    tools:text="Missing materials"
+                    android:text="@{ticketDetailsViewmodel.ticketData.subject}" />
+
+            <TextView
+                    android:layout_marginTop="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="@string/ticket_status" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="25sp"
+                    tools:text="New"
+                    android:text="@{ticketDetailsViewmodel.ticketData.status}" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/message"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:enabled="false"
+                        android:textColor="@color/dark_grey"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/ticket_message"
+                        app:hintTextAppearance="?attr/textAppearanceCaption"
+                        android:gravity="start"
+                        android:inputType="textMultiLine"
+                        android:textSize="20sp"
+                        android:text="@{ticketDetailsViewmodel.ticketData.message}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/resolve_message"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:visibility="@{ticketDetailsViewmodel.ticketData.resolveMessage.length() > 0 ? View.VISIBLE : View.GONE}">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:enabled="false"
+                        android:textColor="@color/dark_grey"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/ticket_resolve_message"
+                        app:hintTextAppearance="?attr/textAppearanceCaption"
+                        android:gravity="start"
+                        android:inputType="textMultiLine"
+                        android:layout_marginBottom="50dp"
+                        android:textSize="20sp"
+                        android:text="@{ticketDetailsViewmodel.ticketData.resolveMessage}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+    </ScrollView>
+</layout>

@@ -44,15 +44,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-        <View
-                android:layout_marginTop="40dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@drawable/item_divider" />
-
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/listView"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="35dp"
+                android:background="@drawable/item_divider_both"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -60,6 +56,4 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" />
     </LinearLayout>
-
-
 </layout>

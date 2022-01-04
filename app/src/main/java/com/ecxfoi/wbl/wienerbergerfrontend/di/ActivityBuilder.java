@@ -1,12 +1,10 @@
 package com.ecxfoi.wbl.wienerbergerfrontend.di;
 
 import com.ecxfoi.wbl.wienerbergerfrontend.di.modules.CompanySelectionActivityModule;
-import com.ecxfoi.wbl.wienerbergerfrontend.di.modules.CustomersFragmentModule;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.modules.LoginActivityModule;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.modules.MainActivityModule;
-import com.ecxfoi.wbl.wienerbergerfrontend.di.modules.MyAccountFragmentModule;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.modules.SplashActivityModule;
-import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.CreateSupportTicketsFragmentProvider;
+import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.NewTicketFragmentProvider;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.CustomersFragmentProvider;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.DeliveryNotesFragmentProvider;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.HomeFragmentProvider;
@@ -15,11 +13,10 @@ import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.MyAccountFragmentProvide
 import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.OrdersFragmentProvider;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.SettingsFragmentProvider;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.SupportTicketsFragmentProvider;
+import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.TicketDetailsFragmentProvider;
 import com.ecxfoi.wbl.wienerbergerfrontend.ui.companyselection.CompanySelectionActivity;
 import com.ecxfoi.wbl.wienerbergerfrontend.ui.login.LoginActivity;
 import com.ecxfoi.wbl.wienerbergerfrontend.ui.main.MainActivity;
-import com.ecxfoi.wbl.wienerbergerfrontend.ui.main.settings.SettingsFragment;
-import com.ecxfoi.wbl.wienerbergerfrontend.ui.main.supporttickets.SupportTicketsFragment;
 import com.ecxfoi.wbl.wienerbergerfrontend.ui.splash.SplashActivity;
 
 import dagger.Module;
@@ -49,7 +46,8 @@ public abstract class ActivityBuilder
             SettingsFragmentProvider.class,
             SupportTicketsFragmentProvider.class,
             MaterialBalanceFragmentProvider.class,
-            CreateSupportTicketsFragmentProvider.class
-            })
+            NewTicketFragmentProvider.class,
+            TicketDetailsFragmentProvider.class
+    })
     abstract MainActivity contributeMainActivity();
 }

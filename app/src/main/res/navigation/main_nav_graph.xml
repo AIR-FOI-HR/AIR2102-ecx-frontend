@@ -81,6 +81,9 @@
         <action
                 android:id="@+id/action_supportTicketsFragment_to_homeFragment"
                 app:destination="@id/homeFragment" />
+        <action
+                android:id="@+id/action_supportTicketsFragment_to_ticketDetails"
+                app:destination="@id/ticketDetails" />
     </fragment>
     <fragment
             android:id="@+id/materialBalanceFragment"
@@ -92,10 +95,19 @@
     </fragment>
     <fragment
             android:id="@+id/createSupportTicketsFragment"
-            android:name="com.ecxfoi.wbl.wienerbergerfrontend.ui.main.supporttickets.CreateSupportTicketsFragment"
+            android:name="com.ecxfoi.wbl.wienerbergerfrontend.ui.main.supporttickets.NewTicketFragment"
             android:label="CreateSupportTicketsFragment">
         <action
                 android:id="@+id/action_createSupportTicketsFragment_to_supportTicketsFragment"
+                app:destination="@id/supportTicketsFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/ticketDetails"
+            android:name="com.ecxfoi.wbl.wienerbergerfrontend.ui.main.supporttickets.TicketDetailsFragment"
+            android:label="ticket_details_fragment"
+            tools:layout="@layout/ticket_details_fragment">
+        <action
+                android:id="@+id/action_ticketDetails_to_supportTicketsFragment"
                 app:destination="@id/supportTicketsFragment" />
     </fragment>
 </navigation>

@@ -29,7 +29,6 @@ import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthenticationData;
 import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthenticationInterface;
 import com.ecxfoi.wbl.wienerbergerfrontend.databinding.ActivityLoginBinding;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.WienerbergerResponse;
-import com.ecxfoi.wbl.wienerbergerfrontend.ui.companyselection.CompanySelectionViewModel;
 
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONException;
@@ -129,7 +128,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
             @Override
             public void interpretError()
             {
-                showLoginFailed(R.string.login_failed_internet);
+                showLoginFailed(R.string.error_no_connection);
             }
         };
 
@@ -173,7 +172,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
         }
         catch (Exception e)
         {
-            this.showLoginFailed(R.string.login_failed_internet);
+            this.showLoginFailed(R.string.error_no_connection);
         }
     }
 
