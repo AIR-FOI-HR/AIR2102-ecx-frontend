@@ -12,7 +12,6 @@ import com.ecxfoi.wbl.wienerbergerfrontend.R;
 import com.ecxfoi.wbl.wienerbergerfrontend.converters.TicketStatusConverter;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.TicketData;
 
-import java.security.InvalidKeyException;
 import java.util.ArrayList;
 
 abstract class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.TicketsViewHolder> implements TicketListenerCallback
@@ -49,16 +48,8 @@ abstract class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Tick
 
             tvSubject.setText(ticketData.getSubject());
 
-            try
-            {
-                tvStatus.setText(TicketStatusConverter.getStatusMessageResource(ticketData));
-                circleStatus.setBackgroundResource(TicketStatusConverter.getStatusBackgroundResource(ticketData));
-            }
-            catch (InvalidKeyException ex)
-            {
-                ex.printStackTrace();
-                tvStatus.setText(R.string.status_unknown);
-            }
+            tvStatus.setText(TicketStatusConverter.getStatusMessageResource(ticketData));
+            circleStatus.setBackgroundResource(TicketStatusConverter.getStatusBackgroundResource(ticketData));
         }
 
         @Override
