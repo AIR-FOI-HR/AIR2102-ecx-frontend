@@ -6,7 +6,7 @@ public class TicketData
 {
     public Long id;
     public String subject;
-    public String status;
+    public int status;
     public String message;
     @SerializedName("resolve_message")
     public String resolveMessage;
@@ -15,7 +15,7 @@ public class TicketData
     {
     }
 
-    public TicketData(final Long id, final String subject, final String status, final String message, final String resolveMessage)
+    public TicketData(final Long id, final String subject, final int status, final String message, final String resolveMessage)
     {
         this.id = id;
         this.subject = subject;
@@ -44,12 +44,12 @@ public class TicketData
         this.subject = subject;
     }
 
-    public String getStatus()
+    public int getStatus()
     {
         return status;
     }
 
-    public void setStatus(final String status)
+    public void setStatus(final int status)
     {
         this.status = status;
     }

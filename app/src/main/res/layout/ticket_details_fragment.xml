@@ -7,6 +7,8 @@
 
         <import type="android.view.View" />
 
+        <import type="com.ecxfoi.wbl.wienerbergerfrontend.converters.TicketStatusConverter" />
+
         <variable
                 name="ticketDetailsViewmodel"
                 type="com.ecxfoi.wbl.wienerbergerfrontend.ui.main.supporttickets.TicketDetailsViewModel" />
@@ -61,7 +63,7 @@
                     android:textColor="@color/dark_grey"
                     android:textSize="25sp"
                     tools:text="New"
-                    android:text="@{ticketDetailsViewmodel.ticketData.status}" />
+                    android:text="@{TicketStatusConverter.getStatusMessageResource(ticketDetailsViewmodel.ticketData)}" />
 
 
             <com.google.android.material.textfield.TextInputLayout

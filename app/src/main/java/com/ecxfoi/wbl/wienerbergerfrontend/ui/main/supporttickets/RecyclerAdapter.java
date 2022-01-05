@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ecxfoi.wbl.wienerbergerfrontend.R;
+import com.ecxfoi.wbl.wienerbergerfrontend.converters.TicketStatusConverter;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.TicketData;
 
 import java.util.ArrayList;
@@ -46,21 +47,9 @@ abstract class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Tick
             this.ticketData = ticketData;
 
             tvSubject.setText(ticketData.getSubject());
-            switch (ticketData.getStatus())
-            {
-                case "New":
-                    tvStatus.setText(R.string.status_new);
-                    circleStatus.setBackgroundResource(R.drawable.circle_status_new);
-                    break;
-                case "Resolved":
-                    tvStatus.setText(R.string.status_resolved);
-                    circleStatus.setBackgroundResource(R.drawable.circle_status_resolved);
-                    break;
-                default: // Treat any vague status as "In-progress".
-                    tvStatus.setText(R.string.status_inprogress);
-                    circleStatus.setBackgroundResource(R.drawable.circle_status_progress);
-                    break;
-            }
+
+            tvStatus.setText(TicketStatusConverter.getStatusMessageResource(ticketData));
+            circleStatus.setBackgroundResource(TicketStatusConverter.getStatusBackgroundResource(ticketData));
         }
 
         @Override
