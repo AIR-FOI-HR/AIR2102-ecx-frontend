@@ -54,4 +54,14 @@
     <string name="error_something_wrong">Something went wrong</string>
     <string name="ticket_not_permitted">You are not permitted to read other user\'s tickets!</string>
     <string name="status_unknown">Unknown status</string>
+    <string name="order_name">Name:</string>
+    <string name="order_status">Status:</string>
+    <string name="order_1a">Order 1A</string>
+    <string name="order_in_progress">In-progress</string>
+    <string name="order_date">12/03/2021</string>
+    <string name="order_date_of">Date of order:</string>
+    <string name="order_payment_method">Payment method:</string>
+    <string name="order_delivery_date">Delivery date:</string>
+    <string name="delivery_date">12/23/2021</string>
+    <string name="order_credit_card">Credit card</string>
 </resources>

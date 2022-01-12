@@ -2,6 +2,8 @@ package com.ecxfoi.wbl.wienerbergerfrontend.di.modules;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import com.ecxfoi.wbl.wienerbergerfrontend.api.SelectedCompanyData;
+import com.ecxfoi.wbl.wienerbergerfrontend.repositories.OrdersRepository;
 import com.ecxfoi.wbl.wienerbergerfrontend.ui.main.orders.OrdersViewModel;
 import com.ecxfoi.wbl.wienerbergerfrontend.utils.ViewModelProviderFactory;
 
@@ -12,9 +14,9 @@ import dagger.Provides;
 public class OrdersFragmentModule
 {
     @Provides
-    OrdersViewModel ordersViewModel()
+    OrdersViewModel ordersViewModel(OrdersRepository ordersRepository, SelectedCompanyData selectedCompanyData)
     {
-        return new OrdersViewModel();
+        return new OrdersViewModel(ordersRepository, selectedCompanyData);
     }
 
     @Provides
