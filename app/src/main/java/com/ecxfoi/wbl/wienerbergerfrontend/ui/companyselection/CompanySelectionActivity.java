@@ -93,7 +93,7 @@ public class CompanySelectionActivity extends BaseActivity<CompanySelectionViewM
 
         companies = companyList;
         companyList.forEach(company -> {
-            companyNames.add(String.format("%s - %s", company.id, company.name));
+            companyNames.add(String.format("%s - %s", company.getId(), company.getName()));
         });
 
         final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
@@ -159,11 +159,13 @@ public class CompanySelectionActivity extends BaseActivity<CompanySelectionViewM
         {
             CompanyData selectedCompany = companies.get(companyIdx);
 
-            tvCountry.setText(selectedCompany.addressCountryCode);
-            tvCity.setText(selectedCompany.addressCity);
-            tvPostal.setText(selectedCompany.addressPostCode);
-            tvStreet.setText(selectedCompany.addressStreet);
+            tvCountry.setText(selectedCompany.getAddressCountryCode());
+            tvCity.setText(selectedCompany.getAddressCity());
+            tvPostal.setText(selectedCompany.getAddressPostCode());
+            tvStreet.setText(selectedCompany.getAddressStreet());
             tvAddressBar.setVisibility(View.VISIBLE);
+
+            viewModel.setSelectedCompanyId((long) selectedCompany.getId());
         }
         catch (IndexOutOfBoundsException ignored)
         {
