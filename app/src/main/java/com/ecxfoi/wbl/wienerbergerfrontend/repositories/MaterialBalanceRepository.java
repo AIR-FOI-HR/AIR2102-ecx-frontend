@@ -35,7 +35,14 @@ public class MaterialBalanceRepository
             @Override
             public void onResponse(final Call<WienerbergerResponse<List<MaterialBalanceData>>> call, final Response<WienerbergerResponse<List<MaterialBalanceData>>> response)
             {
-                orderData.setValue((ArrayList<MaterialBalanceData>) response.body().getData());
+                ArrayList<MaterialBalanceData> materialBalanceData = new ArrayList<>();
+
+                if(response.body() != null)
+                {
+                    materialBalanceData =  ((ArrayList<MaterialBalanceData>) response.body().getData());
+                }
+
+                orderData.setValue(materialBalanceData);
             }
 
             @Override
