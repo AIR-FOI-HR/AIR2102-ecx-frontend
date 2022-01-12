@@ -4,21 +4,21 @@ import com.google.gson.annotations.SerializedName;
 
 public class CompanyData
 {
-    public Integer id;
+    private Integer id;
 
-    public String name;
+    private String name;
 
     @SerializedName("address_street")
-    public String addressStreet;
+    private String addressStreet;
 
     @SerializedName("address_post_code")
-    public String addressPostCode;
+    private String addressPostCode;
 
     @SerializedName("address_city")
-    public String addressCity;
+    private String addressCity;
 
     @SerializedName("address_country_code")
-    public String addressCountryCode;
+    private String addressCountryCode;
 
     public CompanyData()
     {
@@ -33,5 +33,65 @@ public class CompanyData
         this.addressCountryCode = countryCode;
         this.addressPostCode = postCode;
         this.addressStreet = street;
+    }
+
+    public Integer getId()
+    {
+        return id;
+    }
+
+    public void setId(final Integer id)
+    {
+        this.id = id;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(final String name)
+    {
+        this.name = name;
+    }
+
+    public String getAddressStreet()
+    {
+        return addressStreet;
+    }
+
+    public void setAddressStreet(final String addressStreet)
+    {
+        this.addressStreet = addressStreet;
+    }
+
+    public String getAddressPostCode()
+    {
+        return addressPostCode;
+    }
+
+    public void setAddressPostCode(final String addressPostCode)
+    {
+        this.addressPostCode = addressPostCode;
+    }
+
+    public String getAddressCity()
+    {
+        return addressCity;
+    }
+
+    public void setAddressCity(final String addressCity)
+    {
+        this.addressCity = addressCity;
+    }
+
+    public String getAddressCountryCode()
+    {
+        return addressCountryCode;
+    }
+
+    public void setAddressCountryCode(final String addressCountryCode)
+    {
+        this.addressCountryCode = addressCountryCode;
     }
 }
