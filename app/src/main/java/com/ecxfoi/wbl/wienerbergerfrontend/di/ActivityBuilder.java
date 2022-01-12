@@ -10,6 +10,7 @@ import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.DeliveryNotesFragmentPro
 import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.HomeFragmentProvider;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.MaterialBalanceFragmentProvider;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.MyAccountFragmentProvider;
+import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.OrderDetailsFragmentProvider;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.OrdersFragmentProvider;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.SettingsFragmentProvider;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.SupportTicketsFragmentProvider;
@@ -17,6 +18,7 @@ import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.TicketDetailsFragmentPro
 import com.ecxfoi.wbl.wienerbergerfrontend.ui.companyselection.CompanySelectionActivity;
 import com.ecxfoi.wbl.wienerbergerfrontend.ui.login.LoginActivity;
 import com.ecxfoi.wbl.wienerbergerfrontend.ui.main.MainActivity;
+import com.ecxfoi.wbl.wienerbergerfrontend.ui.main.orders.OrderDetailsFragment;
 import com.ecxfoi.wbl.wienerbergerfrontend.ui.splash.SplashActivity;
 
 import dagger.Module;
@@ -47,7 +49,8 @@ public abstract class ActivityBuilder
             SupportTicketsFragmentProvider.class,
             MaterialBalanceFragmentProvider.class,
             NewTicketFragmentProvider.class,
-            TicketDetailsFragmentProvider.class
+            TicketDetailsFragmentProvider.class,
+            OrderDetailsFragmentProvider.class,
     })
     abstract MainActivity contributeMainActivity();
 }

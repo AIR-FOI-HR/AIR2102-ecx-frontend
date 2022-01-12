@@ -4,6 +4,7 @@ import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthenticationData;
 import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthenticationRequest;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.CompanyData;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.OrderData;
+import com.ecxfoi.wbl.wienerbergerfrontend.models.OrderDetailsData;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.TicketData;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.UserData;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.WienerbergerResponse;
@@ -43,4 +44,7 @@ public interface APIService
 
     @GET(APIRoutes.BASE_URL + APIRoutes.ROUTE_ORDERS + "/{companyId}")
     Call<WienerbergerResponse<List<OrderData>>> getAllOrders(@Path("companyId") Long companyId);
+
+    @GET(APIRoutes.BASE_URL + APIRoutes.ROUTE_ORDER_DETAILS + "/{orderId}")
+    Call<WienerbergerResponse<OrderDetailsData>> getSingleOrder(@Path("orderId") Long orderId);
 }

@@ -68,7 +68,7 @@ public class OrdersFragment extends BaseFragment<OrdersViewModel>
                 {
                     Bundle argument = new Bundle();
                     argument.putLong("order", orderId);
-                    //Navigation.findNavController(allOrdersActivity, R.id.nav_host_fragment).navigate(R.id.action_ordersFragment_to_orderDetails, argument);
+                    Navigation.findNavController(allOrdersActivity, R.id.nav_host_fragment).navigate(R.id.action_ordersFragment_to_orderDetails, argument);
                 }
             }
         };

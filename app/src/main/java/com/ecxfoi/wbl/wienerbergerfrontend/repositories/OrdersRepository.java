@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.ecxfoi.wbl.wienerbergerfrontend.api.APIService;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.OrderData;
+import com.ecxfoi.wbl.wienerbergerfrontend.models.OrderDetailsData;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.TicketData;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.WienerbergerResponse;
 
@@ -41,6 +42,28 @@ public class OrdersRepository
 
             @Override
             public void onFailure(final Call<WienerbergerResponse<List<OrderData>>> call, final Throwable t)
+            {
+
+            }
+        });
+
+        return orderData;
+    }
+
+    public LiveData<OrderDetailsData> getOrderData(Long orderId)
+    {
+        final MutableLiveData<OrderDetailsData> orderData = new MutableLiveData<>();
+
+        apiService.getSingleOrder(orderId).enqueue(new Callback<WienerbergerResponse<OrderDetailsData>>()
+        {
+            @Override
+            public void onResponse(final Call<WienerbergerResponse<OrderDetailsData>> call, final Response<WienerbergerResponse<OrderDetailsData>> response)
+            {
+                orderData.setValue((OrderDetailsData) response.body().getData());
+            }
+
+            @Override
+            public void onFailure(final Call<WienerbergerResponse<OrderDetailsData>> call, final Throwable t)
             {
 
             }
