@@ -68,5 +68,7 @@ public class MaterialBalanceFragment extends BaseFragment<MaterialBalanceViewMod
 
         };
         binding.listView.setAdapter(recyclerAdapter);
+
+        viewModel.setErrorMessage(materialBalanceData.size() == 0 ? "No materials found for this company!" : "");
     }
 }

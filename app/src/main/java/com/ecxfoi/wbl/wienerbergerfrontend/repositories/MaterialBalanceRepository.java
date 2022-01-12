@@ -28,21 +28,21 @@ public class MaterialBalanceRepository
 
     public LiveData<ArrayList<MaterialBalanceData>> getMaterialBalance(Long companyId)
     {
-        final MutableLiveData<ArrayList<MaterialBalanceData>> orderData = new MutableLiveData<>();
+        final MutableLiveData<ArrayList<MaterialBalanceData>> materialBalanceData = new MutableLiveData<>();
 
         apiService.getMaterialBalance(companyId).enqueue(new Callback<WienerbergerResponse<List<MaterialBalanceData>>>()
         {
             @Override
             public void onResponse(final Call<WienerbergerResponse<List<MaterialBalanceData>>> call, final Response<WienerbergerResponse<List<MaterialBalanceData>>> response)
             {
-                ArrayList<MaterialBalanceData> materialBalanceData = new ArrayList<>();
+                ArrayList<MaterialBalanceData> materialBalanceList = new ArrayList<>();
 
                 if(response.body() != null)
                 {
-                    materialBalanceData =  ((ArrayList<MaterialBalanceData>) response.body().getData());
+                    materialBalanceList =  ((ArrayList<MaterialBalanceData>) response.body().getData());
                 }
 
-                orderData.setValue(materialBalanceData);
+                materialBalanceData.setValue(materialBalanceList);
             }
 
             @Override
@@ -52,7 +52,7 @@ public class MaterialBalanceRepository
             }
         });
 
-        return orderData;
+        return materialBalanceData;
     }
 
 }

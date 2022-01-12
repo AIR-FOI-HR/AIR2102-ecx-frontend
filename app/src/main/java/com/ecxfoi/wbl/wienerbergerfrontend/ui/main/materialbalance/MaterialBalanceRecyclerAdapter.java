@@ -59,9 +59,9 @@ abstract class MaterialBalanceRecyclerAdapter extends RecyclerView.Adapter<Mater
     }
 
     @Override
-    public void onBindViewHolder(MaterialBalanceViewHolder ticketsViewHolder, final int position)
+    public void onBindViewHolder(MaterialBalanceViewHolder materialBalanceViewHolder, final int position)
     {
-        ticketsViewHolder.bind(materialArray.get(materialArray.size() - 1 - position));
+        materialBalanceViewHolder.bind(materialArray.get(materialArray.size() - 1 - position));
     }
 
     @Override

@@ -18,19 +18,29 @@ public class MaterialBalanceViewModel extends ViewModel
 {
     private final MaterialBalanceRepository materialBalanceRepository;
     private final SelectedCompanyData selectedCompanyData;
-    private final ObservableField<ArrayList<MaterialBalanceData>> materialBalanceData;
+    private final ObservableField<String> errorMessage;
 
     @Inject
     public MaterialBalanceViewModel(final MaterialBalanceRepository materialBalanceRepository, SelectedCompanyData selectedCompanyData)
     {
         this.materialBalanceRepository = materialBalanceRepository;
         this.selectedCompanyData = selectedCompanyData;
-        materialBalanceData = new ObservableField<>();
+        errorMessage = new ObservableField<>();
     }
 
     public LiveData<ArrayList<MaterialBalanceData>> fetchMaterialBalanceData()
     {
         Long selectedCompanyId = selectedCompanyData.getCompanyId();
         return materialBalanceRepository.getMaterialBalance(selectedCompanyId);
+    }
+
+    public ObservableField<String> getErrorMessage()
+    {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(final String error)
+    {
+        errorMessage.set(error);
     }
 }
