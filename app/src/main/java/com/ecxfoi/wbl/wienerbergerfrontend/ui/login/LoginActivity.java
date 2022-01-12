@@ -88,6 +88,8 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
             @Override
             public void interpretResponse(final String email, final String password, final Response<WienerbergerResponse<AuthenticationData>> response)
             {
+                changeInputEnableness(true);
+
                 WienerbergerResponse<AuthenticationData> wienerbergerResponse;
                 if (response.isSuccessful())
                 {
@@ -157,6 +159,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
     private void attemptLogin()
     {
         errorMessage.setText("");
+        changeInputEnableness(false);
         try
         {
             String enteredEmail = emailEditText.getText().toString();
@@ -174,6 +177,13 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
         {
             this.showLoginFailed(R.string.error_no_connection);
         }
+    }
+
+    private void changeInputEnableness(boolean disable)
+    {
+        loginButton.setEnabled(disable);
+        emailEditText.setEnabled(disable);
+        passwordEditText.setEnabled(disable);
     }
 
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
