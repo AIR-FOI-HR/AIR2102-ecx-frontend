@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.ClassicLoginFragment"
+        android:layout_margin="20dp">
+
+    <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:hint="@string/prompt_email"
+            android:autofillHints="emailAddress"
+            android:inputType="textEmailAddress"
+            android:textAlignment="center"
+            app:layout_constraintTop_toTopOf="@+id/password"
+            app:layout_constraintBottom_toTopOf="parent"/>
+
+    <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:hint="@string/prompt_password"
+            android:imeActionLabel="@string/action_sign_in_short"
+            android:imeOptions="actionDone"
+            android:textAlignment="center"
+            tools:layout_editor_absoluteX="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/email"
+            android:layout_marginTop="72dp"
+            android:inputType="textPassword"
+            android:selectAllOnFocus="true"
+            android:autofillHints="password"/>
+
+    <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/password_switch"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            app:layout_constraintTop_toTopOf="@+id/password"
+            app:layout_constraintEnd_toEndOf="@+id/password"
+            app:layout_constraintBottom_toBottomOf="@+id/password" />
+
+    <TextView
+            android:id="@+id/error_message"
+            style="@style/tv_general"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            tools:text="Error"
+            android:textColor="@color/wienerberger_red"
+            app:layout_constraintTop_toBottomOf="@+id/password"
+             />
+
+    <Button
+            android:id="@+id/login"
+            android:enabled="false"
+            style="@style/button_red_centered"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_sign_in"
+            app:layout_constraintTop_toBottomOf="@+id/error_message"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="24sp"
+            app:rippleColor="@color/wienerberger_red"
+            android:textColorHighlight="@color/wienerberger_red"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
