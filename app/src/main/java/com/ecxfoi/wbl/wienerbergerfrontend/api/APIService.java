@@ -3,6 +3,7 @@ package com.ecxfoi.wbl.wienerbergerfrontend.api;
 import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthenticationData;
 import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthenticationRequest;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.CompanyData;
+import com.ecxfoi.wbl.wienerbergerfrontend.models.DeliveryNoteData;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.OrderData;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.OrderDetailsData;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.TicketData;
@@ -18,6 +19,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface APIService
 {
@@ -47,4 +49,7 @@ public interface APIService
 
     @GET(APIRoutes.BASE_URL + APIRoutes.ROUTE_ORDER_DETAILS + "/{orderId}")
     Call<WienerbergerResponse<OrderDetailsData>> getSingleOrder(@Path("orderId") Long orderId);
+
+    @GET(APIRoutes.BASE_URL + APIRoutes.ROUTE_DELIVERY_NOTES + "/dates")
+    Call<WienerbergerResponse<List<DeliveryNoteData>>> getDeliveryNotesByDates(@Query("from") String from, @Query("to") String to);
 }

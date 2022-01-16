@@ -7,19 +7,23 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.ecxfoi.wbl.wienerbergerfrontend.base.BaseFragment;
 import com.ecxfoi.wbl.wienerbergerfrontend.databinding.FragmentDeliveryNotesBinding;
-import com.ecxfoi.wbl.wienerbergerfrontend.databinding.FragmentMyAccountBinding;
-import com.ecxfoi.wbl.wienerbergerfrontend.ui.main.MainActivity;
-import com.ecxfoi.wbl.wienerbergerfrontend.ui.main.myaccount.MyAccountViewModel;
+import com.ecxfoi.wbl.wienerbergerfrontend.models.DeliveryNoteData;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.TimeZone;
 
 import javax.inject.Inject;
@@ -38,8 +42,11 @@ public class DeliveryNotesFragment extends BaseFragment<DeliveryNotesViewModel>
     private EditTextDatePicker datePickerFrom;
     private EditTextDatePicker datePickerTo;
 
+    private Button btnRequest;
+
     @Override
-    public DeliveryNotesViewModel getViewModel() {
+    public DeliveryNotesViewModel getViewModel()
+    {
         viewModel = new ViewModelProvider(this, factory).get(DeliveryNotesViewModel.class);
         return viewModel;
     }
@@ -56,7 +63,25 @@ public class DeliveryNotesFragment extends BaseFragment<DeliveryNotesViewModel>
         datePickerFrom = new EditTextDatePicker(getActivity(), txtDateFrom);
         datePickerTo = new EditTextDatePicker(getActivity(), txtDateTo);
 
+        btnRequest = binding.btnRequest;
+
+        btnRequest.setOnClickListener(v -> {
+            viewModel.getRequestedDeliveryNotes().observe(getViewLifecycleOwner(), this::setRequestedData);
+        });
+
         return binding.getRoot();
+    }
+
+    private void setRequestedData(List<DeliveryNoteData> deliveryNoteData)
+    {
+        viewModel.setRequestedDeliveryNotes(deliveryNoteData);
+
+        binding.listViewOrderNotes.setLayoutManager(new LinearLayoutManager(getActivity()));
+        DeliveryNotesRecyclerAdapter recyclerAdapter = new DeliveryNotesRecyclerAdapter(new ArrayList<>(deliveryNoteData))
+        {
+
+        };
+        binding.listViewOrderNotes.setAdapter(recyclerAdapter);
     }
 }
 
@@ -76,7 +101,8 @@ class EditTextDatePicker implements View.OnClickListener, DatePickerDialog.OnDat
     }
 
     @Override
-    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
+    {
         this.birthYear = year;
         this.month = monthOfYear;
         this.day = dayOfMonth;
@@ -84,7 +110,8 @@ class EditTextDatePicker implements View.OnClickListener, DatePickerDialog.OnDat
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View v)
+    {
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
 
         DatePickerDialog dialog = new DatePickerDialog(context, this,
@@ -93,7 +120,8 @@ class EditTextDatePicker implements View.OnClickListener, DatePickerDialog.OnDat
         dialog.show();
     }
 
-    private void updateDisplay() {
-        editText.setText(new StringBuilder().append(day).append("/").append(month + 1).append("/").append(birthYear).append(" "));
+    private void updateDisplay()
+    {
+        editText.setText(new StringBuilder().append(birthYear).append("-").append(month + 1).append("-").append(day).append(" "));
     }
 }
