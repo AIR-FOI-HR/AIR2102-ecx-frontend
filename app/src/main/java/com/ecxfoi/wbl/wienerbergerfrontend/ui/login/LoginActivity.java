@@ -3,13 +3,17 @@ package com.ecxfoi.wbl.wienerbergerfrontend.ui.login;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 
+import com.ecxfoi.wbl.classic_login.ui.ClassicLoginFragment;
 import com.ecxfoi.wbl.wienerbergerfrontend.api.JwtAuthInterceptor;
 import com.ecxfoi.wbl.wienerbergerfrontend.base.BaseActivity;
+import com.ecxfoi.wbl.wienerbergerfrontend.databinding.ActivityMainBinding;
 import com.ecxfoi.wbl.wienerbergerfrontend.ui.companyselection.CompanySelectionActivity;
 import com.ecxfoi.wbl.wienerbergerfrontend.R;
 import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthService;
@@ -42,21 +46,31 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
     {
         super.onCreate(savedInstanceState);
 
-        initNavigation();
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        navigateTo("classic");
     }
 
-    private void initNavigation()
+    private void navigateTo(String destination)
     {
-        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.nav_host_fragment_login);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment destFragment = new Fragment();
 
-        if (navHostFragment != null)
+        switch(destination)
         {
-            navController = navHostFragment.getNavController();
-
-            AppBarConfiguration appBarConfiguration =
-                    new AppBarConfiguration.Builder(navController.getGraph()).build();
+            case "classic":
+                destFragment = ClassicLoginFragment.newInstance();
+                break;
+            case "pin":
+                break;
+            case "fingerprint":
+                break;
+            default: break;
         }
+
+        ft.add(R.id.nav_host_fragment_login, destFragment);
+        ft.commit();
     }
 
     private void rememberUser(String email, String password)

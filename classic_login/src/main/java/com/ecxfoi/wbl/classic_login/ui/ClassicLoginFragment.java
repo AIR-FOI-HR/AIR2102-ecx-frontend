@@ -13,10 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ecxfoi.wbl.classic_login.R;
+import com.ecxfoi.wbl.classic_login.databinding.ClassicLoginFragmentBinding;
 
 public class ClassicLoginFragment extends Fragment
 {
-
+    private ClassicLoginFragmentBinding binding;
     private ClassicLoginViewModel mViewModel;
 
     public static ClassicLoginFragment newInstance()
@@ -25,17 +26,13 @@ public class ClassicLoginFragment extends Fragment
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState)
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        return inflater.inflate(R.layout.classic_login_fragment, container, false);
-    }
+        binding = ClassicLoginFragmentBinding.inflate(inflater, container, false);
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState)
-    {
-        super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(ClassicLoginViewModel.class);
         // TODO: Use the ViewModel
+
+        return binding.getRoot();
     }
 }
