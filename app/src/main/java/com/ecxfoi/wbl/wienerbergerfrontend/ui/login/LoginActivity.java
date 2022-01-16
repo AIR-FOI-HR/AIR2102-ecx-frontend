@@ -8,7 +8,12 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.StringRes;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -29,6 +34,7 @@ import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthenticationData;
 import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthenticationInterface;
 import com.ecxfoi.wbl.wienerbergerfrontend.databinding.ActivityLoginBinding;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.WienerbergerResponse;
+import com.google.android.material.navigation.NavigationView;
 
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONException;
@@ -44,12 +50,15 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
 {
     private ActivityLoginBinding binding;
 
+    private NavController navController;
+
     private EditText emailEditText;
     private EditText passwordEditText;
     private Button loginButton;
     private TextView errorMessage;
 
-    private LoginViewModel viewModel;
+    @Inject
+    LoginViewModel viewModel;
 
     @Inject
     JwtAuthInterceptor authInterceptor;
@@ -59,7 +68,6 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
     @Override
     public LoginViewModel getViewModel()
     {
-        viewModel = new ViewModelProvider(this, factory).get(LoginViewModel.class);
         return viewModel;
     }
 
@@ -68,20 +76,11 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
     {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityLoginBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
-        emailEditText = binding.email;
-        passwordEditText = binding.password;
-        loginButton = binding.login;
-        errorMessage = binding.errorMessage;
-        final SwitchCompat passwordSwitch = binding.passwordSwitch;
+        initBindings();
+        initNavigation();
 
         retreiveStoredUserData();
 
-        emailEditText.addTextChangedListener(getEmailTextWatcher());
-        passwordEditText.addTextChangedListener(getPasswordTextWatcher());
-        passwordSwitch.setOnCheckedChangeListener(this::onCheckedChanged);
 
         AuthService.authenticationInterface = new AuthenticationInterface()
         {
@@ -101,7 +100,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
 
                     setResult(Activity.RESULT_OK);
 
-                    showLoginSuccess(R.string.welcome);
+//                    showLoginSuccess(R.string.welcome);
                     finish();
                     switchToCompanySelection();
 
@@ -135,6 +134,36 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
         };
 
         loginButton.setOnClickListener(v -> attemptLogin());
+    }
+
+    private void initNavigation()
+    {
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.nav_host_fragment_login);
+
+        if (navHostFragment != null)
+        {
+            navController = navHostFragment.getNavController();
+
+            AppBarConfiguration appBarConfiguration =
+                    new AppBarConfiguration.Builder(navController.getGraph()).build();
+        }
+    }
+
+    private void initBindings()
+    {
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+//        emailEditText = binding.email;
+//        passwordEditText = binding.password;
+//        loginButton = binding.login;
+//        errorMessage = binding.errorMessage;
+//        final SwitchCompat passwordSwitch = binding.passwordSwitch;
+
+        emailEditText.addTextChangedListener(getEmailTextWatcher());
+        passwordEditText.addTextChangedListener(getPasswordTextWatcher());
+//        passwordSwitch.setOnCheckedChangeListener(this::onCheckedChanged);
     }
 
     private void rememberUser(String email, String password)
