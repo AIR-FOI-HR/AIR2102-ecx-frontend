@@ -56,7 +56,6 @@
 
     <Button
             android:id="@+id/login"
-            android:enabled="false"
             style="@style/button_red_centered"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
