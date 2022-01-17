@@ -8,3 +8,4 @@ dependencyResolutionManagement {
 rootProject.name = "WienerbergerApp"
 include ':app'
 include ':classic_login'
+include ':interface_login'
