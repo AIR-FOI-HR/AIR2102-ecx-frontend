@@ -14,6 +14,11 @@ public class DeliveryNoteData
     @SerializedName("delivered_Date")
     private String deliveredDate;
 
+    public DeliveryNoteData()
+    {
+
+    }
+
     public DeliveryNoteData(final Long id, final Long orderId, final String shipToParty, final String deliveryAddress, final String deliveredDate)
     {
         this.id = id;

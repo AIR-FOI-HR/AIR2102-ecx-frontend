@@ -3,6 +3,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
                 name="deliveryNotesViewModel"
                 type="com.ecxfoi.wbl.wienerbergerfrontend.ui.main.deliverynotes.DeliveryNotesViewModel" />
@@ -62,8 +64,7 @@
                     android:layout_gravity="start"
                     android:layout_marginEnd="20dp"
                     android:layout_width="0dp"
-                    android:text="@={deliveryNotesViewModel.dateFrom}"
-                    />
+                    android:text="@={deliveryNotesViewModel.dateFrom}" />
 
             <EditText
                     android:id="@+id/txtDeliveriesTo"
@@ -79,8 +80,7 @@
                     android:layout_width="0dp"
                     android:layout_gravity="end"
                     android:layout_marginStart="20dp"
-                    android:text="@={deliveryNotesViewModel.dateTo}"
-                    />
+                    android:text="@={deliveryNotesViewModel.dateTo}" />
         </LinearLayout>
 
         <EditText
@@ -91,8 +91,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
-                android:text="@={deliveryNotesViewModel.deliveryNoteNumber}"
-                />
+                android:text="@={deliveryNotesViewModel.deliveryNoteNumber}" />
 
         <EditText
                 android:layout_height="wrap_content"
@@ -102,8 +101,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
-                android:text="@={deliveryNotesViewModel.orderNumber}"
-                />
+                android:text="@={deliveryNotesViewModel.orderNumber}" />
 
         <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnRequest"
@@ -116,6 +114,18 @@
                 android:layout_gravity="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textColor="@color/wienerberger_red"
+                android:layout_margin="20dp"
+                android:text="@{deliveryNotesViewModel.errorMessage}"
+                android:layout_marginTop="15dp"
+                android:layout_gravity="center"
+                android:textSize="24dp"
+                android:textStyle="bold"
+                android:visibility="@{deliveryNotesViewModel.errorMessage.length() > 0 ? View.VISIBLE : View.GONE}" />
 
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/listViewOrderNotes"

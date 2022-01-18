@@ -52,4 +52,10 @@ public interface APIService
 
     @GET(APIRoutes.BASE_URL + APIRoutes.ROUTE_DELIVERY_NOTES + "/dates")
     Call<WienerbergerResponse<List<DeliveryNoteData>>> getDeliveryNotesByDates(@Query("from") String from, @Query("to") String to);
+
+    @GET(APIRoutes.BASE_URL + APIRoutes.ROUTE_DELIVERY_NOTES + "/{deliveryNoteId}")
+    Call<WienerbergerResponse<DeliveryNoteData>> getSingleDeliveryByDeliveryNoteId(@Path("deliveryNoteId") Long deliveryNoteId );
+
+    @GET(APIRoutes.BASE_URL + APIRoutes.ROUTE_DELIVERY_NOTES)
+    Call<WienerbergerResponse<List<DeliveryNoteData>>> getDeliveryNotesByOrderId(@Query("orderId") Long orderId);
 }

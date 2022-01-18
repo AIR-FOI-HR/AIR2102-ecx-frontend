@@ -3,6 +3,7 @@ package com.ecxfoi.wbl.wienerbergerfrontend.ui.main.deliverynotes;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,17 +66,13 @@ public class DeliveryNotesFragment extends BaseFragment<DeliveryNotesViewModel>
 
         btnRequest = binding.btnRequest;
 
-        btnRequest.setOnClickListener(v -> {
-            viewModel.getRequestedDeliveryNotes().observe(getViewLifecycleOwner(), this::setRequestedData);
-        });
+        btnRequest.setOnClickListener(v -> viewModel.getRequestedDeliveryNotes().observe(getViewLifecycleOwner(), this::setRequestedData));
 
         return binding.getRoot();
     }
 
     private void setRequestedData(List<DeliveryNoteData> deliveryNoteData)
     {
-        viewModel.setRequestedDeliveryNotes(deliveryNoteData);
-
         binding.listViewOrderNotes.setLayoutManager(new LinearLayoutManager(getActivity()));
         DeliveryNotesRecyclerAdapter recyclerAdapter = new DeliveryNotesRecyclerAdapter(new ArrayList<>(deliveryNoteData))
         {
@@ -117,6 +114,11 @@ class EditTextDatePicker implements View.OnClickListener, DatePickerDialog.OnDat
         DatePickerDialog dialog = new DatePickerDialog(context, this,
                 calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH));
+
+        dialog.setButton(DialogInterface.BUTTON_NEUTRAL, "Reset", (dialog1, which) -> {
+            editText.setText("");
+        });
+
         dialog.show();
     }
 
