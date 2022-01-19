@@ -70,4 +70,11 @@
     <string name="classic_login">Classic login</string>
     <string name="pin_login">PIN Login</string>
     <string name="fingerprint_login">Fingerprint Login</string>
+    <string name="material_balance_id">ID:</string>
+    <string name="material_balance_name">Name:</string>
+    <string name="material_balance_quantity">Quantity:</string>
+    <string name="material_balance_example_quantity">100</string>
+    <string name="material_balance_example_name">Wood 10m</string>
+    <string name="material_balance_example_id">10</string>
+    <string name="material_balance">Material balance</string>
 </resources>
