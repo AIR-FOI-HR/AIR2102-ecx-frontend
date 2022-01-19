@@ -3,14 +3,6 @@
     <string name="logo_image_description">Wienerberger logo</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="app_description">Administrator Application</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_show_password">Show password</string>
-    <string name="action_sign_in">Login</string>
-    <string name="action_sign_in_short">Login</string>
-    <string name="welcome">"Welcome "</string>
-    <string name="invalid_email">Not a valid email</string>
-    <string name="invalid_password">Password must be >5 characters</string>
     <string name="error_no_connection">"Connection error, try again later."</string>
     <string name="login_failed_credentials">"Invalid credentials."</string>
     <string name="login_failed_generic">"Something went wrong on our side."</string>
@@ -87,6 +79,11 @@
     <string name="delivery_note_example_order_number">0213214259</string>
     <string name="delivery_note_example_ship_to_party">NORTH GEORGIA BRICK CO-DISTR NORTH GEORGIA BRICK CO-DISTR</string>
     <string name="delivery_note_example_delivered_date">05/06/20</string>
+    <string name="remember_current_login">Remember current login</string>
+    <string name="choose_login_method">Choose login method:</string>
+    <string name="classic_login">Classic login</string>
+    <string name="pin_login">PIN Login</string>
+    <string name="fingerprint_login">Fingerprint Login</string>
     <string name="material_balance_id">ID:</string>
     <string name="material_balance_name">Name:</string>
     <string name="material_balance_quantity">Quantity:</string>

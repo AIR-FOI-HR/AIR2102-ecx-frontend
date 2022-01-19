@@ -1,34 +1,27 @@
 package com.ecxfoi.wbl.wienerbergerfrontend.ui.login;
 
 import android.app.Activity;
-
-import androidx.appcompat.widget.SwitchCompat;
-
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.StringRes;
-import androidx.lifecycle.ViewModelProvider;
-
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+
+import com.ecxfoi.wbl.classic_login.ui.ClassicLoginFragment;
+import com.ecxfoi.wbl.interface_login.LoginFragment;
 import com.ecxfoi.wbl.wienerbergerfrontend.api.JwtAuthInterceptor;
+import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthenticationData;
+import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthenticationInterface;
 import com.ecxfoi.wbl.wienerbergerfrontend.base.BaseActivity;
+import com.ecxfoi.wbl.wienerbergerfrontend.models.WienerbergerResponse;
 import com.ecxfoi.wbl.wienerbergerfrontend.ui.companyselection.CompanySelectionActivity;
 import com.ecxfoi.wbl.wienerbergerfrontend.R;
 import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthService;
-import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthenticationData;
-import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthenticationInterface;
 import com.ecxfoi.wbl.wienerbergerfrontend.databinding.ActivityLoginBinding;
-import com.ecxfoi.wbl.wienerbergerfrontend.models.WienerbergerResponse;
+import com.ecxfoi.wbl.wienerbergerfrontend.utils.SettingsManager;
 
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONException;
@@ -44,12 +37,12 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
 {
     private ActivityLoginBinding binding;
 
-    private EditText emailEditText;
-    private EditText passwordEditText;
-    private Button loginButton;
-    private TextView errorMessage;
+    private NavController navController;
 
-    private LoginViewModel viewModel;
+    private LoginFragment destFragment;
+
+    @Inject
+    LoginViewModel viewModel;
 
     @Inject
     JwtAuthInterceptor authInterceptor;
@@ -59,7 +52,6 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
     @Override
     public LoginViewModel getViewModel()
     {
-        viewModel = new ViewModelProvider(this, factory).get(LoginViewModel.class);
         return viewModel;
     }
 
@@ -71,25 +63,11 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        emailEditText = binding.email;
-        passwordEditText = binding.password;
-        loginButton = binding.login;
-        errorMessage = binding.errorMessage;
-        final SwitchCompat passwordSwitch = binding.passwordSwitch;
-
-        retreiveStoredUserData();
-
-        emailEditText.addTextChangedListener(getEmailTextWatcher());
-        passwordEditText.addTextChangedListener(getPasswordTextWatcher());
-        passwordSwitch.setOnCheckedChangeListener(this::onCheckedChanged);
-
         AuthService.authenticationInterface = new AuthenticationInterface()
         {
             @Override
             public void interpretResponse(final String email, final String password, final Response<WienerbergerResponse<AuthenticationData>> response)
             {
-                changeInputEnableness(true);
-
                 WienerbergerResponse<AuthenticationData> wienerbergerResponse;
                 if (response.isSuccessful())
                 {
@@ -101,7 +79,6 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
 
                     setResult(Activity.RESULT_OK);
 
-                    showLoginSuccess(R.string.welcome);
                     finish();
                     switchToCompanySelection();
 
@@ -109,32 +86,82 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
                 }
                 else
                 {
-                    int errorString = R.string.login_failed_generic;
+                    int errorResCode = R.string.login_failed_generic;
 
                     try
                     {
                         // Casting to real objects just didn't work so easier variant was implemented here:
                         JSONObject jsonObject = new JSONObject(response.errorBody().string());
 
-                        errorString = R.string.login_failed_credentials;
+                        errorResCode = R.string.login_failed_credentials;
                     }
                     catch (JSONException | IOException e)
                     {
                         e.printStackTrace();
                     }
 
-                    showLoginFailed(errorString);
+                    destFragment.setErrorMessage(getResources().getString(errorResCode));
                 }
             }
 
             @Override
             public void interpretError()
             {
-                showLoginFailed(R.string.error_no_connection);
+                destFragment.setErrorMessage(getResources().getString(R.string.error_no_connection));
             }
         };
 
-        loginButton.setOnClickListener(v -> attemptLogin());
+        SettingsManager.LoginMethods loginMethod = SettingsManager.getRememberLogin(getApplicationContext());
+
+        navigateTo(loginMethod);
+    }
+
+    private void navigateTo(SettingsManager.LoginMethods destination)
+    {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+        switch (destination)
+        {
+            case NONE:
+                prepareClassicLoginFragment();
+                break;
+            case CLASSIC:
+                prepareClassicLoginFragment();
+                ((ClassicLoginFragment) destFragment).setEmailAndPassword(AuthService.getEmail(getApplicationContext()), AuthService.getPassword(getApplicationContext()));
+                break;
+            case PIN:
+                prepareClassicLoginFragment(); // PLACEHOLDER FRAGMENT - REPLACE WITH PROPER MODULE
+                Toast.makeText(getApplicationContext(), "PIN", Toast.LENGTH_SHORT).show();
+                break;
+            case FINGERPRINT:
+                prepareClassicLoginFragment(); // PLACEHOLDER FRAGMENT - REPLACE WITH PROPER MODULE
+                Toast.makeText(getApplicationContext(), "FINGERPRINT", Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+        ft.add(R.id.nav_host_fragment_login, (Fragment) destFragment);
+        ft.commit();
+    }
+
+    private void prepareClassicLoginFragment()
+    {
+        destFragment = ClassicLoginFragment.newInstance();
+
+        destFragment.<ClassicLoginFragment.LoginListener>setListener((String email, String password) -> {
+            try
+            {
+                if (!StringUtils.contains(email, '@'))
+                {
+                    email += "@wb.com";
+                }
+
+                AuthService.createLoginRequest(email, password);
+            }
+            catch (Exception e)
+            {
+                destFragment.setErrorMessage(getResources().getString(R.string.error_no_connection));
+            }
+        });
     }
 
     private void rememberUser(String email, String password)
@@ -143,137 +170,9 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
         AuthService.setPassword(password, this);
     }
 
-    private void retreiveStoredUserData()
-    {
-        String storedEmail = AuthService.getEmail(this);
-        String storedPassword = AuthService.getPassword(this);
-
-        if (storedEmail != null && storedPassword != null)
-        {
-            emailEditText.setText(storedEmail);
-            passwordEditText.setText(storedPassword);
-            loginButton.setEnabled(true);
-        }
-    }
-
-    private void attemptLogin()
-    {
-        errorMessage.setText("");
-        changeInputEnableness(false);
-        try
-        {
-            String enteredEmail = emailEditText.getText().toString();
-
-            if (!StringUtils.contains(enteredEmail, '@'))
-            {
-                enteredEmail += "@wb.com";
-                emailEditText.setText(enteredEmail);
-            }
-
-            String enteredPassword = passwordEditText.getText().toString();
-            AuthService.createLoginRequest(enteredEmail, enteredPassword);
-        }
-        catch (Exception e)
-        {
-            this.showLoginFailed(R.string.error_no_connection);
-        }
-    }
-
-    private void changeInputEnableness(boolean disable)
-    {
-        loginButton.setEnabled(disable);
-        emailEditText.setEnabled(disable);
-        passwordEditText.setEnabled(disable);
-    }
-
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-    {
-        if (isChecked)
-        {
-            passwordEditText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-        }
-        else
-        {
-            passwordEditText.setTransformationMethod(PasswordTransformationMethod.getInstance());
-        }
-    }
-
-    private TextWatcher getEmailTextWatcher()
-    {
-        return new TextWatcher()
-        {
-            @Override
-            public void beforeTextChanged(final CharSequence charSequence, final int i, final int i1, final int i2)
-            {
-                // ignore
-            }
-
-            @Override
-            public void onTextChanged(final CharSequence charSequence, final int i, final int i1, final int i2)
-            {
-                // ignore
-            }
-
-            @Override
-            public void afterTextChanged(final Editable editable)
-            {
-                if (emailEditText.getText().length() > 2 && passwordEditText.getText().length() > 2)
-                {
-                    loginButton.setEnabled(true);
-                }
-                else if (loginButton.isEnabled())
-                {
-                    loginButton.setEnabled(false);
-                }
-            }
-        };
-    }
-
-
-    private TextWatcher getPasswordTextWatcher()
-    {
-        return new TextWatcher()
-        {
-            @Override
-            public void beforeTextChanged(final CharSequence charSequence, final int i, final int i1, final int i2)
-            {
-                // ignore
-            }
-
-            @Override
-            public void onTextChanged(final CharSequence charSequence, final int i, final int i1, final int i2)
-            {
-                // ignore
-            }
-
-            @Override
-            public void afterTextChanged(final Editable editable)
-            {
-                if (emailEditText.getText().length() > 2 && passwordEditText.getText().length() > 2)
-                {
-                    loginButton.setEnabled(true);
-                }
-                else if (loginButton.isEnabled())
-                {
-                    loginButton.setEnabled(false);
-                }
-            }
-        };
-    }
-
     private void switchToCompanySelection()
     {
         Intent intent = new Intent(this, CompanySelectionActivity.class);
         startActivity(intent);
-    }
-
-    private void showLoginSuccess(@StringRes Integer welcomeMessage)
-    {
-        Toast.makeText(getApplicationContext(), getString(welcomeMessage) + emailEditText.getText(), Toast.LENGTH_SHORT).show();
-    }
-
-    private void showLoginFailed(@StringRes Integer errorString)
-    {
-        errorMessage.setText(errorString);
     }
 }
