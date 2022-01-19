@@ -4,6 +4,7 @@ import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthenticationData;
 import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthenticationRequest;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.CompanyData;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.DeliveryNoteData;
+import com.ecxfoi.wbl.wienerbergerfrontend.models.MaterialBalanceData;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.OrderData;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.OrderDetailsData;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.TicketData;
@@ -58,4 +59,7 @@ public interface APIService
 
     @GET(APIRoutes.BASE_URL + APIRoutes.ROUTE_DELIVERY_NOTES)
     Call<WienerbergerResponse<List<DeliveryNoteData>>> getDeliveryNotesByOrderId(@Query("orderId") Long orderId);
+
+    @GET(APIRoutes.BASE_URL + APIRoutes.ROUTE_CUSTOMER_MATERIALS + "/{customerId}")
+    Call<WienerbergerResponse<List<MaterialBalanceData>>> getMaterialBalance(@Path("customerId") Long customerId);
 }

@@ -87,4 +87,11 @@
     <string name="delivery_note_example_order_number">0213214259</string>
     <string name="delivery_note_example_ship_to_party">NORTH GEORGIA BRICK CO-DISTR NORTH GEORGIA BRICK CO-DISTR</string>
     <string name="delivery_note_example_delivered_date">05/06/20</string>
+    <string name="material_balance_id">ID:</string>
+    <string name="material_balance_name">Name:</string>
+    <string name="material_balance_quantity">Quantity:</string>
+    <string name="material_balance_example_quantity">100</string>
+    <string name="material_balance_example_name">Wood 10m</string>
+    <string name="material_balance_example_id">10</string>
+    <string name="material_balance">Material balance</string>
 </resources>
