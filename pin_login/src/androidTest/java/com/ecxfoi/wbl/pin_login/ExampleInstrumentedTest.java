@@ -1,4 +1,4 @@
-package com.ecxfoi.wbl.login_interface;
+package com.ecxfoi.wbl.pin_login;
 
 import android.content.Context;
 
@@ -23,6 +23,6 @@ public class ExampleInstrumentedTest
     {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.ecxfoi.wbl.login_interface", appContext.getPackageName());
+        assertEquals("com.ecxfoi.wbl.pin_login", appContext.getPackageName());
     }
 }
