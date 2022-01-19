@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="wienerberger_red">#C11D06</color>
+    <color name="wienerberger_red_variant">#B30000</color>
+    <color name="wienerberger_black">#F7F7F7</color>
+    <color name="grey">#808080</color>
+    <color name="dark_grey">#3C3C3C</color>
+    <color name="light_grey">#D8D8D9</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <color name="success">#22bb33</color>
+    <color name="orange">#FF6400</color>
+</resources>

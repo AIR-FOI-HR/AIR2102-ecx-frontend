@@ -1,11 +1,10 @@
 package com.ecxfoi.wbl.wienerbergerfrontend.auth;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import com.ecxfoi.wbl.wienerbergerfrontend.api.APIService;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.WienerbergerResponse;
+import com.ecxfoi.wbl.wienerbergerfrontend.utils.SettingsManager;
 
 import javax.inject.Inject;
 
@@ -48,36 +47,23 @@ public class AuthService
         });
     }
 
-    private static void changeParameter(String parameterName, String parameterValue, Context context)
-    {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = preferences.edit();
-        if (!preferences.getString(parameterName, "").equals(parameterValue))
-        {
-            editor.putString(parameterName, parameterValue);
-        }
-        editor.apply();
-    }
-
     public static void setEmail(String email, Context context)
     {
-        changeParameter("email", email, context);
+        SettingsManager.changeParameter("email", email, context);
     }
 
     public static void setPassword(String password, Context context)
     {
-        changeParameter("password", password, context);
+        SettingsManager.changeParameter("password", password, context);
     }
 
     public static String getEmail(Context context)
     {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return preferences.getString("email", null);
+        return SettingsManager.getParameter("email", context);
     }
 
     public static String getPassword(Context context)
     {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return preferences.getString("password", null);
+        return SettingsManager.getParameter("password", context);
     }
 }
