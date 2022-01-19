@@ -3,6 +3,7 @@ package com.ecxfoi.wbl.wienerbergerfrontend.ui.login;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -20,6 +21,7 @@ import com.ecxfoi.wbl.wienerbergerfrontend.ui.companyselection.CompanySelectionA
 import com.ecxfoi.wbl.wienerbergerfrontend.R;
 import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthService;
 import com.ecxfoi.wbl.wienerbergerfrontend.databinding.ActivityLoginBinding;
+import com.ecxfoi.wbl.wienerbergerfrontend.utils.SettingsManager;
 
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONException;
@@ -109,44 +111,57 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
             }
         };
 
-        navigateTo("classic");
+        SettingsManager.LoginMethods loginMethod = SettingsManager.getRememberLogin(getApplicationContext());
+
+        navigateTo(loginMethod);
     }
 
-    private void navigateTo(String destination)
+    private void navigateTo(SettingsManager.LoginMethods destination)
     {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
         switch (destination)
         {
-            case "classic":
-                destFragment = ClassicLoginFragment.newInstance();
-
-                destFragment.<ClassicLoginFragment.LoginListener>setListener((String email, String password) -> {
-                    try
-                    {
-                        if (!StringUtils.contains(email, '@'))
-                        {
-                            email += "@wb.com";
-                        }
-
-                        AuthService.createLoginRequest(email, password);
-                    }
-                    catch (Exception e)
-                    {
-                        destFragment.setErrorMessage(getResources().getString(R.string.error_no_connection));
-                    }
-                });
+            case NONE:
+                prepareClassicLoginFragment();
                 break;
-            case "pin":
+            case CLASSIC:
+                prepareClassicLoginFragment();
+                ((ClassicLoginFragment) destFragment).setEmailAndPassword(AuthService.getEmail(getApplicationContext()), AuthService.getPassword(getApplicationContext()));
                 break;
-            case "fingerprint":
+            case PIN:
+                prepareClassicLoginFragment(); // PLACEHOLDER FRAGMENT - REPLACE WITH PROPER MODULE
+                Toast.makeText(getApplicationContext(), "PIN", Toast.LENGTH_SHORT).show();
                 break;
-            default:
+            case FINGERPRINT:
+                prepareClassicLoginFragment(); // PLACEHOLDER FRAGMENT - REPLACE WITH PROPER MODULE
+                Toast.makeText(getApplicationContext(), "FINGERPRINT", Toast.LENGTH_SHORT).show();
                 break;
         }
 
         ft.add(R.id.nav_host_fragment_login, (Fragment) destFragment);
         ft.commit();
+    }
+
+    private void prepareClassicLoginFragment()
+    {
+        destFragment = ClassicLoginFragment.newInstance();
+
+        destFragment.<ClassicLoginFragment.LoginListener>setListener((String email, String password) -> {
+            try
+            {
+                if (!StringUtils.contains(email, '@'))
+                {
+                    email += "@wb.com";
+                }
+
+                AuthService.createLoginRequest(email, password);
+            }
+            catch (Exception e)
+            {
+                destFragment.setErrorMessage(getResources().getString(R.string.error_no_connection));
+            }
+        });
     }
 
     private void rememberUser(String email, String password)

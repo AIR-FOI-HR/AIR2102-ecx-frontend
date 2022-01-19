@@ -9,24 +9,37 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.ecxfoi.wbl.classic_login.R;
 import com.ecxfoi.wbl.classic_login.databinding.ClassicLoginFragmentBinding;
 import com.ecxfoi.wbl.interface_login.LoginFragment;
+
+import java.util.Objects;
 
 public class ClassicLoginFragment extends Fragment implements LoginFragment
 {
     private ClassicLoginFragmentBinding binding;
     private ClassicLoginViewModel mViewModel;
 
+    private String email = "";
+    private String password = "";
+
+    public void setEmailAndPassword(String email, String password)
+    {
+        this.email = email;
+        this.password = password;
+    }
+
     @Override
     public void setErrorMessage(final String errorMessage)
     {
         isInputAvaliable(true);
-        binding.errorMessage.setText(errorMessage);
+        mViewModel.setErrorMessage(errorMessage);
     }
 
     public interface LoginListener
@@ -47,6 +60,7 @@ public class ClassicLoginFragment extends Fragment implements LoginFragment
         binding.email.setEnabled(enabled);
         binding.password.setEnabled(enabled);
         binding.passwordSwitch.setEnabled(enabled);
+        binding.login.setEnabled(enabled);
     }
 
     public static ClassicLoginFragment newInstance()
@@ -62,26 +76,35 @@ public class ClassicLoginFragment extends Fragment implements LoginFragment
         initNavigation();
 
         mViewModel = new ViewModelProvider(this).get(ClassicLoginViewModel.class);
+        binding.setClassicLoginViewModel(mViewModel);
+
+        mViewModel.setEmail(this.email);
+        mViewModel.setPassword(this.password);
 
         return binding.getRoot();
     }
 
     private void initNavigation()
     {
-        binding.passwordSwitch.setOnCheckedChangeListener((compoundButton, isChecked) -> binding.password.setTransformationMethod(isChecked ? HideReturnsTransformationMethod.getInstance() : HideReturnsTransformationMethod.getInstance()));
+        binding.passwordSwitch.setOnCheckedChangeListener(
+                (compoundButton, isChecked) -> binding.password.setTransformationMethod(
+                        isChecked
+                                ? HideReturnsTransformationMethod.getInstance() :
+                                PasswordTransformationMethod.getInstance()));
+
         binding.login.setOnClickListener(v -> {
-            if (binding.email.getText().toString().equals(""))
+            if (Objects.equals(mViewModel.getEmail(), ""))
             {
-                Toast.makeText(getContext(), "Please enter your email.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.email_missing, Toast.LENGTH_SHORT).show();
                 return;
             }
-            else if (binding.password.getText().toString().equals(""))
+            else if (Objects.equals(mViewModel.getPassword(), ""))
             {
-                Toast.makeText(getContext(), "Please enter your password.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.password_missing, Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            binding.errorMessage.setText("");
+            mViewModel.setErrorMessage("");
             isInputAvaliable(false);
             mListener.onLoginAttempt(binding.email.getText().toString(), binding.password.getText().toString());
         });
