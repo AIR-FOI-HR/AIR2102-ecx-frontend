@@ -31,29 +31,50 @@ public class DeliveryNotesViewModel extends ViewModel
         errorMessage = new ObservableField<>("");
     }
 
+    private boolean isOrderNrEntered()
+    {
+        return !orderNumber.get().isEmpty();
+    }
+
+    private boolean isDateEntered()
+    {
+        return !dateFrom.get().isEmpty() || !dateTo.get().isEmpty();
+    }
+
+    private boolean isNoteNrEntered()
+    {
+        return !deliveryNoteNumber.get().isEmpty();
+    }
+
     public LiveData<ArrayList<DeliveryNoteData>> getRequestedDeliveryNotes()
     {
         ArrayList<DeliveryNoteData> emptyDeliveryNoteList = new ArrayList<>();
         MutableLiveData<ArrayList<DeliveryNoteData>> mutableLiveData = new MutableLiveData<>();
         mutableLiveData.setValue(emptyDeliveryNoteList);
 
-        if (!orderNumber.get().isEmpty() && !dateFrom.get().isEmpty() && !dateTo.get().isEmpty())
+        if (isOrderNrEntered() && isNoteNrEntered() || isOrderNrEntered() && isDateEntered() || isDateEntered() && isNoteNrEntered())
         {
-            errorMessage.set("Please select only one option (date/order number/delivery note number)");
+            errorMessage.set("Please select only one option \n (date/order number/delivery note number)");
         }
-
-        errorMessage.set("");
-        if (!dateFrom.get().isEmpty() && !dateTo.get().isEmpty())
+        else
         {
-            return deliveryNotesRepository.getDeliveryNotesForDateRange(dateFrom.get(), dateTo.get());
-        }
-        else if (!orderNumber.get().isEmpty())
-        {
-            return deliveryNotesRepository.getDeliveryNotesForOrder(Long.parseLong(orderNumber.get()));
-        }
-        else if (!deliveryNoteNumber.get().isEmpty())
-        {
-            return deliveryNotesRepository.getDeliveryNoteByDeliveryNoteId(Long.parseLong(deliveryNoteNumber.get()));
+            errorMessage.set("");
+            if (!dateFrom.get().isEmpty() && !dateTo.get().isEmpty())
+            {
+                return deliveryNotesRepository.getDeliveryNotesForDateRange(dateFrom.get(), dateTo.get());
+            }
+            else if (!orderNumber.get().isEmpty())
+            {
+                return deliveryNotesRepository.getDeliveryNotesForOrder(Long.parseLong(orderNumber.get()));
+            }
+            else if (!deliveryNoteNumber.get().isEmpty())
+            {
+                return deliveryNotesRepository.getDeliveryNoteByDeliveryNoteId(Long.parseLong(deliveryNoteNumber.get()));
+            }
+            else
+            {
+                errorMessage.set("Please select one of the options");
+            }
         }
 
         return mutableLiveData;

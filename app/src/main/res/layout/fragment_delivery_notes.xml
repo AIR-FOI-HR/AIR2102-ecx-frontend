@@ -16,7 +16,8 @@
             android:layout_height="match_parent"
             tools:context=".ui.main.MainActivity"
             android:orientation="vertical"
-            android:layout_margin="20dp">
+            android:layout_margin="20dp"
+            >
 
         <TextView
                 android:layout_width="match_parent"
@@ -25,7 +26,6 @@
                 android:textColor="@color/dark_grey"
                 android:textStyle="bold"
                 android:textSize="36sp"
-                android:paddingBottom="10dp"
                 android:textAlignment="center" />
 
         <TextView
@@ -38,7 +38,7 @@
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
                 android:layout_marginTop="20dp"
-                android:paddingBottom="10dp"
+
                 android:textAlignment="center" />
 
         <LinearLayout
@@ -113,7 +113,9 @@
                 android:text="@string/request"
                 android:layout_gravity="center"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                android:textStyle="bold"
+                />
 
         <TextView
                 android:layout_height="wrap_content"
@@ -123,8 +125,9 @@
                 android:text="@{deliveryNotesViewModel.errorMessage}"
                 android:layout_marginTop="15dp"
                 android:layout_gravity="center"
-                android:textSize="24dp"
+                android:textSize="18dp"
                 android:textStyle="bold"
+                android:gravity="center"
                 android:visibility="@{deliveryNotesViewModel.errorMessage.length() > 0 ? View.VISIBLE : View.GONE}" />
 
         <androidx.recyclerview.widget.RecyclerView

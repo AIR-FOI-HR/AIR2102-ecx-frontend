@@ -11,7 +11,7 @@ public class DeliveryNoteData
     private String shipToParty;
     @SerializedName("delivery_address")
     private String deliveryAddress;
-    @SerializedName("delivered_Date")
+    @SerializedName("delivered_date")
     private String deliveredDate;
 
     public DeliveryNoteData()
