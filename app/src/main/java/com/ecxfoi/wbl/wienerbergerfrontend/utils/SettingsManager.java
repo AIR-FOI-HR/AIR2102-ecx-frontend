@@ -2,6 +2,7 @@ package com.ecxfoi.wbl.wienerbergerfrontend.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.hardware.biometrics.BiometricManager;
 import android.preference.PreferenceManager;
 
 public class SettingsManager

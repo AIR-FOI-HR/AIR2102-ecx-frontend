@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">fingerprint_login</string>
+    <string name="touch_sensor">Please touch the fingerprint sensor...</string>
+</resources>

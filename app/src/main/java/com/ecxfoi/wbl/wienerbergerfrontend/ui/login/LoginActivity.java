@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.ecxfoi.wbl.classic_login.ui.ClassicLoginFragment;
+import com.ecxfoi.wbl.fingerprint_login.FingerprintLoginFragment;
 import com.ecxfoi.wbl.interface_login.LoginFragment;
 import com.ecxfoi.wbl.pin_login.PinLoginFragment;
 import com.ecxfoi.wbl.wienerbergerfrontend.api.JwtAuthInterceptor;
@@ -132,12 +133,34 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
                 preparePinLoginFragment();
                 break;
             case FINGERPRINT:
-                prepareClassicLoginFragment(); // PLACEHOLDER FRAGMENT - REPLACE WITH PROPER MODULE
-                Toast.makeText(getApplicationContext(), "FINGERPRINT", Toast.LENGTH_SHORT).show();
+                prepareFingerprintLogiFragment();
                 break;
         }
 
         getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment_login, (Fragment) destFragment).commit();
+    }
+
+    private void prepareFingerprintLogiFragment()
+    {
+        destFragment = FingerprintLoginFragment.newInstance();
+
+        destFragment.<FingerprintLoginFragment.LoginFragmentInterface>setListener((succesfull) -> {
+            try
+            {
+                if (succesfull)
+                {
+                    AuthService.createLoginRequest(AuthService.getEmail(LoginActivity.this), AuthService.getPassword(LoginActivity.this));
+                }
+                else
+                {
+                    navigateTo(SettingsManager.LoginMethods.CLASSIC);
+                }
+            }
+            catch (Exception e)
+            {
+                destFragment.setErrorMessage(getResources().getString(R.string.error_no_connection));
+            }
+        });
     }
 
     private void prepareClassicLoginFragment()

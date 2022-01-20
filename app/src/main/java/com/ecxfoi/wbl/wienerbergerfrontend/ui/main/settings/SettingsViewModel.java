@@ -4,12 +4,16 @@ import static com.ecxfoi.wbl.wienerbergerfrontend.utils.SettingsManager.LoginMet
 import static com.ecxfoi.wbl.wienerbergerfrontend.utils.SettingsManager.LoginMethods.NONE;
 import static com.ecxfoi.wbl.wienerbergerfrontend.utils.SettingsManager.LoginMethods.PIN;
 
+import android.app.Activity;
+import android.os.Build;
 import android.content.Context;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
 
+import androidx.annotation.RequiresApi;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.ViewModel;
+import androidx.biometric.BiometricManager;
 
 import com.ecxfoi.wbl.wienerbergerfrontend.utils.SettingsManager;
 
@@ -25,6 +29,7 @@ public class SettingsViewModel extends ViewModel
     public ObservableField<Integer> selectedItemIndex;
     public ObservableField<String> pin;
     public ObservableField<AdapterView.OnItemSelectedListener> arrayListAdapter;
+    public static ObservableField<Boolean> fingerprintAvailable;
 
     @Inject
     public SettingsViewModel()
@@ -35,6 +40,7 @@ public class SettingsViewModel extends ViewModel
         selectedItemIndex = new ObservableField<>();
         pin = new ObservableField<>("");
         arrayListAdapter = new ObservableField<>();
+        fingerprintAvailable = new ObservableField<>(true);
     }
 
     public void onRememberLogin(final CompoundButton compoundButton, final boolean b)
@@ -58,6 +64,15 @@ public class SettingsViewModel extends ViewModel
         doRememberLogin.set(method != NONE);
         isPinOptionSelected.set(method == PIN);
         selectedItemIndex.set(getMethodSpinnerIndex(method));
+    }
+
+    public void checkFingerprintAvailability(Activity context)
+    {
+        BiometricManager biometricManager = BiometricManager.from(context);
+
+        boolean isAvailable = biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK) == BiometricManager.BIOMETRIC_SUCCESS;
+
+        fingerprintAvailable.set(isAvailable);
     }
 
     private Integer getMethodSpinnerIndex(final SettingsManager.LoginMethods method)
