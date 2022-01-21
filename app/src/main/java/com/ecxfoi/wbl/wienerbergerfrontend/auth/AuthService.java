@@ -57,6 +57,11 @@ public class AuthService
         SettingsManager.changeParameter("password", password, context);
     }
 
+    public static void setPIN(String PIN, Context context)
+    {
+        SettingsManager.changeParameter("pin", PIN, context);
+    }
+
     public static String getEmail(Context context)
     {
         return SettingsManager.getParameter("email", context);
@@ -65,5 +70,10 @@ public class AuthService
     public static String getPassword(Context context)
     {
         return SettingsManager.getParameter("password", context);
+    }
+
+    public static String getPIN(Context context)
+    {
+        return SettingsManager.getParameter("pin", context);
     }
 }

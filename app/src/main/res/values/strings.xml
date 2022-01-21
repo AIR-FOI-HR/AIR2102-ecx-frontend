@@ -90,4 +90,5 @@
     <string name="material_balance_example_name">Wood 10m</string>
     <string name="material_balance_example_id">10</string>
     <string name="material_balance">Material balance</string>
+    <string name="failed_pin_login_attempt">Attempt</string>
 </resources>

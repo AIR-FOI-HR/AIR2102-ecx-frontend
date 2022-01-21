@@ -1,17 +1,17 @@
 package com.ecxfoi.wbl.wienerbergerfrontend.ui.login;
 
+import android.accounts.AuthenticatorException;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
 
 import com.ecxfoi.wbl.classic_login.ui.ClassicLoginFragment;
 import com.ecxfoi.wbl.interface_login.LoginFragment;
+import com.ecxfoi.wbl.pin_login.PinLoginFragment;
 import com.ecxfoi.wbl.wienerbergerfrontend.api.JwtAuthInterceptor;
 import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthenticationData;
 import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthenticationInterface;
@@ -36,8 +36,6 @@ import retrofit2.Response;
 public class LoginActivity extends BaseActivity<LoginViewModel>
 {
     private ActivityLoginBinding binding;
-
-    private NavController navController;
 
     private LoginFragment destFragment;
 
@@ -118,7 +116,8 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
 
     private void navigateTo(SettingsManager.LoginMethods destination)
     {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        if (destFragment != null)
+            getSupportFragmentManager().beginTransaction().remove((Fragment) destFragment).commit();
 
         switch (destination)
         {
@@ -130,8 +129,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
                 ((ClassicLoginFragment) destFragment).setEmailAndPassword(AuthService.getEmail(getApplicationContext()), AuthService.getPassword(getApplicationContext()));
                 break;
             case PIN:
-                prepareClassicLoginFragment(); // PLACEHOLDER FRAGMENT - REPLACE WITH PROPER MODULE
-                Toast.makeText(getApplicationContext(), "PIN", Toast.LENGTH_SHORT).show();
+                preparePinLoginFragment();
                 break;
             case FINGERPRINT:
                 prepareClassicLoginFragment(); // PLACEHOLDER FRAGMENT - REPLACE WITH PROPER MODULE
@@ -139,8 +137,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
                 break;
         }
 
-        ft.add(R.id.nav_host_fragment_login, (Fragment) destFragment);
-        ft.commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment_login, (Fragment) destFragment).commit();
     }
 
     private void prepareClassicLoginFragment()
@@ -160,6 +157,42 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
             catch (Exception e)
             {
                 destFragment.setErrorMessage(getResources().getString(R.string.error_no_connection));
+            }
+        });
+    }
+
+    private void preparePinLoginFragment()
+    {
+        destFragment = PinLoginFragment.newInstance();
+
+        destFragment.<PinLoginFragment.Listener>setListener(new PinLoginFragment.Listener()
+        {
+            @Override
+            public void onLoginAttempt(final String PIN)
+            {
+                try
+                {
+                    String actualPIN = AuthService.getPIN(getApplicationContext());
+
+                    if (!StringUtils.equals(PIN, actualPIN) ||
+                            StringUtils.length(PIN) != PinLoginFragment.maxAttempts)
+                    {
+                        throw new AuthenticatorException();
+                    }
+
+                    AuthService.createLoginRequest(AuthService.getEmail(getApplicationContext()), AuthService.getPassword(getApplicationContext()));
+                }
+                catch (Exception e)
+                {
+                    destFragment.setErrorMessage(getResources().getString(R.string.failed_pin_login_attempt));
+                }
+            }
+
+            @Override
+            public void onMultipleFailedAttempts()
+            {
+                SettingsManager.setRememberLogin(SettingsManager.LoginMethods.NONE, getApplicationContext());
+                navigateTo(SettingsManager.LoginMethods.NONE);
             }
         });
     }
