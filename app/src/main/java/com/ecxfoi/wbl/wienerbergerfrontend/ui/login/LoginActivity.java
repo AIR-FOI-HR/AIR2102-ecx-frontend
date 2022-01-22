@@ -133,27 +133,27 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
                 preparePinLoginFragment();
                 break;
             case FINGERPRINT:
-                prepareFingerprintLogiFragment();
+                prepareFingerprintLoginFragment();
                 break;
         }
 
         getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment_login, (Fragment) destFragment).commit();
     }
 
-    private void prepareFingerprintLogiFragment()
+    private void prepareFingerprintLoginFragment()
     {
         destFragment = FingerprintLoginFragment.newInstance();
 
-        destFragment.<FingerprintLoginFragment.LoginFragmentInterface>setListener((succesfull) -> {
+        destFragment.<FingerprintLoginFragment.Listener>setListener((successful) -> {
             try
             {
-                if (succesfull)
+                if (successful)
                 {
                     AuthService.createLoginRequest(AuthService.getEmail(LoginActivity.this), AuthService.getPassword(LoginActivity.this));
                 }
                 else
                 {
-                    navigateTo(SettingsManager.LoginMethods.CLASSIC);
+                    navigateTo(SettingsManager.LoginMethods.NONE);
                 }
             }
             catch (Exception e)

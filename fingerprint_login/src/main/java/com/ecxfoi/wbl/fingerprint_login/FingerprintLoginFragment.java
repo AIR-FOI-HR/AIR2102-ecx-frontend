@@ -30,23 +30,23 @@ public class FingerprintLoginFragment extends Fragment implements LoginFragment
     private Executor executor;
     private Activity activity;
 
-    @Override
-    public void setErrorMessage(final String errorMessage)
-    {
-
-    }
-
-    public interface LoginFragmentInterface
+    public interface Listener
     {
         void onLoginAttempt(boolean success);
     }
 
-    private LoginFragmentInterface listener;
+    private Listener listener;
 
     @Override
     public <T> void setListener(final T listener)
     {
-        this.listener = (FingerprintLoginFragment.LoginFragmentInterface) listener;
+        this.listener = (FingerprintLoginFragment.Listener) listener;
+    }
+
+    @Override
+    public void setErrorMessage(final String errorMessage)
+    {
+
     }
 
     public static FingerprintLoginFragment newInstance()
