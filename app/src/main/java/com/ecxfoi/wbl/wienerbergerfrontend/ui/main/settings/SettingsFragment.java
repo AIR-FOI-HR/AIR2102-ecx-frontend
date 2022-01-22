@@ -30,19 +30,16 @@ import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
-public class SettingsFragment extends BaseFragment<SettingsViewModel>
-{
+public class SettingsFragment extends BaseFragment<SettingsViewModel> {
     @Inject
     ViewModelProvider.Factory factory;
 
-    private static class SpinnerEntry
-    {
+    private static class SpinnerEntry {
         public int index;
         public String description;
         public SettingsManager.LoginMethods method;
 
-        public SpinnerEntry(final int index, final String description, final SettingsManager.LoginMethods method)
-        {
+        public SpinnerEntry(final int index, final String description, final SettingsManager.LoginMethods method) {
             this.index = index;
             this.description = description;
             this.method = method;
@@ -54,19 +51,16 @@ public class SettingsFragment extends BaseFragment<SettingsViewModel>
     private ArrayList<SpinnerEntry> loginMethodEntries;
 
     @Override
-    public SettingsViewModel getViewModel()
-    {
+    public SettingsViewModel getViewModel() {
         viewModel = new ViewModelProvider(this, factory).get(SettingsViewModel.class);
         return viewModel;
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = SettingsFragmentBinding.inflate(inflater, container, false);
 
-        loginMethodEntries = new ArrayList<SpinnerEntry>()
-        {
+        loginMethodEntries = new ArrayList<SpinnerEntry>() {
             {
                 add(new SpinnerEntry(0, getString(R.string.classic_login), CLASSIC));
                 add(new SpinnerEntry(1, getString(R.string.pin_login), PIN));
@@ -74,6 +68,7 @@ public class SettingsFragment extends BaseFragment<SettingsViewModel>
             }
         };
 
+        checkFingerprintAvailability();
         initNavigation();
         initSpinner();
 
@@ -82,17 +77,20 @@ public class SettingsFragment extends BaseFragment<SettingsViewModel>
         return binding.getRoot();
     }
 
-    private void initSpinner()
-    {
+    private void checkFingerprintAvailability() {
+        if (!viewModel.isFingerprintAvailable(getActivity())) {
+            loginMethodEntries.removeIf(entry -> entry.description.contains("Fingerprint"));
+        }
+    }
+
+    private void initSpinner() {
         final Spinner spinner = binding.loginMethodSpinner;
 
         List<String> options = loginMethodEntries.stream().map(spinnerEntry -> spinnerEntry.description).collect(Collectors.toList());
 
-        final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, options)
-        {
+        final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, options) {
             @Override
-            public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent)
-            {
+            public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
                 return super.getDropDownView(position, convertView, parent);
             }
         };
@@ -100,49 +98,37 @@ public class SettingsFragment extends BaseFragment<SettingsViewModel>
         spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
         spinner.setAdapter(spinnerArrayAdapter);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             boolean firstTime = true;
 
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
-                if (firstTime)
-                {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (firstTime) {
                     firstTime = false;
-                }
-                else
-                {
+                } else {
                     setNewMethod(position);
                 }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent)
-            {
+            public void onNothingSelected(AdapterView<?> parent) {
             }
         });
     }
 
-    private void initNavigation()
-    {
-        binding.pinEditText.addTextChangedListener(new TextWatcher()
-        {
+    private void initNavigation() {
+        binding.pinEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(final CharSequence charSequence, final int i, final int i1, final int i2)
-            {
+            public void beforeTextChanged(final CharSequence charSequence, final int i, final int i1, final int i2) {
             }
 
             @Override
-            public void afterTextChanged(final Editable editable)
-            {
+            public void afterTextChanged(final Editable editable) {
             }
 
             @Override
-            public void onTextChanged(final CharSequence charSequence, final int start, final int before, final int count)
-            {
-                if (charSequence.length() == 4)
-                {
+            public void onTextChanged(final CharSequence charSequence, final int start, final int before, final int count) {
+                if (charSequence.length() == 4) {
                     AuthService.setPIN(charSequence.toString(), getContext());
                     viewModel.setDoRememberLogin(PIN, getContext());
                     if (count == 1) // If manual change happened, notify that this new PIN is actually remembered.
@@ -154,15 +140,13 @@ public class SettingsFragment extends BaseFragment<SettingsViewModel>
         });
 
         SettingsManager.LoginMethods currentMethod = SettingsManager.getRememberLogin(getContext());
-        if (currentMethod == PIN)
-        {
+        if (currentMethod == PIN) {
             Toast.makeText(getContext(), R.string.enter_new_pin_message, Toast.LENGTH_LONG).show();
         }
         viewModel.setDoRememberLogin(currentMethod, getContext());
     }
 
-    private void setNewMethod(final int itemIndex)
-    {
+    private void setNewMethod(final int itemIndex) {
         SettingsManager.LoginMethods newMethod = loginMethodEntries.stream().filter(spinnerEntry -> spinnerEntry.index == itemIndex).findAny().orElse(loginMethodEntries.get(0)).method;
         viewModel.setDoRememberLogin(newMethod, getContext());
     }

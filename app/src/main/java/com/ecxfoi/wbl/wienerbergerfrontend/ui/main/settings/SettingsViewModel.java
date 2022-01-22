@@ -29,7 +29,6 @@ public class SettingsViewModel extends ViewModel
     public ObservableField<Integer> selectedItemIndex;
     public ObservableField<String> pin;
     public ObservableField<AdapterView.OnItemSelectedListener> arrayListAdapter;
-    public static ObservableField<Boolean> fingerprintAvailable;
 
     @Inject
     public SettingsViewModel()
@@ -40,7 +39,6 @@ public class SettingsViewModel extends ViewModel
         selectedItemIndex = new ObservableField<>();
         pin = new ObservableField<>("");
         arrayListAdapter = new ObservableField<>();
-        fingerprintAvailable = new ObservableField<>(true);
     }
 
     public void onRememberLogin(final CompoundButton compoundButton, final boolean b)
@@ -66,13 +64,11 @@ public class SettingsViewModel extends ViewModel
         selectedItemIndex.set(getMethodSpinnerIndex(method));
     }
 
-    public void checkFingerprintAvailability(Activity context)
+    public Boolean isFingerprintAvailable(Activity context)
     {
         BiometricManager biometricManager = BiometricManager.from(context);
 
-        boolean isAvailable = biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK) == BiometricManager.BIOMETRIC_SUCCESS;
-
-        fingerprintAvailable.set(isAvailable);
+        return biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK) == BiometricManager.BIOMETRIC_SUCCESS;
     }
 
     private Integer getMethodSpinnerIndex(final SettingsManager.LoginMethods method)
