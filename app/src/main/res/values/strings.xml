@@ -91,4 +91,6 @@
     <string name="material_balance_example_id">10</string>
     <string name="material_balance">Material balance</string>
     <string name="failed_pin_login_attempt">Attempt</string>
+    <string name="pin_description">4-digit PIN:</string>
+    <string name="enter_new_pin_message">Enter new PIN to overwrite current value.</string>
 </resources>

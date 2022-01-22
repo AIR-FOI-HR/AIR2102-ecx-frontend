@@ -19,7 +19,7 @@ import com.ecxfoi.wbl.pin_login.databinding.PinLoginFragmentBinding;
 
 public class PinLoginFragment extends Fragment implements LoginFragment
 {
-    private int numberOfAttempts = 0;
+    private int attemptCount = 1;
     private PinLoginFragmentBinding binding;
     private PinLoginViewModel mViewModel;
 
@@ -68,7 +68,7 @@ public class PinLoginFragment extends Fragment implements LoginFragment
             }
 
             @Override
-            public void onTextChanged(final CharSequence charSequence, final int i, final int i1, final int i2)
+            public void onTextChanged(final CharSequence charSequence, final int start, final int before, final int count)
             {
                 if (charSequence.length() == 4)
                 {
@@ -82,13 +82,13 @@ public class PinLoginFragment extends Fragment implements LoginFragment
     @Override
     public void setErrorMessage(final String errorMessage)
     {
-        numberOfAttempts++;
-        if (numberOfAttempts == maxAttempts)
+        attemptCount++;
+        if (attemptCount > maxAttempts)
         {
             mListener.onMultipleFailedAttempts();
             return;
         }
-        mViewModel.setErrorMessage(errorMessage + ": " + numberOfAttempts + "/" + maxAttempts);
+        mViewModel.setErrorMessage(errorMessage + ": " + attemptCount + "/" + maxAttempts);
         isInputAvaliable(true);
     }
 
@@ -100,7 +100,7 @@ public class PinLoginFragment extends Fragment implements LoginFragment
 
     private void isInputAvaliable(final boolean available)
     {
-        if (!available) mViewModel.setErrorMessage("Please wait");
+        if (!available) mViewModel.setInfoMessage("Please wait");
         else binding.pinTextBox.setText("");
         binding.pinTextBox.setEnabled(available);
     }

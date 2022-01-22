@@ -174,8 +174,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
                 {
                     String actualPIN = AuthService.getPIN(getApplicationContext());
 
-                    if (!StringUtils.equals(PIN, actualPIN) ||
-                            StringUtils.length(PIN) != PinLoginFragment.maxAttempts)
+                    if (!StringUtils.equals(PIN, actualPIN))
                     {
                         throw new AuthenticatorException();
                     }

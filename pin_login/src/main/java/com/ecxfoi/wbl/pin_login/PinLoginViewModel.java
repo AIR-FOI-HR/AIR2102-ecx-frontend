@@ -5,15 +5,24 @@ import androidx.lifecycle.ViewModel;
 
 public class PinLoginViewModel extends ViewModel
 {
-    public ObservableField<String> tvErrorMessage;
+    public ObservableField<Boolean> error;
+    public ObservableField<String> tvMessage;
 
     public PinLoginViewModel()
     {
-        tvErrorMessage = new ObservableField<>("");
+        error = new ObservableField<>(false);
+        tvMessage = new ObservableField<>("");
     }
 
-    public void setErrorMessage(final String s)
+    public void setErrorMessage(final String errorMessage)
     {
-        tvErrorMessage.set(s);
+        error.set(true);
+        tvMessage.set(errorMessage);
+    }
+
+    public void setInfoMessage(final String infoMessage)
+    {
+        error.set(false);
+        tvMessage.set(infoMessage);
     }
 }
