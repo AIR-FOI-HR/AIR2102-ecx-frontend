@@ -1,4 +1,4 @@
-package com.ecxfoi.wbl.login_interface;
+package com.ecxfoi.wbl.pin_login;
 
 import org.junit.Test;
 

@@ -74,7 +74,6 @@
     <string name="delivery_note_id">Delivery note ID:</string>
     <string name="delivery_note_order_number">Order number:</string>
     <string name="delivery_note_ship_to_party">Ship-to-party:</string>
-    <string name="material_balance_quantity">Delivered date:</string>
     <string name="delivery_note_example_id">0532498326</string>
     <string name="delivery_note_example_order_number">0213214259</string>
     <string name="delivery_note_example_ship_to_party">NORTH GEORGIA BRICK CO-DISTR NORTH GEORGIA BRICK CO-DISTR</string>
@@ -91,4 +90,7 @@
     <string name="material_balance_example_name">Wood 10m</string>
     <string name="material_balance_example_id">10</string>
     <string name="material_balance">Material balance</string>
+    <string name="failed_pin_login_attempt">Attempt</string>
+    <string name="pin_description">4-digit PIN:</string>
+    <string name="enter_new_pin_message">Enter new PIN to overwrite current value.</string>
 </resources>
