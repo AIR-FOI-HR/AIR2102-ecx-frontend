@@ -204,6 +204,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
 
     private void switchToCompanySelection()
     {
+        finishAndRemoveTask();
         Intent intent = new Intent(this, CompanySelectionActivity.class);
         startActivity(intent);
     }

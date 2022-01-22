@@ -76,7 +76,7 @@ public class CompanySelectionActivity extends BaseActivity<CompanySelectionViewM
         setContentView(binding.getRoot());
 
         btnContinue = binding.btnNext;
-        
+
         tvAddressBar = binding.tvAddressBar;
         tvStreet = binding.tvAddressStreet;
         tvPostal = binding.tvAddressPostal;
@@ -174,6 +174,7 @@ public class CompanySelectionActivity extends BaseActivity<CompanySelectionViewM
 
     private void continueToMainMenu()
     {
+        finishAndRemoveTask();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
