@@ -76,7 +76,7 @@ public class FingerprintLoginFragment extends Fragment implements LoginFragment
         executor = ContextCompat.getMainExecutor(activity);
         new BiometricPrompt.Builder(activity)
                 .setTitle("Wienerberger")
-                .setDescription("Please be so kind as to lightly tap your fingerprint sensor")
+                .setDescription("Please be so kind as to lightly tap the sensor")
                 .setNegativeButton("Cancel", executor,
                         (dialog, which) -> {
                             listener.onLoginAttempt(false);
