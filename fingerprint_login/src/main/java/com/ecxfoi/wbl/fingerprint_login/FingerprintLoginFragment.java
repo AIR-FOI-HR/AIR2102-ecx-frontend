@@ -27,6 +27,8 @@ public class FingerprintLoginFragment extends Fragment implements LoginFragment
     public interface Listener
     {
         void onLoginAttempt(boolean success);
+
+        void onMultipleFailedAttempts();
     }
 
     private Listener listener;
@@ -98,7 +100,6 @@ public class FingerprintLoginFragment extends Fragment implements LoginFragment
                             public void onAuthenticationFailed()
                             {
                                 super.onAuthenticationFailed();
-                                listener.onLoginAttempt(false);
                             }
                         });
     }

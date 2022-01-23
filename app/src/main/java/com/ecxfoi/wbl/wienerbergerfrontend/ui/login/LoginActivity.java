@@ -144,21 +144,33 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
     {
         destFragment = FingerprintLoginFragment.newInstance();
 
-        destFragment.<FingerprintLoginFragment.Listener>setListener((successful) -> {
-            try
+        destFragment.<FingerprintLoginFragment.Listener>setListener(new FingerprintLoginFragment.Listener()
+        {
+            @Override
+            public void onLoginAttempt(final boolean success)
             {
-                if (successful)
+                try
                 {
-                    AuthService.createLoginRequest(AuthService.getEmail(LoginActivity.this), AuthService.getPassword(LoginActivity.this));
+                    if (success)
+                    {
+                        AuthService.createLoginRequest(AuthService.getEmail(LoginActivity.this), AuthService.getPassword(LoginActivity.this));
+                    }
+                    else
+                    {
+                        navigateTo(SettingsManager.LoginMethods.NONE);
+                    }
                 }
-                else
+                catch (Exception e)
                 {
-                    navigateTo(SettingsManager.LoginMethods.NONE);
+                    destFragment.setErrorMessage(getResources().getString(R.string.error_no_connection));
                 }
             }
-            catch (Exception e)
+
+            @Override
+            public void onMultipleFailedAttempts()
             {
-                destFragment.setErrorMessage(getResources().getString(R.string.error_no_connection));
+                SettingsManager.setRememberLogin(SettingsManager.LoginMethods.NONE, getApplicationContext());
+                navigateTo(SettingsManager.LoginMethods.NONE);
             }
         });
     }
