@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">fingerprint_login</string>
     <string name="touch_sensor">Please touch the fingerprint sensor...</string>
+    <string name="biometric_prompt_desc">Please be so kind as to lightly tap the sensor</string>
+    <string name="biometric_prompt_title">Wienerberger</string>
+    <string name="biometric_prompt_cancel_text">Cancel</string>
 </resources>
