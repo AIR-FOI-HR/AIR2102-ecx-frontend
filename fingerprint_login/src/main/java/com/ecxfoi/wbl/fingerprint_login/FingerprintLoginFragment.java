@@ -27,8 +27,6 @@ public class FingerprintLoginFragment extends Fragment implements LoginFragment
     public interface Listener
     {
         void onLoginAttempt(boolean success);
-
-        void onMultipleFailedAttempts();
     }
 
     private Listener listener;
@@ -72,7 +70,7 @@ public class FingerprintLoginFragment extends Fragment implements LoginFragment
         final Executor executor = ContextCompat.getMainExecutor(activity);
         new BiometricPrompt.Builder(activity)
                 .setTitle(getString(R.string.biometric_prompt_title))
-                .setDescription(getString(R.string.biometric_prompt_desc))
+                .setDescription(getString(R.string.biometric_prompt_description))
                 .setNegativeButton(getString(R.string.biometric_prompt_cancel_text), executor,
                         (dialog, which) -> {
                             listener.onLoginAttempt(false);

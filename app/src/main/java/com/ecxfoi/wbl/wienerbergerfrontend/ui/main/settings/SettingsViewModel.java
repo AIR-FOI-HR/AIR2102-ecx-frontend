@@ -64,13 +64,6 @@ public class SettingsViewModel extends ViewModel
         selectedItemIndex.set(getMethodSpinnerIndex(method));
     }
 
-    public Boolean isFingerprintAvailable(Activity context)
-    {
-        BiometricManager biometricManager = BiometricManager.from(context);
-
-        return biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK) == BiometricManager.BIOMETRIC_SUCCESS;
-    }
-
     private Integer getMethodSpinnerIndex(final SettingsManager.LoginMethods method)
     {
         return method.ordinal() - 1; // Decrement because indexes in list go by 0, and that enum value is NULL.

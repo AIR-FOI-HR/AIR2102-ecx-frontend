@@ -85,10 +85,9 @@ public class SettingsFragment extends BaseFragment<SettingsViewModel>
 
     private void checkFingerprintAvailability()
     {
-        if (!viewModel.isFingerprintAvailable(getActivity()))
+        if (!SettingsManager.isFingerprintAvailable(getActivity()))
         {
             loginMethodEntries.removeIf(entry -> entry.description.contains("Fingerprint"));
-            SettingsManager.setRememberLogin(CLASSIC, getContext());
         }
     }
 

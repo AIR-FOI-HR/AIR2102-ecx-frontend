@@ -120,6 +120,11 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
         if (destFragment != null)
             getSupportFragmentManager().beginTransaction().remove((Fragment) destFragment).commit();
 
+        if (destination == SettingsManager.LoginMethods.FINGERPRINT && !SettingsManager.isFingerprintAvailable(this))
+        {
+            SettingsManager.setRememberLogin(SettingsManager.LoginMethods.NONE, this);
+        }
+
         switch (destination)
         {
             case NONE:
@@ -144,33 +149,21 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
     {
         destFragment = FingerprintLoginFragment.newInstance();
 
-        destFragment.<FingerprintLoginFragment.Listener>setListener(new FingerprintLoginFragment.Listener()
-        {
-            @Override
-            public void onLoginAttempt(final boolean success)
+        destFragment.<FingerprintLoginFragment.Listener>setListener(success -> {
+            try
             {
-                try
+                if (success)
                 {
-                    if (success)
-                    {
-                        AuthService.createLoginRequest(AuthService.getEmail(LoginActivity.this), AuthService.getPassword(LoginActivity.this));
-                    }
-                    else
-                    {
-                        navigateTo(SettingsManager.LoginMethods.NONE);
-                    }
+                    AuthService.createLoginRequest(AuthService.getEmail(LoginActivity.this), AuthService.getPassword(LoginActivity.this));
                 }
-                catch (Exception e)
+                else
                 {
-                    destFragment.setErrorMessage(getResources().getString(R.string.error_no_connection));
+                    navigateTo(SettingsManager.LoginMethods.NONE);
                 }
             }
-
-            @Override
-            public void onMultipleFailedAttempts()
+            catch (Exception e)
             {
-                SettingsManager.setRememberLogin(SettingsManager.LoginMethods.NONE, getApplicationContext());
-                navigateTo(SettingsManager.LoginMethods.NONE);
+                destFragment.setErrorMessage(getResources().getString(R.string.error_no_connection));
             }
         });
     }
