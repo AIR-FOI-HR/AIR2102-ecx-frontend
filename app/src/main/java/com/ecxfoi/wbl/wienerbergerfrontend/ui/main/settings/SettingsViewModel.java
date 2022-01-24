@@ -4,12 +4,16 @@ import static com.ecxfoi.wbl.wienerbergerfrontend.utils.SettingsManager.LoginMet
 import static com.ecxfoi.wbl.wienerbergerfrontend.utils.SettingsManager.LoginMethods.NONE;
 import static com.ecxfoi.wbl.wienerbergerfrontend.utils.SettingsManager.LoginMethods.PIN;
 
+import android.app.Activity;
+import android.os.Build;
 import android.content.Context;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
 
+import androidx.annotation.RequiresApi;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.ViewModel;
+import androidx.biometric.BiometricManager;
 
 import com.ecxfoi.wbl.wienerbergerfrontend.utils.SettingsManager;
 

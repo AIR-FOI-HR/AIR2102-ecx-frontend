@@ -74,12 +74,21 @@ public class SettingsFragment extends BaseFragment<SettingsViewModel>
             }
         };
 
+        checkFingerprintAvailability();
         initNavigation();
         initSpinner();
 
         binding.setSettingsViewModel(viewModel);
 
         return binding.getRoot();
+    }
+
+    private void checkFingerprintAvailability()
+    {
+        if (!SettingsManager.isFingerprintAvailable(getActivity()))
+        {
+            loginMethodEntries.removeIf(entry -> entry.description.contains("Fingerprint"));
+        }
     }
 
     private void initSpinner()

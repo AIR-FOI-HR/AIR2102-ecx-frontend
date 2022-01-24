@@ -93,4 +93,6 @@
     <string name="failed_pin_login_attempt">Attempt</string>
     <string name="pin_description">4-digit PIN:</string>
     <string name="enter_new_pin_message">Enter new PIN to overwrite current value.</string>
+    <string name="login_fingerprint_temporary_lockout_error">Fingerprint sensor reports too many failed attempts. It will reenable shortly.</string>
+    <string name="login_fingerprint_permanent_lockout_error">Fingerprint login has been permanently disabled. Please unlock it in the settings before proceeding.</string>
 </resources>

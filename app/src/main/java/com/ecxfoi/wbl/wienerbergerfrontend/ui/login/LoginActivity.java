@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.ecxfoi.wbl.classic_login.ui.ClassicLoginFragment;
+import com.ecxfoi.wbl.fingerprint_login.FingerprintLoginFragment;
 import com.ecxfoi.wbl.interface_login.LoginFragment;
 import com.ecxfoi.wbl.pin_login.PinLoginFragment;
 import com.ecxfoi.wbl.wienerbergerfrontend.api.JwtAuthInterceptor;
@@ -119,6 +120,12 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
         if (destFragment != null)
             getSupportFragmentManager().beginTransaction().remove((Fragment) destFragment).commit();
 
+        if (destination == SettingsManager.LoginMethods.FINGERPRINT && !SettingsManager.isFingerprintAvailable(this))
+        {
+            destination = SettingsManager.LoginMethods.NONE;
+            SettingsManager.setRememberLogin(SettingsManager.LoginMethods.NONE, this);
+        }
+
         switch (destination)
         {
             case NONE:
@@ -132,12 +139,40 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
                 preparePinLoginFragment();
                 break;
             case FINGERPRINT:
-                prepareClassicLoginFragment(); // PLACEHOLDER FRAGMENT - REPLACE WITH PROPER MODULE
-                Toast.makeText(getApplicationContext(), "FINGERPRINT", Toast.LENGTH_SHORT).show();
+                prepareFingerprintLoginFragment();
                 break;
         }
 
         getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment_login, (Fragment) destFragment).commit();
+    }
+
+    private void prepareFingerprintLoginFragment()
+    {
+        destFragment = FingerprintLoginFragment.newInstance();
+
+        destFragment.<FingerprintLoginFragment.Listener>setListener((success, errorCode) -> {
+            try
+            {
+                if (success)
+                {
+                    AuthService.createLoginRequest(AuthService.getEmail(LoginActivity.this), AuthService.getPassword(LoginActivity.this));
+                    return;
+                }
+                else if (errorCode == 7)
+                {
+                    Toast.makeText(LoginActivity.this, R.string.login_fingerprint_temporary_lockout_error, Toast.LENGTH_SHORT).show();
+                }
+                else if (errorCode == 9)
+                {
+                    Toast.makeText(LoginActivity.this, R.string.login_fingerprint_permanent_lockout_error, Toast.LENGTH_SHORT).show();
+                }
+                navigateTo(SettingsManager.LoginMethods.NONE);
+            }
+            catch (Exception e)
+            {
+                destFragment.setErrorMessage(getResources().getString(R.string.error_no_connection));
+            }
+        });
     }
 
     private void prepareClassicLoginFragment()
