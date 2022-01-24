@@ -156,6 +156,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
                 if (success)
                 {
                     AuthService.createLoginRequest(AuthService.getEmail(LoginActivity.this), AuthService.getPassword(LoginActivity.this));
+                    return;
                 }
                 else if (errorCode == 7)
                 {
@@ -165,10 +166,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
                 {
                     Toast.makeText(LoginActivity.this, R.string.login_fingerprint_permanent_lockout_error, Toast.LENGTH_SHORT).show();
                 }
-                else
-                {
-                    navigateTo(SettingsManager.LoginMethods.NONE);
-                }
+                navigateTo(SettingsManager.LoginMethods.NONE);
             }
             catch (Exception e)
             {
