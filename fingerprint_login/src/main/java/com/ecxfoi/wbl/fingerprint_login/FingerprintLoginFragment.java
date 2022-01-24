@@ -26,7 +26,7 @@ public class FingerprintLoginFragment extends Fragment implements LoginFragment
 
     public interface Listener
     {
-        void onLoginAttempt(boolean success);
+        void onLoginAttempt(boolean success, int errorCode);
     }
 
     private Listener listener;
@@ -73,7 +73,7 @@ public class FingerprintLoginFragment extends Fragment implements LoginFragment
                 .setDescription(getString(R.string.biometric_prompt_description))
                 .setNegativeButton(getString(R.string.biometric_prompt_cancel_text), executor,
                         (dialog, which) -> {
-                            listener.onLoginAttempt(false);
+                            listener.onLoginAttempt(false, -1);
                         }
                 )
                 .build()
@@ -84,14 +84,15 @@ public class FingerprintLoginFragment extends Fragment implements LoginFragment
                             public void onAuthenticationError(int errorCode, @NonNull CharSequence errString)
                             {
                                 super.onAuthenticationError(errorCode, errString);
-                                listener.onLoginAttempt(false);
+
+                                listener.onLoginAttempt(false, errorCode);
                             }
 
                             @Override
                             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result)
                             {
                                 super.onAuthenticationSucceeded(result);
-                                listener.onLoginAttempt(true);
+                                listener.onLoginAttempt(true, -1);
                             }
 
                             @Override

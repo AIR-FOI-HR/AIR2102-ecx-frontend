@@ -122,6 +122,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
 
         if (destination == SettingsManager.LoginMethods.FINGERPRINT && !SettingsManager.isFingerprintAvailable(this))
         {
+            destination = SettingsManager.LoginMethods.NONE;
             SettingsManager.setRememberLogin(SettingsManager.LoginMethods.NONE, this);
         }
 
@@ -149,12 +150,20 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
     {
         destFragment = FingerprintLoginFragment.newInstance();
 
-        destFragment.<FingerprintLoginFragment.Listener>setListener(success -> {
+        destFragment.<FingerprintLoginFragment.Listener>setListener((success, errorCode) -> {
             try
             {
                 if (success)
                 {
                     AuthService.createLoginRequest(AuthService.getEmail(LoginActivity.this), AuthService.getPassword(LoginActivity.this));
+                }
+                else if (errorCode == 7)
+                {
+                    Toast.makeText(LoginActivity.this, R.string.login_fingerprint_temporary_lockout_error, Toast.LENGTH_SHORT).show();
+                }
+                else if (errorCode == 9)
+                {
+                    Toast.makeText(LoginActivity.this, R.string.login_fingerprint_permanent_lockout_error, Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
