@@ -22,9 +22,7 @@ public class APIUtil
         {
             e.printStackTrace();
         }
-        finally
-        {
-            return errorResponse;
-        }
+
+        return errorResponse;
     }
 }

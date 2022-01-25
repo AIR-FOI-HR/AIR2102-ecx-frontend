@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData;
 import com.ecxfoi.wbl.wienerbergerfrontend.api.APIService;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.OrderData;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.OrderDetailsData;
-import com.ecxfoi.wbl.wienerbergerfrontend.models.TicketData;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.WienerbergerResponse;
 
 import java.util.ArrayList;
@@ -59,7 +58,7 @@ public class OrdersRepository
             @Override
             public void onResponse(final Call<WienerbergerResponse<OrderDetailsData>> call, final Response<WienerbergerResponse<OrderDetailsData>> response)
             {
-                orderData.setValue((OrderDetailsData) response.body().getData());
+                orderData.setValue(response.body().getData());
             }
 
             @Override

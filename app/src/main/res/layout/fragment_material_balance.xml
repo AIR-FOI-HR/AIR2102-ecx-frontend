@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.view.View" />
 
         <variable
@@ -36,6 +36,7 @@
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                tools:text="@string/no_materials_found"
                 android:text="@{materialBalanceViewModel.errorMessage}"
                 android:visibility="@{materialBalanceViewModel.errorMessage.length() > 0 ? View.VISIBLE : View.GONE}"
                 android:textColor="@color/wienerberger_red"
@@ -52,17 +53,6 @@
                 android:background="@drawable/item_divider_both"
                 android:layout_height="0dp"
                 android:layout_width="match_parent"
-                android:layout_weight="1"
-                />
-
-        <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnBack"
-                style="@style/button_red"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/back"
-                android:layout_gravity="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:layout_weight="1" />
     </LinearLayout>
 </layout>

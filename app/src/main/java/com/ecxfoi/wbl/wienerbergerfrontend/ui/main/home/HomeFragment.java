@@ -22,20 +22,16 @@ public class HomeFragment extends BaseFragment<HomeViewModel>
     @Inject
     ViewModelProvider.Factory factory;
 
-    private HomeViewModel viewModel;
-    private FragmentHomeBinding binding;
-
     @Override
     public HomeViewModel getViewModel()
     {
-        viewModel = new ViewModelProvider(this, factory).get(HomeViewModel.class);
-        return viewModel;
+        return new ViewModelProvider(this, factory).get(HomeViewModel.class);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        final com.ecxfoi.wbl.wienerbergerfrontend.databinding.FragmentHomeBinding binding = FragmentHomeBinding.inflate(inflater, container, false);
 
         final ImageView ivOrders = binding.ivOrders;
         final ImageView ivMaterialBalance = binding.ivMaterialBalanceView;

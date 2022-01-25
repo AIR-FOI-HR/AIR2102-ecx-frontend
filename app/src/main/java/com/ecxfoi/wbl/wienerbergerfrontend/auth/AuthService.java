@@ -14,6 +14,7 @@ import retrofit2.Response;
 
 public class AuthService
 {
+    public static AuthenticationInterface authenticationInterface;
     private static APIService apiService;
 
     @Inject
@@ -21,8 +22,6 @@ public class AuthService
     {
         apiService = _apiService;
     }
-
-    public static AuthenticationInterface authenticationInterface;
 
     public static void createLoginRequest(String email, String password)
     {

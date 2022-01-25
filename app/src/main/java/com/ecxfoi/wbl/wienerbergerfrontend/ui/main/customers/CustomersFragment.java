@@ -14,12 +14,10 @@ public class CustomersFragment extends BaseFragment<CustomersViewModel>
     @Inject
     ViewModelProvider.Factory factory;
 
-    private CustomersViewModel viewModel;
-
     @Override
     public CustomersViewModel getViewModel()
     {
-        viewModel = new ViewModelProvider(this, factory).get(CustomersViewModel.class);
+        final CustomersViewModel viewModel = new ViewModelProvider(this, factory).get(CustomersViewModel.class);
         Intent intent = new Intent(getContext(), CompanySelectionActivity.class);
         startActivity(intent);
         return viewModel;

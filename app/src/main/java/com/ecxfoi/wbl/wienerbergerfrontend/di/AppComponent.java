@@ -14,20 +14,21 @@ import dagger.android.DaggerApplication;
 import dagger.android.support.AndroidSupportInjectionModule;
 
 @Singleton
-@Component(modules={AndroidSupportInjectionModule.class,
+@Component(modules = {AndroidSupportInjectionModule.class,
         AppModule.class,
         ActivityBuilder.class,
         RetrofitModule.class,
         ServiceBuilder.class})
 public interface AppComponent extends AndroidInjector<DaggerApplication>
 {
+    void inject(App application);
+
     @Component.Builder
     interface Builder
     {
         @BindsInstance
         Builder application(Application application);
+
         AppComponent build();
     }
-
-    void inject(App application);
 }

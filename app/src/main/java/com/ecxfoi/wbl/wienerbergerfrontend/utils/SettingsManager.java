@@ -26,14 +26,6 @@ public class SettingsManager
         return preferences.getString(key, null);
     }
 
-    public enum LoginMethods
-    {
-        NONE, // -> don't remember login, use classic login for manual entering username/password
-        CLASSIC, // -> use classic login with username/password already there
-        PIN, // -> use 4-digit PIN number to log-in
-        FINGERPRINT // -> user fingerprint scanner
-    }
-
     public static void setRememberLogin(LoginMethods selectedLoginMethod, Context context)
     {
         changeParameter("remember_login", selectedLoginMethod.toString(), context);
@@ -57,5 +49,13 @@ public class SettingsManager
         androidx.biometric.BiometricManager biometricManager = androidx.biometric.BiometricManager.from(context);
 
         return biometricManager.canAuthenticate(androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_WEAK) == BiometricManager.BIOMETRIC_SUCCESS;
+    }
+
+    public enum LoginMethods
+    {
+        NONE, // -> don't remember login, use classic login for manual entering username/password
+        CLASSIC, // -> use classic login with username/password already there
+        PIN, // -> use 4-digit PIN number to log-in
+        FINGERPRINT // -> user fingerprint scanner
     }
 }

@@ -13,22 +13,18 @@ import com.ecxfoi.wbl.classic_login.ui.ClassicLoginFragment;
 import com.ecxfoi.wbl.fingerprint_login.FingerprintLoginFragment;
 import com.ecxfoi.wbl.interface_login.LoginFragment;
 import com.ecxfoi.wbl.pin_login.PinLoginFragment;
+import com.ecxfoi.wbl.wienerbergerfrontend.R;
 import com.ecxfoi.wbl.wienerbergerfrontend.api.JwtAuthInterceptor;
+import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthService;
 import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthenticationData;
 import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthenticationInterface;
 import com.ecxfoi.wbl.wienerbergerfrontend.base.BaseActivity;
+import com.ecxfoi.wbl.wienerbergerfrontend.databinding.ActivityLoginBinding;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.WienerbergerResponse;
 import com.ecxfoi.wbl.wienerbergerfrontend.ui.companyselection.CompanySelectionActivity;
-import com.ecxfoi.wbl.wienerbergerfrontend.R;
-import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthService;
-import com.ecxfoi.wbl.wienerbergerfrontend.databinding.ActivityLoginBinding;
 import com.ecxfoi.wbl.wienerbergerfrontend.utils.SettingsManager;
 
 import org.apache.commons.lang.StringUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 
 import javax.inject.Inject;
 
@@ -36,8 +32,6 @@ import retrofit2.Response;
 
 public class LoginActivity extends BaseActivity<LoginViewModel>
 {
-    private ActivityLoginBinding binding;
-
     private LoginFragment destFragment;
 
     @Inject
@@ -59,7 +53,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
     {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        final com.ecxfoi.wbl.wienerbergerfrontend.databinding.ActivityLoginBinding binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         AuthService.authenticationInterface = new AuthenticationInterface()
@@ -85,19 +79,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
                 }
                 else
                 {
-                    int errorResCode = R.string.login_failed_generic;
-
-                    try
-                    {
-                        // Casting to real objects just didn't work so easier variant was implemented here:
-                        JSONObject jsonObject = new JSONObject(response.errorBody().string());
-
-                        errorResCode = R.string.login_failed_credentials;
-                    }
-                    catch (JSONException | IOException e)
-                    {
-                        e.printStackTrace();
-                    }
+                    int errorResCode = R.string.login_failed_credentials;
 
                     destFragment.setErrorMessage(getResources().getString(errorResCode));
                 }

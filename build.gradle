@@ -6,9 +6,23 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.4'
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.3"
+    }
+}
 
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+plugins {
+    id "org.sonarqube" version "3.3"
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectName", "WienerbergerApp"
+        property "sonar.projectKey", "com.ecxfoi.wbl.wienerbergerfrontend"
+        property "sonar.host.url", "http://127.0.0.1:9000"
+        property "sonar.language", "java"
+        property "sonar.sources", "src/main/"
+        property "sonar.login", "admin"
+        property "sonar.password", "admin1"
     }
 }
 

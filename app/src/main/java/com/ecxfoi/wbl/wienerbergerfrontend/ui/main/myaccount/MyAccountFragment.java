@@ -41,6 +41,11 @@ public class MyAccountFragment extends BaseFragment<MyAccountViewModel>
 
         initNavigation();
 
+        viewModel.setMessagesFromResources(getString(R.string.error_check_field),
+                getString(R.string.info_user_data_updated),
+                getString(R.string.error_check_fields),
+                getString(R.string.error_no_connection));
+
         viewModel.getCurrentUserData().observe(getViewLifecycleOwner(), this::setUserData);
 
         return binding.getRoot();

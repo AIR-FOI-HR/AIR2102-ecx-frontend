@@ -34,24 +34,10 @@ public class SettingsFragment extends BaseFragment<SettingsViewModel>
 {
     @Inject
     ViewModelProvider.Factory factory;
-
-    private static class SpinnerEntry
-    {
-        public int index;
-        public String description;
-        public SettingsManager.LoginMethods method;
-
-        public SpinnerEntry(final int index, final String description, final SettingsManager.LoginMethods method)
-        {
-            this.index = index;
-            this.description = description;
-            this.method = method;
-        }
-    }
-
     private SettingsViewModel viewModel;
     private SettingsFragmentBinding binding;
     private ArrayList<SpinnerEntry> loginMethodEntries;
+    private SettingsManager.LoginMethods currentMethod;
 
     @Override
     public SettingsViewModel getViewModel()
@@ -74,6 +60,8 @@ public class SettingsFragment extends BaseFragment<SettingsViewModel>
             }
         };
 
+        currentMethod = SettingsManager.getRememberLogin(getContext());
+
         checkFingerprintAvailability();
         initNavigation();
         initSpinner();
@@ -87,7 +75,10 @@ public class SettingsFragment extends BaseFragment<SettingsViewModel>
     {
         if (!SettingsManager.isFingerprintAvailable(getActivity()))
         {
-            SettingsManager.setRememberLogin(SettingsManager.LoginMethods.NONE, getContext());
+            if (currentMethod == FINGERPRINT)
+            {
+                SettingsManager.setRememberLogin(SettingsManager.LoginMethods.NONE, getContext());
+            }
             loginMethodEntries.removeIf(entry -> entry.description.contains("Fingerprint"));
         }
     }
@@ -163,7 +154,6 @@ public class SettingsFragment extends BaseFragment<SettingsViewModel>
             }
         });
 
-        SettingsManager.LoginMethods currentMethod = SettingsManager.getRememberLogin(getContext());
         if (currentMethod == PIN)
         {
             Toast.makeText(getContext(), R.string.enter_new_pin_message, Toast.LENGTH_LONG).show();
@@ -175,5 +165,19 @@ public class SettingsFragment extends BaseFragment<SettingsViewModel>
     {
         SettingsManager.LoginMethods newMethod = loginMethodEntries.stream().filter(spinnerEntry -> spinnerEntry.index == itemIndex).findAny().orElse(loginMethodEntries.get(0)).method;
         viewModel.setDoRememberLogin(newMethod, getContext());
+    }
+
+    private static class SpinnerEntry
+    {
+        public int index;
+        public String description;
+        public SettingsManager.LoginMethods method;
+
+        public SpinnerEntry(final int index, final String description, final SettingsManager.LoginMethods method)
+        {
+            this.index = index;
+            this.description = description;
+            this.method = method;
+        }
     }
 }

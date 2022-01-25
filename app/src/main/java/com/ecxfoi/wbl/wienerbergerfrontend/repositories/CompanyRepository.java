@@ -19,17 +19,20 @@ import retrofit2.Response;
 @Singleton
 public class CompanyRepository
 {
-    private APIService apiService;
+    private final APIService apiService;
 
     @Inject
-    public CompanyRepository(APIService apiService) {
+    public CompanyRepository(APIService apiService)
+    {
         this.apiService = apiService;
     }
 
-    public LiveData<ArrayList<CompanyData>> getAllCompanies() {
+    public LiveData<ArrayList<CompanyData>> getAllCompanies()
+    {
         final MutableLiveData<ArrayList<CompanyData>> companyData = new MutableLiveData<>();
 
-        apiService.getAllCompanies().enqueue(new Callback<WienerbergerResponse<ArrayList<CompanyData>>>() {
+        apiService.getAllCompanies().enqueue(new Callback<WienerbergerResponse<ArrayList<CompanyData>>>()
+        {
             @Override
             public void onResponse(final Call<WienerbergerResponse<ArrayList<CompanyData>>> call, final Response<WienerbergerResponse<ArrayList<CompanyData>>> response)
             {

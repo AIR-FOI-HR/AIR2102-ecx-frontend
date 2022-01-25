@@ -20,9 +20,9 @@ public class NewTicketViewModel extends ViewModel
 {
     private final TicketsRepository ticketsRepository;
 
-    public ObservableField<Integer> infoMessage;
-    public ObservableField<Boolean> isError;
-    public ObservableField<TicketData> newTicket;
+    public final ObservableField<Integer> infoMessage;
+    public final ObservableField<Boolean> isError;
+    public final ObservableField<TicketData> newTicket;
 
     @Inject
     public NewTicketViewModel(final TicketsRepository ticketsRepository)

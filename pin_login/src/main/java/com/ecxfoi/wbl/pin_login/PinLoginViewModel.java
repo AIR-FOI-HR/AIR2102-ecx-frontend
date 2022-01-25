@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel;
 
 public class PinLoginViewModel extends ViewModel
 {
-    public ObservableField<Boolean> error;
-    public ObservableField<String> tvMessage;
+    public final ObservableField<Boolean> error;
+    public final ObservableField<String> tvMessage;
 
     public PinLoginViewModel()
     {
