@@ -2,7 +2,6 @@ package com.ecxfoi.wbl.wienerbergerfrontend.di.modules;
 
 import androidx.lifecycle.ViewModelProvider;
 
-import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.DeliveryNotesFragmentProvider;
 import com.ecxfoi.wbl.wienerbergerfrontend.repositories.DeliveryNotesRepository;
 import com.ecxfoi.wbl.wienerbergerfrontend.ui.main.deliverynotes.DeliveryNotesViewModel;
 import com.ecxfoi.wbl.wienerbergerfrontend.utils.ViewModelProviderFactory;

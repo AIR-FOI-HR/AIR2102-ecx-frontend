@@ -26,11 +26,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:defaultNavHost="true"
-           app:layout_constraintTop_toBottomOf="@+id/logoImage"
-            app:layout_constraintBottom_toBottomOf="parent"
-            >
-    </androidx.fragment.app.FragmentContainerView>
-
+            app:layout_constraintTop_toBottomOf="@+id/logoImage"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

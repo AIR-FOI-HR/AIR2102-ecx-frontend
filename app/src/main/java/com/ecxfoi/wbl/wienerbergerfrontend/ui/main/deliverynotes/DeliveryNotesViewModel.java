@@ -9,16 +9,16 @@ import com.ecxfoi.wbl.wienerbergerfrontend.models.DeliveryNoteData;
 import com.ecxfoi.wbl.wienerbergerfrontend.repositories.DeliveryNotesRepository;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class DeliveryNotesViewModel extends ViewModel
 {
-    public ObservableField<String> dateFrom;
-    public ObservableField<String> dateTo;
-    public ObservableField<String> deliveryNoteNumber;
-    public ObservableField<String> orderNumber;
-    public ObservableField<String> errorMessage;
-
     private final DeliveryNotesRepository deliveryNotesRepository;
+    public final ObservableField<String> dateFrom;
+    public final ObservableField<String> dateTo;
+    public final ObservableField<String> deliveryNoteNumber;
+    public final ObservableField<String> orderNumber;
+    public final ObservableField<String> errorMessage;
 
     public DeliveryNotesViewModel(DeliveryNotesRepository deliveryNotesRepository)
     {
@@ -33,17 +33,17 @@ public class DeliveryNotesViewModel extends ViewModel
 
     private boolean isOrderNrEntered()
     {
-        return !orderNumber.get().isEmpty();
+        return !Objects.requireNonNull(orderNumber.get()).isEmpty();
     }
 
     private boolean isDateEntered()
     {
-        return !dateFrom.get().isEmpty() || !dateTo.get().isEmpty();
+        return !Objects.requireNonNull(dateFrom.get()).isEmpty() || !Objects.requireNonNull(dateTo.get()).isEmpty();
     }
 
     private boolean isNoteNrEntered()
     {
-        return !deliveryNoteNumber.get().isEmpty();
+        return !Objects.requireNonNull(deliveryNoteNumber.get()).isEmpty();
     }
 
     public LiveData<ArrayList<DeliveryNoteData>> getRequestedDeliveryNotes()
@@ -59,17 +59,17 @@ public class DeliveryNotesViewModel extends ViewModel
         else
         {
             errorMessage.set("");
-            if (!dateFrom.get().isEmpty() && !dateTo.get().isEmpty())
+            if (!Objects.requireNonNull(dateFrom.get()).isEmpty() && !Objects.requireNonNull(dateTo.get()).isEmpty())
             {
                 return deliveryNotesRepository.getDeliveryNotesForDateRange(dateFrom.get(), dateTo.get());
             }
-            else if (!orderNumber.get().isEmpty())
+            else if (!Objects.requireNonNull(orderNumber.get()).isEmpty())
             {
-                return deliveryNotesRepository.getDeliveryNotesForOrder(Long.parseLong(orderNumber.get()));
+                return deliveryNotesRepository.getDeliveryNotesForOrder(Long.parseLong(Objects.requireNonNull(orderNumber.get())));
             }
-            else if (!deliveryNoteNumber.get().isEmpty())
+            else if (!Objects.requireNonNull(deliveryNoteNumber.get()).isEmpty())
             {
-                return deliveryNotesRepository.getDeliveryNoteByDeliveryNoteId(Long.parseLong(deliveryNoteNumber.get()));
+                return deliveryNotesRepository.getDeliveryNoteByDeliveryNoteId(Long.parseLong(Objects.requireNonNull(deliveryNoteNumber.get())));
             }
             else
             {

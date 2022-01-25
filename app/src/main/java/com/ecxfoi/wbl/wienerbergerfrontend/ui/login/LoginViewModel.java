@@ -8,7 +8,7 @@ import javax.inject.Inject;
 
 public class LoginViewModel extends ViewModel
 {
-    AuthService authService;
+    final AuthService authService;
 
     @Inject
     public LoginViewModel(AuthService authService)

@@ -14,7 +14,7 @@ import javax.inject.Inject;
 public class CompanySelectionViewModel extends ViewModel
 {
     private final CompanyRepository companyRepository;
-    private SelectedCompanyData selectedCompanyData;
+    private final SelectedCompanyData selectedCompanyData;
 
     @Inject
     public CompanySelectionViewModel(CompanyRepository companyRepository, SelectedCompanyData selectedCompanyData)

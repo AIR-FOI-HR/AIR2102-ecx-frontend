@@ -1,9 +1,5 @@
 package com.ecxfoi.wbl.wienerbergerfrontend.models;
 
-import androidx.databinding.BaseObservable;
-import androidx.databinding.Bindable;
-import androidx.databinding.library.baseAdapters.BR;
-
 import com.google.gson.annotations.SerializedName;
 
 public class UserData

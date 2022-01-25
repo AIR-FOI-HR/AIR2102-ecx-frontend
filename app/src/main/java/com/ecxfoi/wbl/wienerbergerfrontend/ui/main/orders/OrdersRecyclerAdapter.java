@@ -10,13 +10,39 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ecxfoi.wbl.wienerbergerfrontend.R;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.OrderData;
-import com.ecxfoi.wbl.wienerbergerfrontend.ui.main.supporttickets.TicketListenerCallback;
 
 import java.util.ArrayList;
 
 abstract class OrdersRecyclerAdapter extends RecyclerView.Adapter<OrdersRecyclerAdapter.OrdersViewHolder> implements OrderListenerCallback
 {
     private final ArrayList<OrderData> orderArray;
+
+    public OrdersRecyclerAdapter(ArrayList<OrderData> orderArray)
+    {
+        this.orderArray = orderArray;
+    }
+
+    @NonNull
+    @Override
+    public OrdersViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType)
+    {
+        View view = LayoutInflater.from(viewGroup.getContext())
+                .inflate(R.layout.orders_row_item, viewGroup, false);
+
+        return new OrdersRecyclerAdapter.OrdersViewHolder(view, this);
+    }
+
+    @Override
+    public void onBindViewHolder(OrdersViewHolder ticketsViewHolder, final int position)
+    {
+        ticketsViewHolder.bind(orderArray.get(orderArray.size() - 1 - position));
+    }
+
+    @Override
+    public int getItemCount()
+    {
+        return orderArray.size();
+    }
 
     public static class OrdersViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener
     {
@@ -25,8 +51,8 @@ abstract class OrdersRecyclerAdapter extends RecyclerView.Adapter<OrdersRecycler
         private final TextView tvDateOfOrder;
         private final TextView tvPaymentMethod;
         private final TextView tvDeliveryDate;
-        private OrderData orderData;
         private final OrdersRecyclerAdapter recyclerAdapter;
+        private OrderData orderData;
 
         public OrdersViewHolder(final View view, final OrdersRecyclerAdapter recyclerAdapter)
         {
@@ -62,32 +88,5 @@ abstract class OrdersRecyclerAdapter extends RecyclerView.Adapter<OrdersRecycler
             }
             return true;
         }
-    }
-
-    public OrdersRecyclerAdapter(ArrayList<OrderData> orderArray)
-    {
-        this.orderArray = orderArray;
-    }
-
-    @NonNull
-    @Override
-    public OrdersViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType)
-    {
-        View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.orders_row_item, viewGroup, false);
-
-        return new OrdersRecyclerAdapter.OrdersViewHolder(view, this);
-    }
-
-    @Override
-    public void onBindViewHolder(OrdersViewHolder ticketsViewHolder, final int position)
-    {
-        ticketsViewHolder.bind(orderArray.get(orderArray.size() - 1 - position));
-    }
-
-    @Override
-    public int getItemCount()
-    {
-        return orderArray.size();
     }
 }

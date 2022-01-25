@@ -1,21 +1,18 @@
 package com.ecxfoi.wbl.wienerbergerfrontend.ui.main;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Gravity;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.ecxfoi.wbl.wienerbergerfrontend.R;
 import com.ecxfoi.wbl.wienerbergerfrontend.api.JwtAuthInterceptor;
@@ -30,19 +27,16 @@ import javax.inject.Inject;
 
 public class MainActivity extends BaseActivity<MainActivityViewModel>
 {
-    private ActivityMainBinding binding;
 
+    @Inject
+    MainActivityViewModel viewModel;
+    @Inject
+    JwtAuthInterceptor authInterceptor;
     private DrawerLayout dlMainLayout;
     private NavigationView navigationView;
     private NavController navController;
     private ImageView ivHamburger;
     private TextView tvLogoutMenuItem;
-
-    @Inject
-    MainActivityViewModel viewModel;
-
-    @Inject
-    JwtAuthInterceptor authInterceptor;
 
     @Override
     public MainActivityViewModel getViewModel()
@@ -80,7 +74,7 @@ public class MainActivity extends BaseActivity<MainActivityViewModel>
 
     private void initBindings()
     {
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        final com.ecxfoi.wbl.wienerbergerfrontend.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         ivHamburger = binding.btnMenu;
@@ -98,9 +92,6 @@ public class MainActivity extends BaseActivity<MainActivityViewModel>
         {
             navController = navHostFragment.getNavController();
 
-            AppBarConfiguration appBarConfiguration =
-                    new AppBarConfiguration.Builder(navController.getGraph()).build();
-
             NavigationUI.setupWithNavController(navigationView, navController);
         }
 
@@ -109,7 +100,7 @@ public class MainActivity extends BaseActivity<MainActivityViewModel>
 
         ivHamburger.setOnClickListener(v -> dlMainLayout.openDrawer(GravityCompat.START));
 
-        tvLogoutMenuItem.setOnClickListener(this::onLogoutMenuItemClick);
+        tvLogoutMenuItem.setOnClickListener(view -> onLogoutMenuItemClick());
     }
 
     public boolean onDrawerItemSelected(@NonNull final MenuItem item)
@@ -123,15 +114,10 @@ public class MainActivity extends BaseActivity<MainActivityViewModel>
         }
         int currentMenuId = currentDestination.getId();
 
-        if (selectedMenuItemId == currentMenuId) // When linked with NavigationUI the current item disappears, but just in case
+        if (selectedMenuItemId == currentMenuId)
         {
             return true;
         }
-        // This would work if we didn't need to put the logout item at the bottom of the screen,
-        // in which case we need to manually bind it to the since it's not a regular menu item any more
-        /*else if (selectedMenuItemId == R.id.logout)
-        {
-        } */
 
         NavigationUI.onNavDestinationSelected(item, navController);
 
@@ -140,7 +126,7 @@ public class MainActivity extends BaseActivity<MainActivityViewModel>
         return true;
     }
 
-    private void onLogoutMenuItemClick(final View view)
+    private void onLogoutMenuItemClick()
     {
         authInterceptor.setJwtToken("");
         startActivity(new Intent(this, LoginActivity.class));

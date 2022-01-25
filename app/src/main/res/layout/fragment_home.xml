@@ -4,11 +4,9 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/home_fragment"
         tools:context=".ui.main.MainActivity">
 
     <androidx.constraintlayout.helper.widget.Flow
-            android:id="@+id/flow"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="70dp"
@@ -22,36 +20,52 @@
             app:flow_verticalBias="0"
             app:flow_wrapMode="aligned"
             app:flow_verticalGap="0dp"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:layout_editor_absoluteY="0dp" />
 
     <ImageView
             android:id="@+id/iv_delivery_notes"
-            android:src="@drawable/main_menu_delivery_notes"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:contentDescription="@string/logo_image_description" />
-
-    <ImageView
-            android:id="@+id/iv_orders"
-            android:src="@drawable/main_menu_orders"
+            android:src="@drawable/main_menu_delivery_notes_image"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:contentDescription="@string/logo_image_description"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/iv_orders"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="48dp" />
+
+    <ImageView
+            android:id="@+id/iv_orders"
+            android:src="@drawable/main_menu_orders_image_image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:contentDescription="@string/logo_image_description"
+            tools:layout_editor_absoluteX="230dp"
+            android:layout_marginTop="48dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_delivery_notes"
+            app:layout_constraintBottom_toTopOf="@+id/tv_orders" />
 
     <ImageView
             android:id="@+id/iv_material_balance_view"
-            android:src="@drawable/main_menu_material_balance"
+            android:src="@drawable/main_menu_material_balance_image"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:contentDescription="@string/logo_image_description" />
+            android:contentDescription="@string/logo_image_description"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_delivery_notes"
+            app:layout_constraintEnd_toStartOf="@+id/iv_support_tickets" />
 
     <ImageView
             android:id="@+id/iv_support_tickets"
-            android:src="@drawable/main_menu_support_tickets"
+            android:src="@drawable/main_menu_support_tickets_image"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:contentDescription="@string/logo_image_description" />
+            android:contentDescription="@string/logo_image_description"
+            tools:layout_editor_absoluteX="230dp"
+            app:layout_constraintLeft_toRightOf="@id/iv_material_balance_view"
+            app:layout_constraintTop_toBottomOf="@+id/tv_orders"
+            app:layout_constraintBottom_toTopOf="@+id/tv_support_tickets" />
 
     <TextView
             android:id="@+id/tv_delivery_notes"
@@ -60,7 +74,9 @@
             android:text="@string/delivery_notes"
             android:textSize="24sp"
             android:paddingBottom="40dp"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_delivery_notes"
+            app:layout_constraintEnd_toStartOf="@+id/tv_orders" />
 
     <TextView
             android:id="@+id/tv_orders"
@@ -69,7 +85,9 @@
             android:text="@string/orders"
             android:textSize="24sp"
             android:paddingBottom="40dp"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/iv_orders"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/iv_orders" />
 
     <TextView
             android:id="@+id/tv_material_balance_view"
@@ -77,13 +95,18 @@
             android:textSize="24sp"
             android:layout_width="wrap_content"
             android:text="@string/material_balance_view"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_support_tickets"
+            app:layout_constraintTop_toBottomOf="@+id/iv_material_balance_view" />
 
     <TextView
             android:id="@+id/tv_support_tickets"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:textSize="24sp"
-            android:text="@string/support_tickets" />
+            android:text="@string/support_tickets"
+            app:layout_constraintTop_toBottomOf="@+id/iv_support_tickets"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/iv_support_tickets" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,15 +21,12 @@ import java.util.concurrent.Executor;
 
 public class FingerprintLoginFragment extends Fragment implements LoginFragment
 {
-    private FingerprintLoginFragmentBinding binding;
-    private FingerprintLoginViewModel viewModel;
-
-    public interface Listener
-    {
-        void onLoginAttempt(boolean success, int errorCode);
-    }
-
     private Listener listener;
+
+    public static FingerprintLoginFragment newInstance()
+    {
+        return new FingerprintLoginFragment();
+    }
 
     @Override
     public <T> void setListener(final T listener)
@@ -43,15 +40,10 @@ public class FingerprintLoginFragment extends Fragment implements LoginFragment
 
     }
 
-    public static FingerprintLoginFragment newInstance()
-    {
-        return new FingerprintLoginFragment();
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        binding = FingerprintLoginFragmentBinding.inflate(inflater, container, false);
+        final com.ecxfoi.wbl.fingerprint_login.databinding.FingerprintLoginFragmentBinding binding = FingerprintLoginFragmentBinding.inflate(inflater, container, false);
 
         initFingerprint();
 
@@ -72,9 +64,7 @@ public class FingerprintLoginFragment extends Fragment implements LoginFragment
                 .setTitle(getString(R.string.biometric_prompt_title))
                 .setDescription(getString(R.string.biometric_prompt_description))
                 .setNegativeButton(getString(R.string.biometric_prompt_cancel_text), executor,
-                        (dialog, which) -> {
-                            listener.onLoginAttempt(false, -1);
-                        }
+                        (dialog, which) -> listener.onLoginAttempt(false, -1)
                 )
                 .build()
                 .authenticate(new CancellationSignal(), executor,
@@ -101,5 +91,10 @@ public class FingerprintLoginFragment extends Fragment implements LoginFragment
                                 super.onAuthenticationFailed();
                             }
                         });
+    }
+
+    public interface Listener
+    {
+        void onLoginAttempt(boolean success, int errorCode);
     }
 }

@@ -1,38 +1,27 @@
 package com.ecxfoi.wbl.pin_login;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.ecxfoi.wbl.interface_login.LoginFragment;
 import com.ecxfoi.wbl.pin_login.databinding.PinLoginFragmentBinding;
 
 public class PinLoginFragment extends Fragment implements LoginFragment
 {
+    public static final int maxAttempts = 3;
+    Listener mListener;
     private int attemptCount = 1;
     private PinLoginFragmentBinding binding;
     private PinLoginViewModel mViewModel;
-
-    public static final int maxAttempts = 3;
-
-    public interface Listener
-    {
-        void onLoginAttempt(String PIN);
-
-        void onMultipleFailedAttempts();
-    }
-
-    Listener mListener;
 
     public static PinLoginFragment newInstance()
     {
@@ -103,5 +92,12 @@ public class PinLoginFragment extends Fragment implements LoginFragment
         if (!available) mViewModel.setInfoMessage("Please wait");
         else binding.pinTextBox.setText("");
         binding.pinTextBox.setEnabled(available);
+    }
+
+    public interface Listener
+    {
+        void onLoginAttempt(String PIN);
+
+        void onMultipleFailedAttempts();
     }
 }

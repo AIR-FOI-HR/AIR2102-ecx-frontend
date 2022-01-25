@@ -8,7 +8,6 @@ import com.ecxfoi.wbl.wienerbergerfrontend.models.DeliveryNoteData;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.WienerbergerResponse;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -99,7 +98,7 @@ public class DeliveryNotesRepository
 
                 if (response.body() != null)
                 {
-                    deliveryNoteList = new ArrayList<>(Arrays.asList(response.body().getData()));
+                    deliveryNoteList = new ArrayList<>(Collections.singletonList(response.body().getData()));
                 }
 
                 deliveryNotesData.setValue(deliveryNoteList);
