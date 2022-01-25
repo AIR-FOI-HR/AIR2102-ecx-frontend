@@ -2,7 +2,6 @@ package com.ecxfoi.wbl.wienerbergerfrontend.di.modules;
 
 import androidx.lifecycle.ViewModelProvider;
 
-import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.HomeFragmentProvider;
 import com.ecxfoi.wbl.wienerbergerfrontend.ui.main.home.HomeViewModel;
 import com.ecxfoi.wbl.wienerbergerfrontend.utils.ViewModelProviderFactory;
 

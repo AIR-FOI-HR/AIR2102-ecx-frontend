@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,7 +30,8 @@ public class OrdersFragment extends BaseFragment<OrdersViewModel>
     private OrdersViewModel viewModel;
 
     @Override
-    public OrdersViewModel getViewModel() {
+    public OrdersViewModel getViewModel()
+    {
         viewModel = new ViewModelProvider(this, factory).get(OrdersViewModel.class);
         return viewModel;
     }
@@ -41,14 +41,6 @@ public class OrdersFragment extends BaseFragment<OrdersViewModel>
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState)
     {
         binding = FragmentOrdersBinding.inflate(inflater, container, false);
-
-        final Button buttonBack = binding.btnBack;
-
-        final Activity allOrdersActivity = getActivity();
-        if (allOrdersActivity != null)
-        {
-            buttonBack.setOnClickListener(v -> Navigation.findNavController(allOrdersActivity, R.id.nav_host_fragment).navigate(R.id.action_ordersFragment_to_homeFragment));
-        }
 
         viewModel.fetchOrderData().observe(getViewLifecycleOwner(), this::setOrdersData);
 
@@ -73,5 +65,10 @@ public class OrdersFragment extends BaseFragment<OrdersViewModel>
             }
         };
         binding.listView.setAdapter(recyclerAdapter);
+
+        if (orderData.isEmpty())
+        {
+            binding.errorMessage.setText(getString(R.string.no_orders_available));
+        }
     }
 }

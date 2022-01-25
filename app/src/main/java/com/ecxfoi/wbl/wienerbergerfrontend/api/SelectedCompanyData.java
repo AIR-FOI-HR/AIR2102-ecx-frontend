@@ -1,7 +1,6 @@
 package com.ecxfoi.wbl.wienerbergerfrontend.api;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 public class SelectedCompanyData
 {

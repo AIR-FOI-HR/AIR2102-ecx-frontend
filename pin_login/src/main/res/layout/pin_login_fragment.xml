@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+                name="viewModel"
+                type="com.ecxfoi.wbl.pin_login.PinLoginViewModel" />
+    </data>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".PinLoginFragment"
+            android:padding="20dp"
+            android:orientation="vertical">
+
+        <EditText
+                android:id="@+id/pin_text_box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/enter_pin"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:inputType="numberPassword"
+                android:importantForAutofill="no"
+                android:maxLength="4" />
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Error message"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:textColor="@{viewModel.error ? @color/wienerberger_red : @color/success}"
+                android:text="@{viewModel.tvMessage}" />
+
+    </LinearLayout>
+</layout>

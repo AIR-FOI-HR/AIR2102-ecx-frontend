@@ -4,7 +4,6 @@ import androidx.databinding.ObservableField;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.ecxfoi.wbl.wienerbergerfrontend.models.OrderData;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.OrderDetailsData;
 import com.ecxfoi.wbl.wienerbergerfrontend.repositories.OrdersRepository;
 
@@ -14,12 +13,14 @@ public class OrderDetailsViewModel extends ViewModel
 {
     private final OrdersRepository ordersRepository;
     private final ObservableField<OrderDetailsData> orderData;
+    public final ObservableField<String> errorMessage;
 
     @Inject
     public OrderDetailsViewModel(final OrdersRepository ordersRepository)
     {
         this.ordersRepository = ordersRepository;
         orderData = new ObservableField<>();
+        errorMessage = new ObservableField<>();
     }
 
     public ObservableField<OrderDetailsData> getTicketData()
@@ -29,6 +30,7 @@ public class OrderDetailsViewModel extends ViewModel
 
     public LiveData<OrderDetailsData> fetchOrderData(Long id)
     {
+        errorMessage.set("");
         return ordersRepository.getOrderData(id);
     }
 

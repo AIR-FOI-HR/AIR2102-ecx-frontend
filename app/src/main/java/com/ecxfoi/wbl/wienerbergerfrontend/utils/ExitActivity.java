@@ -7,13 +7,6 @@ import android.os.Bundle;
 
 public class ExitActivity extends Activity
 {
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        finishAndRemoveTask();
-    }
-
     public static void exitApplication(Context context)
     {
         Intent intent = new Intent(context, ExitActivity.class);
@@ -21,5 +14,12 @@ public class ExitActivity extends Activity
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
 
         context.startActivity(intent);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        finishAndRemoveTask();
     }
 }

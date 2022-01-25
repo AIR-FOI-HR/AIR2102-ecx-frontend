@@ -11,42 +11,33 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.ecxfoi.wbl.wienerbergerfrontend.R;
 import com.ecxfoi.wbl.wienerbergerfrontend.base.BaseActivity;
 import com.ecxfoi.wbl.wienerbergerfrontend.databinding.ActivityCompanySelectionBinding;
-import com.ecxfoi.wbl.wienerbergerfrontend.databinding.ActivityLoginBinding;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.CompanyData;
-import com.ecxfoi.wbl.wienerbergerfrontend.ui.login.LoginViewModel;
 import com.ecxfoi.wbl.wienerbergerfrontend.ui.main.MainActivity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import javax.inject.Inject;
 
-import dagger.android.support.DaggerAppCompatActivity;
-
 public class CompanySelectionActivity extends BaseActivity<CompanySelectionViewModel>
 {
+    CompanySelectionViewModel viewModel;
+    @Inject
+    ViewModelProvider.Factory factory;
     private ActivityCompanySelectionBinding binding;
-
     private TextView tvAddressBar;
     private TextView tvStreet;
     private TextView tvCountry;
     private TextView tvCity;
     private TextView tvPostal;
     private Button btnContinue;
-
     private ArrayList<CompanyData> companies;
-
-    CompanySelectionViewModel viewModel;
-    @Inject
-    ViewModelProvider.Factory factory;
 
     @Override
     public CompanySelectionViewModel getViewModel()
@@ -76,7 +67,7 @@ public class CompanySelectionActivity extends BaseActivity<CompanySelectionViewM
         setContentView(binding.getRoot());
 
         btnContinue = binding.btnNext;
-        
+
         tvAddressBar = binding.tvAddressBar;
         tvStreet = binding.tvAddressStreet;
         tvPostal = binding.tvAddressPostal;
@@ -92,9 +83,7 @@ public class CompanySelectionActivity extends BaseActivity<CompanySelectionViewM
         companyNames.add("Select a company...");
 
         companies = companyList;
-        companyList.forEach(company -> {
-            companyNames.add(String.format("%s - %s", company.getId(), company.getName()));
-        });
+        companyList.forEach(company -> companyNames.add(String.format("%s - %s", company.getId(), company.getName())));
 
         final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
                 this, R.layout.spinner_item, companyNames)
@@ -106,7 +95,7 @@ public class CompanySelectionActivity extends BaseActivity<CompanySelectionViewM
             }
 
             @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent)
+            public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent)
             {
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView tv = (TextView) view;
@@ -174,6 +163,7 @@ public class CompanySelectionActivity extends BaseActivity<CompanySelectionViewM
 
     private void continueToMainMenu()
     {
+        finishAndRemoveTask();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }

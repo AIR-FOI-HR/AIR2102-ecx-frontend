@@ -1,19 +1,17 @@
 package com.ecxfoi.wbl.classic_login.ui;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.ecxfoi.wbl.classic_login.R;
 import com.ecxfoi.wbl.classic_login.databinding.ClassicLoginFragmentBinding;
@@ -28,6 +26,12 @@ public class ClassicLoginFragment extends Fragment implements LoginFragment
 
     private String email = "";
     private String password = "";
+    private LoginListener mListener;
+
+    public static ClassicLoginFragment newInstance()
+    {
+        return new ClassicLoginFragment();
+    }
 
     public void setEmailAndPassword(String email, String password)
     {
@@ -42,13 +46,6 @@ public class ClassicLoginFragment extends Fragment implements LoginFragment
         mViewModel.setErrorMessage(errorMessage);
     }
 
-    public interface LoginListener
-    {
-        void onLoginAttempt(String email, String password);
-    }
-
-    private LoginListener mListener;
-
     @Override
     public <T> void setListener(final T listener)
     {
@@ -61,11 +58,6 @@ public class ClassicLoginFragment extends Fragment implements LoginFragment
         binding.password.setEnabled(enabled);
         binding.passwordSwitch.setEnabled(enabled);
         binding.login.setEnabled(enabled);
-    }
-
-    public static ClassicLoginFragment newInstance()
-    {
-        return new ClassicLoginFragment();
     }
 
     @Override
@@ -108,5 +100,10 @@ public class ClassicLoginFragment extends Fragment implements LoginFragment
             isInputAvaliable(false);
             mListener.onLoginAttempt(binding.email.getText().toString(), binding.password.getText().toString());
         });
+    }
+
+    public interface LoginListener
+    {
+        void onLoginAttempt(String email, String password);
     }
 }

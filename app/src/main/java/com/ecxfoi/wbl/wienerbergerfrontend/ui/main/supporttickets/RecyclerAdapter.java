@@ -19,51 +19,6 @@ abstract class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Tick
     private final ArrayList<TicketData> ticketArray;
 
     /**
-     * Provide a reference to the type of views that you are using
-     * (custom TicketsViewHolder).
-     */
-    public static class TicketsViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener
-    {
-        private final TextView tvSubject;
-        private final TextView tvStatus;
-        private final View circleStatus;
-        private TicketData ticketData;
-        private final RecyclerAdapter recyclerAdapter;
-
-        public TicketsViewHolder(final View view, final RecyclerAdapter recyclerAdapter)
-        {
-            super(view);
-
-            tvSubject = view.findViewById(R.id.tv_ticket_subject);
-            tvStatus = view.findViewById(R.id.tv_ticket_status);
-            circleStatus = view.findViewById(R.id.circle_status_indicator);
-            this.recyclerAdapter = recyclerAdapter;
-
-            view.setOnLongClickListener(this);
-        }
-
-        public void bind(TicketData ticketData)
-        {
-            this.ticketData = ticketData;
-
-            tvSubject.setText(ticketData.getSubject());
-
-            tvStatus.setText(TicketStatusConverter.getStatusMessageResource(ticketData));
-            circleStatus.setBackgroundResource(TicketStatusConverter.getStatusBackgroundResource(ticketData));
-        }
-
-        @Override
-        public boolean onLongClick(final View view)
-        {
-            if (ticketData != null)
-            {
-                recyclerAdapter.onTicketSelected(ticketData.getId());
-            }
-            return true;
-        }
-    }
-
-    /**
      * Initialize the dataset of the Adapter.
      *
      * @param ticketArray String[] containing the data to populate views to be used
@@ -100,5 +55,50 @@ abstract class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Tick
     public int getItemCount()
     {
         return ticketArray.size();
+    }
+
+    /**
+     * Provide a reference to the type of views that you are using
+     * (custom TicketsViewHolder).
+     */
+    public static class TicketsViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener
+    {
+        private final TextView tvSubject;
+        private final TextView tvStatus;
+        private final View circleStatus;
+        private final RecyclerAdapter recyclerAdapter;
+        private TicketData ticketData;
+
+        public TicketsViewHolder(final View view, final RecyclerAdapter recyclerAdapter)
+        {
+            super(view);
+
+            tvSubject = view.findViewById(R.id.tv_ticket_subject);
+            tvStatus = view.findViewById(R.id.tv_ticket_status);
+            circleStatus = view.findViewById(R.id.circle_status_indicator);
+            this.recyclerAdapter = recyclerAdapter;
+
+            view.setOnLongClickListener(this);
+        }
+
+        public void bind(TicketData ticketData)
+        {
+            this.ticketData = ticketData;
+
+            tvSubject.setText(ticketData.getSubject());
+
+            tvStatus.setText(TicketStatusConverter.getStatusMessageResource(ticketData));
+            circleStatus.setBackgroundResource(TicketStatusConverter.getStatusBackgroundResource(ticketData));
+        }
+
+        @Override
+        public boolean onLongClick(final View view)
+        {
+            if (ticketData != null)
+            {
+                recyclerAdapter.onTicketSelected(ticketData.getId());
+            }
+            return true;
+        }
     }
 }

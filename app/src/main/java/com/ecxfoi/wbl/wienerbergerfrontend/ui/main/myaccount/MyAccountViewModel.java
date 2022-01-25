@@ -26,19 +26,19 @@ public class MyAccountViewModel extends ViewModel
 {
     private final UserRepository userRepository;
 
-    // It was too much of a hastle to use resources :(
-    private final String checkFieldMessage = "Check this field";
-    private final String successfulUpdateMessage = "User data successfully updated!";
-    private final String multipleErrorsMessage = "Check fields for errors!";
+    private String checkFieldMessage;
+    private String successfulUpdateMessage;
+    private String checkFieldsForErrors;
+    private String connectionErrorString;
 
-    public ObservableField<String> firstNameMessage;
-    public ObservableField<String> lastNameMessage;
-    public ObservableField<String> phoneMessage;
-    public ObservableField<String> faxMessage;
-    public ObservableField<String> mainErrorMessage;
+    public final ObservableField<String> firstNameMessage;
+    public final ObservableField<String> lastNameMessage;
+    public final ObservableField<String> phoneMessage;
+    public final ObservableField<String> faxMessage;
+    public final ObservableField<String> mainErrorMessage;
 
-    public ObservableField<UserData> data;
-    public ObservableField<Boolean> error;
+    public final ObservableField<UserData> data;
+    public final ObservableField<Boolean> error;
 
     @Inject
     public MyAccountViewModel(UserRepository userRepository)
@@ -51,6 +51,17 @@ public class MyAccountViewModel extends ViewModel
         mainErrorMessage = new ObservableField<>();
         data = new ObservableField<>();
         error = new ObservableField<>(false);
+    }
+
+    public void setMessagesFromResources(final String checkFieldMessage,
+                                         final String successfulUpdateMessage,
+                                         final String checkFieldsForErrors,
+                                         final String connectionErrorString)
+    {
+        this.checkFieldMessage = checkFieldMessage;
+        this.successfulUpdateMessage = successfulUpdateMessage;
+        this.checkFieldsForErrors = checkFieldsForErrors;
+        this.connectionErrorString = connectionErrorString;
     }
 
     private void clearAllMessages()
@@ -96,8 +107,10 @@ public class MyAccountViewModel extends ViewModel
                 {
                     finalMessage = StringUtils.join(new String[]{finalMessage, StringUtils.join(new String[]{error, " is empty!\n"})});
                 }
-            } else {
-                finalMessage = multipleErrorsMessage;
+            }
+            else
+            {
+                finalMessage = checkFieldsForErrors;
             }
             mainErrorMessage.set(finalMessage);
             return false;
@@ -159,7 +172,7 @@ public class MyAccountViewModel extends ViewModel
             @Override
             public void onFailure(final Call<WienerbergerResponse<UserData>> call, final Throwable t)
             {
-                mainErrorMessage.set("Connection error");
+                mainErrorMessage.set(connectionErrorString);
                 error.set(true);
                 call.cancel();
             }
@@ -171,7 +184,7 @@ public class MyAccountViewModel extends ViewModel
         this.data.set(userData);
     }
 
-    public LiveData<UserData>getCurrentUserData()
+    public LiveData<UserData> getCurrentUserData()
     {
         return userRepository.getCurrentUserData();
     }

@@ -14,13 +14,14 @@
 
     <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:scrollbars="vertical"
             android:layout_marginBottom="30dp">
 
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingBottom="100dp"
                 android:orientation="vertical"
                 android:layout_margin="20dp">
 
@@ -146,15 +147,6 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnBack"
-                    style="@style/button_red"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/back"
-                    android:layout_gravity="center"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
         </LinearLayout>
     </ScrollView>
 </layout>

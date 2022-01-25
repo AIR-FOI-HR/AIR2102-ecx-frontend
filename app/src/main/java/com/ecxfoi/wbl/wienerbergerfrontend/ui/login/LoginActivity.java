@@ -1,33 +1,30 @@
 package com.ecxfoi.wbl.wienerbergerfrontend.ui.login;
 
+import android.accounts.AuthenticatorException;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
 
 import com.ecxfoi.wbl.classic_login.ui.ClassicLoginFragment;
+import com.ecxfoi.wbl.fingerprint_login.FingerprintLoginFragment;
 import com.ecxfoi.wbl.interface_login.LoginFragment;
+import com.ecxfoi.wbl.pin_login.PinLoginFragment;
+import com.ecxfoi.wbl.wienerbergerfrontend.R;
 import com.ecxfoi.wbl.wienerbergerfrontend.api.JwtAuthInterceptor;
+import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthService;
 import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthenticationData;
 import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthenticationInterface;
 import com.ecxfoi.wbl.wienerbergerfrontend.base.BaseActivity;
+import com.ecxfoi.wbl.wienerbergerfrontend.databinding.ActivityLoginBinding;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.WienerbergerResponse;
 import com.ecxfoi.wbl.wienerbergerfrontend.ui.companyselection.CompanySelectionActivity;
-import com.ecxfoi.wbl.wienerbergerfrontend.R;
-import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthService;
-import com.ecxfoi.wbl.wienerbergerfrontend.databinding.ActivityLoginBinding;
 import com.ecxfoi.wbl.wienerbergerfrontend.utils.SettingsManager;
 
 import org.apache.commons.lang.StringUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 
 import javax.inject.Inject;
 
@@ -35,10 +32,6 @@ import retrofit2.Response;
 
 public class LoginActivity extends BaseActivity<LoginViewModel>
 {
-    private ActivityLoginBinding binding;
-
-    private NavController navController;
-
     private LoginFragment destFragment;
 
     @Inject
@@ -60,7 +53,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
     {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        final com.ecxfoi.wbl.wienerbergerfrontend.databinding.ActivityLoginBinding binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         AuthService.authenticationInterface = new AuthenticationInterface()
@@ -86,19 +79,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
                 }
                 else
                 {
-                    int errorResCode = R.string.login_failed_generic;
-
-                    try
-                    {
-                        // Casting to real objects just didn't work so easier variant was implemented here:
-                        JSONObject jsonObject = new JSONObject(response.errorBody().string());
-
-                        errorResCode = R.string.login_failed_credentials;
-                    }
-                    catch (JSONException | IOException e)
-                    {
-                        e.printStackTrace();
-                    }
+                    int errorResCode = R.string.login_failed_credentials;
 
                     destFragment.setErrorMessage(getResources().getString(errorResCode));
                 }
@@ -118,7 +99,14 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
 
     private void navigateTo(SettingsManager.LoginMethods destination)
     {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        if (destFragment != null)
+            getSupportFragmentManager().beginTransaction().remove((Fragment) destFragment).commit();
+
+        if (destination == SettingsManager.LoginMethods.FINGERPRINT && !SettingsManager.isFingerprintAvailable(this))
+        {
+            destination = SettingsManager.LoginMethods.NONE;
+            SettingsManager.setRememberLogin(SettingsManager.LoginMethods.NONE, this);
+        }
 
         switch (destination)
         {
@@ -130,17 +118,43 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
                 ((ClassicLoginFragment) destFragment).setEmailAndPassword(AuthService.getEmail(getApplicationContext()), AuthService.getPassword(getApplicationContext()));
                 break;
             case PIN:
-                prepareClassicLoginFragment(); // PLACEHOLDER FRAGMENT - REPLACE WITH PROPER MODULE
-                Toast.makeText(getApplicationContext(), "PIN", Toast.LENGTH_SHORT).show();
+                preparePinLoginFragment();
                 break;
             case FINGERPRINT:
-                prepareClassicLoginFragment(); // PLACEHOLDER FRAGMENT - REPLACE WITH PROPER MODULE
-                Toast.makeText(getApplicationContext(), "FINGERPRINT", Toast.LENGTH_SHORT).show();
+                prepareFingerprintLoginFragment();
                 break;
         }
 
-        ft.add(R.id.nav_host_fragment_login, (Fragment) destFragment);
-        ft.commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment_login, (Fragment) destFragment).commit();
+    }
+
+    private void prepareFingerprintLoginFragment()
+    {
+        destFragment = FingerprintLoginFragment.newInstance();
+
+        destFragment.<FingerprintLoginFragment.Listener>setListener((success, errorCode) -> {
+            try
+            {
+                if (success)
+                {
+                    AuthService.createLoginRequest(AuthService.getEmail(LoginActivity.this), AuthService.getPassword(LoginActivity.this));
+                    return;
+                }
+                else if (errorCode == 7)
+                {
+                    Toast.makeText(LoginActivity.this, R.string.login_fingerprint_temporary_lockout_error, Toast.LENGTH_SHORT).show();
+                }
+                else if (errorCode == 9)
+                {
+                    Toast.makeText(LoginActivity.this, R.string.login_fingerprint_permanent_lockout_error, Toast.LENGTH_SHORT).show();
+                }
+                navigateTo(SettingsManager.LoginMethods.NONE);
+            }
+            catch (Exception e)
+            {
+                destFragment.setErrorMessage(getResources().getString(R.string.error_no_connection));
+            }
+        });
     }
 
     private void prepareClassicLoginFragment()
@@ -164,6 +178,41 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
         });
     }
 
+    private void preparePinLoginFragment()
+    {
+        destFragment = PinLoginFragment.newInstance();
+
+        destFragment.<PinLoginFragment.Listener>setListener(new PinLoginFragment.Listener()
+        {
+            @Override
+            public void onLoginAttempt(final String PIN)
+            {
+                try
+                {
+                    String actualPIN = AuthService.getPIN(getApplicationContext());
+
+                    if (!StringUtils.equals(PIN, actualPIN))
+                    {
+                        throw new AuthenticatorException();
+                    }
+
+                    AuthService.createLoginRequest(AuthService.getEmail(getApplicationContext()), AuthService.getPassword(getApplicationContext()));
+                }
+                catch (Exception e)
+                {
+                    destFragment.setErrorMessage(getResources().getString(R.string.failed_pin_login_attempt));
+                }
+            }
+
+            @Override
+            public void onMultipleFailedAttempts()
+            {
+                SettingsManager.setRememberLogin(SettingsManager.LoginMethods.NONE, getApplicationContext());
+                navigateTo(SettingsManager.LoginMethods.NONE);
+            }
+        });
+    }
+
     private void rememberUser(String email, String password)
     {
         AuthService.setEmail(email, this);
@@ -172,6 +221,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel>
 
     private void switchToCompanySelection()
     {
+        finishAndRemoveTask();
         Intent intent = new Intent(this, CompanySelectionActivity.class);
         startActivity(intent);
     }

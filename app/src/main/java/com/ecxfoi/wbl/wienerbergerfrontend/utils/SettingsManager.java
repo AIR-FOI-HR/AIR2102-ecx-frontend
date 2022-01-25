@@ -1,8 +1,11 @@
 package com.ecxfoi.wbl.wienerbergerfrontend.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
+import androidx.biometric.BiometricManager;
 
 public class SettingsManager
 {
@@ -23,14 +26,6 @@ public class SettingsManager
         return preferences.getString(key, null);
     }
 
-    public enum LoginMethods
-    {
-        NONE, // -> don't remember login, use classic login for manual entering username/password
-        CLASSIC, // -> use classic login with username/password already there
-        PIN, // -> use 4-digit PIN number to log-in
-        FINGERPRINT // -> user fingerprint scanner
-    }
-
     public static void setRememberLogin(LoginMethods selectedLoginMethod, Context context)
     {
         changeParameter("remember_login", selectedLoginMethod.toString(), context);
@@ -47,5 +42,20 @@ public class SettingsManager
         }
 
         return LoginMethods.valueOf(methodValue);
+    }
+
+    public static Boolean isFingerprintAvailable(Activity context)
+    {
+        androidx.biometric.BiometricManager biometricManager = androidx.biometric.BiometricManager.from(context);
+
+        return biometricManager.canAuthenticate(androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_WEAK) == BiometricManager.BIOMETRIC_SUCCESS;
+    }
+
+    public enum LoginMethods
+    {
+        NONE, // -> don't remember login, use classic login for manual entering username/password
+        CLASSIC, // -> use classic login with username/password already there
+        PIN, // -> use 4-digit PIN number to log-in
+        FINGERPRINT // -> user fingerprint scanner
     }
 }

@@ -5,7 +5,6 @@
     <string name="app_description">Administrator Application</string>
     <string name="error_no_connection">"Connection error, try again later."</string>
     <string name="login_failed_credentials">"Invalid credentials."</string>
-    <string name="login_failed_generic">"Something went wrong on our side."</string>
     <string name="action_next">Next</string>
     <string name="add_ticket">Add Ticket</string>
     <string name="create_new_ticket">Create new ticket</string>
@@ -28,8 +27,6 @@
     <string name="customers">Customers</string>
     <string name="settings">Settings</string>
     <string name="logout">Logout</string>
-    <string name="hint_subject">Subject</string>
-    <string name="hint_message">Message</string>
     <string name="create">Create</string>
     <string name="ticket_subject">Subject</string>
     <string name="ticket_status">Status</string>
@@ -43,8 +40,6 @@
     <string name="message_input_error">Message not valid!</string>
     <string name="ticket_created">Ticket created!</string>
     <string name="generic_error_message">There was an error.</string>
-    <string name="error_something_wrong">Something went wrong</string>
-    <string name="ticket_not_permitted">You are not permitted to read other user\'s tickets!</string>
     <string name="status_unknown">Unknown status</string>
     <string name="order_name">Name:</string>
     <string name="order_status">Status:</string>
@@ -56,7 +51,6 @@
     <string name="order_delivery_date">Delivery date:</string>
     <string name="delivery_date">12/23/2021</string>
     <string name="order_credit_card">Credit card</string>
-    <string name="order_additional_project_info">Additional project info</string>
     <string name="order_details_title">Details of order</string>
     <string name="order_details_name">Name</string>
     <string name="order_details_status">Status</string>
@@ -74,7 +68,6 @@
     <string name="delivery_note_id">Delivery note ID:</string>
     <string name="delivery_note_order_number">Order number:</string>
     <string name="delivery_note_ship_to_party">Ship-to-party:</string>
-    <string name="material_balance_quantity">Delivered date:</string>
     <string name="delivery_note_example_id">0532498326</string>
     <string name="delivery_note_example_order_number">0213214259</string>
     <string name="delivery_note_example_ship_to_party">NORTH GEORGIA BRICK CO-DISTR NORTH GEORGIA BRICK CO-DISTR</string>
@@ -91,4 +84,17 @@
     <string name="material_balance_example_name">Wood 10m</string>
     <string name="material_balance_example_id">10</string>
     <string name="material_balance">Material balance</string>
+    <string name="failed_pin_login_attempt">Attempt</string>
+    <string name="pin_description">4-digit PIN:</string>
+    <string name="enter_new_pin_message">Enter new PIN to overwrite current value.</string>
+    <string name="login_fingerprint_temporary_lockout_error">Fingerprint sensor reports too many failed attempts. It will reenable shortly.</string>
+    <string name="login_fingerprint_permanent_lockout_error">Fingerprint login has been permanently disabled. Please unlock it in the settings before proceeding.</string>
+    <string name="hamburger_menu">Hamburger Menu</string>
+    <string name="logout_icon">Logout Icon</string>
+    <string name="error_check_field">Check this field</string>
+    <string name="info_user_data_updated">User data successfully updated!</string>
+    <string name="error_check_fields">Check fields for errors</string>
+    <string name="reset">Reset</string>
+    <string name="no_orders_available">No orders available for selected customer.</string>
+    <string name="no_materials_found">No materials available for selected customer.</string>
 </resources>

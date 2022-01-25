@@ -4,12 +4,12 @@ import com.ecxfoi.wbl.wienerbergerfrontend.di.modules.CompanySelectionActivityMo
 import com.ecxfoi.wbl.wienerbergerfrontend.di.modules.LoginActivityModule;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.modules.MainActivityModule;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.modules.SplashActivityModule;
-import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.NewTicketFragmentProvider;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.CustomersFragmentProvider;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.DeliveryNotesFragmentProvider;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.HomeFragmentProvider;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.MaterialBalanceFragmentProvider;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.MyAccountFragmentProvider;
+import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.NewTicketFragmentProvider;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.OrderDetailsFragmentProvider;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.OrdersFragmentProvider;
 import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.SettingsFragmentProvider;
@@ -18,7 +18,6 @@ import com.ecxfoi.wbl.wienerbergerfrontend.di.providers.TicketDetailsFragmentPro
 import com.ecxfoi.wbl.wienerbergerfrontend.ui.companyselection.CompanySelectionActivity;
 import com.ecxfoi.wbl.wienerbergerfrontend.ui.login.LoginActivity;
 import com.ecxfoi.wbl.wienerbergerfrontend.ui.main.MainActivity;
-import com.ecxfoi.wbl.wienerbergerfrontend.ui.main.orders.OrderDetailsFragment;
 import com.ecxfoi.wbl.wienerbergerfrontend.ui.splash.SplashActivity;
 
 import dagger.Module;

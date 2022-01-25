@@ -1,5 +1,6 @@
 package com.ecxfoi.wbl.wienerbergerfrontend.ui.main.materialbalance;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,32 +17,6 @@ import java.util.ArrayList;
 abstract class MaterialBalanceRecyclerAdapter extends RecyclerView.Adapter<MaterialBalanceRecyclerAdapter.MaterialBalanceViewHolder>
 {
     private final ArrayList<MaterialBalanceData> materialArray;
-
-    public static class MaterialBalanceViewHolder extends RecyclerView.ViewHolder
-    {
-        private final TextView tvID;
-        private final TextView tvName;
-        private final TextView tvQuantity;
-        private MaterialBalanceData materialBalanceData;
-
-        public MaterialBalanceViewHolder(final View view)
-        {
-            super(view);
-
-            tvID = view.findViewById(R.id.tv_material_balance_id);
-            tvName = view.findViewById(R.id.tv_material_balance_name);
-            tvQuantity = view.findViewById(R.id.tv_material_balance_quantity);
-        }
-
-        public void bind(MaterialBalanceData materialBalanceData)
-        {
-            this.materialBalanceData = materialBalanceData;
-
-            tvID.setText(materialBalanceData.getId().toString());
-            tvName.setText(materialBalanceData.getName());
-            tvQuantity.setText(materialBalanceData.getQuantity().toString());
-        }
-    }
 
     public MaterialBalanceRecyclerAdapter(ArrayList<MaterialBalanceData> materialArray)
     {
@@ -68,5 +43,30 @@ abstract class MaterialBalanceRecyclerAdapter extends RecyclerView.Adapter<Mater
     public int getItemCount()
     {
         return materialArray.size();
+    }
+
+    public static class MaterialBalanceViewHolder extends RecyclerView.ViewHolder
+    {
+        private final TextView tvID;
+        private final TextView tvName;
+        private final TextView tvQuantity;
+
+        public MaterialBalanceViewHolder(final View view)
+        {
+            super(view);
+
+            tvID = view.findViewById(R.id.tv_material_balance_id);
+            tvName = view.findViewById(R.id.tv_material_balance_name);
+            tvQuantity = view.findViewById(R.id.tv_material_balance_quantity);
+        }
+
+        @SuppressLint("SetTextI18n")
+        public void bind(MaterialBalanceData materialBalanceData)
+        {
+
+            tvID.setText(materialBalanceData.getId().toString());
+            tvName.setText(materialBalanceData.getName());
+            tvQuantity.setText(materialBalanceData.getQuantity().toString());
+        }
     }
 }

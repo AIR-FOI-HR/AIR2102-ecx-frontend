@@ -47,8 +47,8 @@
                 android:text="@string/remember_current_login"
                 android:paddingBottom="10dp"
                 android:layout_marginBottom="10dp"
-                android:onCheckedChanged="@{(compoundButton, b) -> settingsViewModel.setRememberLogin(compoundButton, b)}"
-                android:checked="@{settingsViewModel.rememberLogin.booleanValue()}" />
+                android:onCheckedChanged="@{(compoundButton, b) -> settingsViewModel.onRememberLogin(compoundButton, b)}"
+                android:checked="@{settingsViewModel.doRememberLogin.booleanValue()}" />
 
         <TextView
                 android:layout_width="match_parent"
@@ -58,7 +58,7 @@
                 android:paddingTop="10dp"
                 android:text="@string/choose_login_method"
                 android:paddingBottom="5dp"
-                android:visibility="@{settingsViewModel.rememberLogin.booleanValue() ? View.VISIBLE : View.INVISIBLE}"
+                android:visibility="@{settingsViewModel.doRememberLogin.booleanValue() ? View.VISIBLE : View.INVISIBLE}"
                 tools:visibility="visible" />
 
         <Spinner
@@ -67,8 +67,32 @@
                 android:layout_height="68dp"
                 android:layout_gravity="center"
                 android:background="@drawable/spinner_border"
-                android:visibility="@{settingsViewModel.rememberLogin.booleanValue() ? View.VISIBLE : View.INVISIBLE}"
+                android:visibility="@{settingsViewModel.doRememberLogin.booleanValue() ? View.VISIBLE : View.INVISIBLE}"
                 tools:visibility="visible"
                 android:selectedItemPosition="@{settingsViewModel.selectedItemIndex}" />
+
+        <TextView
+                android:layout_marginStart="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/pin_description"
+                android:visibility="@{settingsViewModel.isPinOptionSelected.booleanValue() ? View.VISIBLE : View.INVISIBLE}"
+                android:textSize="30sp" />
+
+        <EditText
+                android:id="@+id/pin_edit_text"
+                android:layout_marginLeft="50sp"
+                android:layout_marginRight="50sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/enter_pin"
+                android:inputType="numberPassword"
+                android:textColor="@{(settingsViewModel.pin.length() != 4) ? @color/wienerberger_red : @color/success}"
+                android:textSize="30sp"
+                android:visibility="@{settingsViewModel.isPinOptionSelected.booleanValue() ? View.VISIBLE : View.INVISIBLE}"
+                android:text="@={settingsViewModel.pin}"
+                android:textAlignment="center"
+                android:importantForAutofill="no" />
     </LinearLayout>
 </layout>

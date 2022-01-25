@@ -37,9 +37,9 @@ public class MaterialBalanceRepository
             {
                 ArrayList<MaterialBalanceData> materialBalanceList = new ArrayList<>();
 
-                if(response.body() != null)
+                if (response.body() != null)
                 {
-                    materialBalanceList =  ((ArrayList<MaterialBalanceData>) response.body().getData());
+                    materialBalanceList = ((ArrayList<MaterialBalanceData>) response.body().getData());
                 }
 
                 materialBalanceData.setValue(materialBalanceList);

@@ -1,6 +1,5 @@
 package com.ecxfoi.wbl.wienerbergerfrontend.ui.main.supporttickets;
 
-import androidx.databinding.ObservableField;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -15,13 +14,10 @@ public class SupportTicketsViewModel extends ViewModel
 {
     private final TicketsRepository ticketsRepository;
 
-    private final ObservableField<ArrayList<TicketData>> ticketsData;
-
     @Inject
     public SupportTicketsViewModel(final TicketsRepository ticketsRepository)
     {
         this.ticketsRepository = ticketsRepository;
-        ticketsData = new ObservableField<>();
     }
 
     public LiveData<ArrayList<TicketData>> fetchTicketData()

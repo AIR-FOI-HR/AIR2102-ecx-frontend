@@ -6,9 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.ecxfoi.wbl.wienerbergerfrontend.api.SelectedCompanyData;
 import com.ecxfoi.wbl.wienerbergerfrontend.models.MaterialBalanceData;
-import com.ecxfoi.wbl.wienerbergerfrontend.models.OrderData;
 import com.ecxfoi.wbl.wienerbergerfrontend.repositories.MaterialBalanceRepository;
-import com.ecxfoi.wbl.wienerbergerfrontend.repositories.OrdersRepository;
 
 import java.util.ArrayList;
 
@@ -30,6 +28,7 @@ public class MaterialBalanceViewModel extends ViewModel
 
     public LiveData<ArrayList<MaterialBalanceData>> fetchMaterialBalanceData()
     {
+        setErrorMessage("");
         Long selectedCompanyId = selectedCompanyData.getCompanyId();
         return materialBalanceRepository.getMaterialBalance(selectedCompanyId);
     }

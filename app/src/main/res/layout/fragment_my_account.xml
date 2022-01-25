@@ -31,9 +31,7 @@
                                            tvLastName,txtLastName,
                                            tvPhoneNumber,txtPhoneNumber,
                                            tvFaxNum,txtFaxNumber,
-                                           tvEmail,txtEmail,
-                                           btnCancel, btnUpdate
-                                           ">
+                                           tvEmail,txtEmail, btnUpdate">
 
             <TextView
                     android:id="@+id/tvProfileTitle"

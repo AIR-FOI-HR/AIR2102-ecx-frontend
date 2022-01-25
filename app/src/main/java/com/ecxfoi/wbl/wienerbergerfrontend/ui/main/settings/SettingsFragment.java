@@ -2,28 +2,31 @@ package com.ecxfoi.wbl.wienerbergerfrontend.ui.main.settings;
 
 import static com.ecxfoi.wbl.wienerbergerfrontend.utils.SettingsManager.LoginMethods.CLASSIC;
 import static com.ecxfoi.wbl.wienerbergerfrontend.utils.SettingsManager.LoginMethods.FINGERPRINT;
-import static com.ecxfoi.wbl.wienerbergerfrontend.utils.SettingsManager.LoginMethods.NONE;
 import static com.ecxfoi.wbl.wienerbergerfrontend.utils.SettingsManager.LoginMethods.PIN;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.ecxfoi.wbl.wienerbergerfrontend.R;
+import com.ecxfoi.wbl.wienerbergerfrontend.auth.AuthService;
 import com.ecxfoi.wbl.wienerbergerfrontend.base.BaseFragment;
 import com.ecxfoi.wbl.wienerbergerfrontend.databinding.SettingsFragmentBinding;
 import com.ecxfoi.wbl.wienerbergerfrontend.utils.SettingsManager;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -31,13 +34,10 @@ public class SettingsFragment extends BaseFragment<SettingsViewModel>
 {
     @Inject
     ViewModelProvider.Factory factory;
-
     private SettingsViewModel viewModel;
     private SettingsFragmentBinding binding;
-    private HashMap<Integer, String> loginMethodStringsMap;
-    private String string_classic_login;
-    private String string_pin_login;
-    private String string_fingerprint_login;
+    private ArrayList<SpinnerEntry> loginMethodEntries;
+    private SettingsManager.LoginMethods currentMethod;
 
     @Override
     public SettingsViewModel getViewModel()
@@ -51,19 +51,18 @@ public class SettingsFragment extends BaseFragment<SettingsViewModel>
     {
         binding = SettingsFragmentBinding.inflate(inflater, container, false);
 
-        string_classic_login = getString(R.string.classic_login);
-        string_pin_login = getString(R.string.pin_login);
-        string_fingerprint_login = getString(R.string.fingerprint_login);
-
-        loginMethodStringsMap = new HashMap<Integer, String>()
+        loginMethodEntries = new ArrayList<SpinnerEntry>()
         {
             {
-                put(0, string_classic_login);
-                put(1, string_pin_login);
-                put(2, string_fingerprint_login);
+                add(new SpinnerEntry(0, getString(R.string.classic_login), CLASSIC));
+                add(new SpinnerEntry(1, getString(R.string.pin_login), PIN));
+                add(new SpinnerEntry(2, getString(R.string.fingerprint_login), FINGERPRINT));
             }
         };
 
+        currentMethod = SettingsManager.getRememberLogin(getContext());
+
+        checkFingerprintAvailability();
         initNavigation();
         initSpinner();
 
@@ -72,11 +71,23 @@ public class SettingsFragment extends BaseFragment<SettingsViewModel>
         return binding.getRoot();
     }
 
+    private void checkFingerprintAvailability()
+    {
+        if (!SettingsManager.isFingerprintAvailable(getActivity()))
+        {
+            if (currentMethod == FINGERPRINT)
+            {
+                SettingsManager.setRememberLogin(SettingsManager.LoginMethods.NONE, getContext());
+            }
+            loginMethodEntries.removeIf(entry -> entry.description.contains("Fingerprint"));
+        }
+    }
+
     private void initSpinner()
     {
         final Spinner spinner = binding.loginMethodSpinner;
 
-        ArrayList<String> options = new ArrayList<>(loginMethodStringsMap.values());
+        List<String> options = loginMethodEntries.stream().map(spinnerEntry -> spinnerEntry.description).collect(Collectors.toList());
 
         final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, options)
         {
@@ -116,59 +127,57 @@ public class SettingsFragment extends BaseFragment<SettingsViewModel>
 
     private void initNavigation()
     {
-        SettingsManager.LoginMethods currentMethod = SettingsManager.getRememberLogin(getContext());
-
-        if (currentMethod == SettingsManager.LoginMethods.NONE)
+        binding.pinEditText.addTextChangedListener(new TextWatcher()
         {
-            viewModel.setRememberLogin(false);
-        }
-        else
-        {
-            viewModel.setRememberLogin(true);
-
-            switch (currentMethod)
+            @Override
+            public void beforeTextChanged(final CharSequence charSequence, final int i, final int i1, final int i2)
             {
-                case CLASSIC:
+            }
+
+            @Override
+            public void afterTextChanged(final Editable editable)
+            {
+            }
+
+            @Override
+            public void onTextChanged(final CharSequence charSequence, final int start, final int before, final int count)
+            {
+                if (charSequence.length() == 4)
                 {
-                    viewModel.selectedItemIndex.set(0);
-                    break;
-                }
-                case PIN:
-                {
-                    viewModel.selectedItemIndex.set(1);
-                    break;
-                }
-                case FINGERPRINT:
-                {
-                    viewModel.selectedItemIndex.set(2);
-                    break;
+                    AuthService.setPIN(charSequence.toString(), getContext());
+                    viewModel.setDoRememberLogin(PIN, getContext());
+                    if (count == 1) // If manual change happened, notify that this new PIN is actually remembered.
+                    {
+                        Toast.makeText(getContext(), "New PIN remembered!", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
+        });
+
+        if (currentMethod == PIN)
+        {
+            Toast.makeText(getContext(), R.string.enter_new_pin_message, Toast.LENGTH_LONG).show();
         }
+        viewModel.setDoRememberLogin(currentMethod, getContext());
     }
 
     private void setNewMethod(final int itemIndex)
     {
-        SettingsManager.LoginMethods newLoginMethod;
-        String loginMethodString = loginMethodStringsMap.get(itemIndex);
+        SettingsManager.LoginMethods newMethod = loginMethodEntries.stream().filter(spinnerEntry -> spinnerEntry.index == itemIndex).findAny().orElse(loginMethodEntries.get(0)).method;
+        viewModel.setDoRememberLogin(newMethod, getContext());
+    }
 
-        if (Objects.equals(loginMethodString, string_classic_login))
-        {
-            newLoginMethod = CLASSIC;
-        }
-        else if (Objects.equals(loginMethodString, string_pin_login))
-        {
-            newLoginMethod = PIN;
-        }
-        else if (Objects.equals(loginMethodString, string_fingerprint_login))
-        {
-            newLoginMethod = FINGERPRINT;
-        }
-        else
-        {
-            newLoginMethod = NONE;
-        }
+    private static class SpinnerEntry
+    {
+        public int index;
+        public String description;
+        public SettingsManager.LoginMethods method;
 
-        SettingsManager.setRememberLogin(newLoginMethod, getContext());
+        public SpinnerEntry(final int index, final String description, final SettingsManager.LoginMethods method)
+        {
+            this.index = index;
+            this.description = description;
+            this.method = method;
+        }
     }
 }

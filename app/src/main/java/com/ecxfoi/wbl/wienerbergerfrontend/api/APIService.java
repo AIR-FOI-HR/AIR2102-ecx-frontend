@@ -60,6 +60,6 @@ public interface APIService
     @GET(APIRoutes.BASE_URL + APIRoutes.ROUTE_DELIVERY_NOTES)
     Call<WienerbergerResponse<List<DeliveryNoteData>>> getDeliveryNotesByOrderId(@Query("orderId") Long orderId);
 
-    @GET(APIRoutes.BASE_URL + APIRoutes.ROUTE_CUSTOMER_MATERIALS + "/{customerId}")
+    @GET(APIRoutes.BASE_URL + APIRoutes.ROUTE_CUSTOMERS + "/{customerId}" + "/materials")
     Call<WienerbergerResponse<List<MaterialBalanceData>>> getMaterialBalance(@Path("customerId") Long customerId);
 }
